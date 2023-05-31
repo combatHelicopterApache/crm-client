@@ -1,9 +1,9 @@
 import { message as notify, MessageArgsProps } from 'antd'
-import { NoticeType, MessageType } from 'antd/es/message/interface'
+import { NoticeType } from 'antd/es/message/interface'
 
 export const notification = (
   type: NoticeType,
-  message: MessageType,
+  message: string,
   ...rest: any[]
 ): MessageArgsProps => {
   return notify[type](message, ...rest)

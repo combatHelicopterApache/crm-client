@@ -130,13 +130,13 @@ const GroupsTable = () => {
     backgroundColor: '#1f1f1f',
   }
 
-  const rowStyle = (record: any, index: number) => {
-    if (index % 2 === 0) {
-      return s.light
-    } else {
-      return s.dark
-    }
-  }
+  // const rowStyle = (record: any, index: number) => {
+  //   if (index % 2 === 0) {
+  //     return s.light
+  //   } else {
+  //     return s.dark
+  //   }
+  // }
 
   const handleVisible = (id: string) => {
     setVisible(true)
