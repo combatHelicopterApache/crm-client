@@ -1,4 +1,5 @@
 import React from 'react'
+import Fallback from './FallBack'
 import './ErrorBoundary.scss'
 
 class ErrorBoundary extends React.Component {
@@ -13,7 +14,12 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.errorInfo) {
-      return <p>Ooops! Something went wrong</p>
+      return (
+        <>
+          <Fallback />
+          <p>Ooops! Something went wrong</p>
+        </>
+      )
     }
     return this.props.children
   }

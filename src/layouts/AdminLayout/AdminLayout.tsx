@@ -20,7 +20,7 @@ export default AdminLayout
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: #1f1f1f;
+  background-color: #1d2125;
   height: 100vh;
   width: 100%;
   & .inside {

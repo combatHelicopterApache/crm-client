@@ -14,6 +14,7 @@ const Fallback = () => {
       <h2 className={'fallback-title'}>
         Oops, something went wrong, please try to reload or go to{' '}
         <CustomButton
+          style={{ margin: '0 auto' }}
           className={'fallback-home-button'}
           onClick={handleButtonClick}
         >
