@@ -2,7 +2,8 @@ import React, { FC } from 'react'
 import { Table, TableProps } from 'antd'
 import styled from 'styled-components'
 
-export const CustomTable: FC<TableProps> = ({
+interface CustomTableProps<T> extends TableProps<T> {}
+export const CustomTable: FC<CustomTableProps<any>> = ({
   columns,
   dataSource,
   ...rest
@@ -31,6 +32,7 @@ export const CustomTable: FC<TableProps> = ({
 }
 
 const TableWrapper = styled.div`
+  padding: 10px 0;
   .ant-table-body {
     background-color: #0e0d0d !important;
   }
