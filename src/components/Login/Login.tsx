@@ -25,6 +25,7 @@ export const Login:FC = () => {
                    const response = await userLogin(value)
                    message.success(response.data.message)
                    dispatch(setLoginData(response.data))
+                   console.log(response.data)
                    if(response.data.status === true) navigate('/')
                } catch (error) {
                    message.error(error.response?.data?.message)
