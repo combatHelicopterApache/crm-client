@@ -3,7 +3,7 @@ import Sidebar from './components/Sidebar/Sidebar'
 import Header from './components/Header/Header'
 import styled from 'styled-components'
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Wrapper>
       <Sidebar />

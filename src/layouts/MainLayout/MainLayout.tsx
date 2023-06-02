@@ -3,7 +3,7 @@ import s from './MainLayout.module.css'
 import Sidebar from './components/Sidebar/Sidebar'
 import Header from './components/Header/Header'
 
-const MainLayout = ({ children }) => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className={s.container}>
       <Sidebar />

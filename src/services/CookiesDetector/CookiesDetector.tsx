@@ -1,7 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const CookiesDetector = ({ children }: { children: React.ReactNode }) => {
+interface CookiesDetectorProps {
+  children: React.ReactNode
+}
+
+const CookiesDetector = ({ children }: CookiesDetectorProps) => {
   if (!navigator.cookieEnabled)
     return (
       <Wrapper>

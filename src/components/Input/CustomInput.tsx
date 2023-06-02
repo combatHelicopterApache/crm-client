@@ -6,7 +6,10 @@ interface CustomInputProps extends InputProps {
   error?: string
 }
 
-export const CustomInput: FC<CustomInputProps> = ({ error, ...props }) => {
+export const CustomInput: FC<CustomInputProps> = ({
+  error,
+  ...props
+}): JSX.Element => {
   return (
     <InputWrapper>
       <Input autoComplete='off' {...props} />
