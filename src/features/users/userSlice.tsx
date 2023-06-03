@@ -1,13 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-
-// import * as userAPI from 'api/Users'
-
+import { generateRandomLetters } from 'utils/generateRandomLatters'
 import { notification } from 'components/Notification/Notification'
-import moment from 'moment-timezone'
-// import { AppStateType } from 'store'
-// import { setMe } from 'store/Orcatec/actions/settings/user'
-// import { AsyncThunkAPI } from 'features/Dispatch/types'
-// import { User, UserRole, UserStatus } from 'types/User'
+import * as userAPI from 'api/Users'
+
 import { User, UserRole, UserStatus } from './types'
 import { getModulesByRole } from './helpers/helpers'
 import { AppDispatch, RootState } from 'store/store'
@@ -19,39 +14,20 @@ export interface AsyncThunkAPI<T = void> {
 }
 
 const initialUser: User = {
-  background_color: '#626ed4',
-  commission_type: 1,
-  commission_percent: 0,
   full_name: '',
   email: '',
-  info: {
-    address: {
-      address: '',
-      city: '',
-      state: '',
-      lat: '',
-      lng: '',
-      unit: '',
-      zip: '',
-    },
-    coordination: [],
-    number_prefix: '',
-    profile_picture: '',
-    use_office_address: true,
-    change_date_status: moment().utc().format(),
-  },
-  labor_rate: '0',
-  permissions: getModulesByRole(1),
   phone: '',
-  project_status_change: true,
-  restrict_contract_access: false,
-  role_id: UserRole.ADMIN,
-  status: UserStatus.Pending,
+  address: '',
+  permissions: getModulesByRole(2),
+  role_id: UserRole.AGENT,
+  manager_id: null,
+  admin_id: null,
+  brand_id: null,
+  status: UserStatus.Active,
   title: '',
-  useAsTech: false,
-  use_clock_in_with_gps: false,
-  has_access_to_proposal_insights: false,
-  proposal_insights_action_level: 1,
+  background_color: '#626ed4',
+  user_identifier: generateRandomLetters(2),
+  notes: '',
 }
 
 export const fetchUser = createAsyncThunk<User, string>(
@@ -63,11 +39,7 @@ export const fetchUser = createAsyncThunk<User, string>(
   },
 )
 
-interface PostUser extends User {
-  make_column: boolean
-}
-
-export const createUser = createAsyncThunk<User, PostUser, AsyncThunkAPI>(
+export const createUser = createAsyncThunk<User, User, AsyncThunkAPI>(
   'users/createUser',
   async (user, { rejectWithValue }) => {
     try {
@@ -78,18 +50,11 @@ export const createUser = createAsyncThunk<User, PostUser, AsyncThunkAPI>(
   },
 )
 
-export const updateUser = createAsyncThunk<
-  User,
-  { user: User; confirm: boolean },
-  AsyncThunkAPI
->(
+export const updateUser = createAsyncThunk<{ user: User }, AsyncThunkAPI>(
   'users/updateUser',
-  async ({ user, confirm }, { rejectWithValue, getState, dispatch }) => {
+  async ({ user }, { rejectWithValue }) => {
     try {
-      const updatedUser = await userAPI.updateUser(user.id, user, confirm)
-
-      // const me = getState().orcatec.user.me
-      // if (user.id === me.id) dispatch(setMe(updatedUser))
+      const updatedUser = await userAPI.updateUser(user.id, user)
 
       return updatedUser
     } catch (error) {
@@ -114,9 +79,6 @@ const userSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    setUserAddress: (state, { payload }) => {
-      state.currentUser.info.address = payload
-    },
     resetUser: state => {
       state.redirect = false
       state.error = null
@@ -162,7 +124,6 @@ const userSlice = createSlice({
 })
 
 export default userSlice.reducer
-export const { setUserAddress, resetUser } = userSlice.actions
+export const { resetUser } = userSlice.actions
 
-export const selectCurrentUser = (state: AppStateType) =>
-  state.orcatec.usersSlice.currentUser
+export const selectCurrentUser = (state: RootState) => state.user.currentUser

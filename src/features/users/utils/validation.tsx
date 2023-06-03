@@ -1,48 +1,53 @@
 import * as yup from 'yup'
 
-//const phoneRegExp = /^[(][0-9]{3}[)][\s][0-9]{3}[-][0-9]{4}$/
 const phoneRegExp = /^\+38\(\d{3}\) \d{2}-\d{2}-\d{3}$/
 
 export const userFormSchema = yup.object({
-  company_name: yup
-    .string()
-    .required('Company name is required')
-    .label('Company name'),
-  company_email: yup
+  full_name: yup.string().required('User name is required').label('User name'),
+  email: yup
     .string()
     .email('Invalid email address')
     .nullable()
-    .required('Company email is required')
-    .label('Company email'),
-  company_phone: yup
+    .required('User email is required')
+    .label('User email'),
+  phone: yup
     .string()
     .matches(phoneRegExp, 'Phone must match the following: +38(999) 99-99-999')
     .nullable()
-    .label('Office phone')
-    .required('Office Phone is required'),
-
-  admin_name: yup
-    .string()
-    .required('Admin name is required')
-    .label('Company name'),
-  admin_email: yup
-    .string()
-    .email('Invalid email address')
+    .label('User phone')
+    .required('User Phone is required'),
+  manager_id: yup
+    .number()
     .nullable()
-    .required('Admin email is required')
-    .label('Admin email'),
-  admin_phone: yup
-    .string()
-    .matches(phoneRegExp, 'Phone must match the following: +38(999) 99-99-999')
+    .required('Manager is required')
+    .label('Manager'),
+  role_id: yup
+    .number()
     .nullable()
-    .label('Admin phone')
-    .required('Admin Phone is required'),
+    .label('Role ')
+    .required('User Role  is required'),
+  status: yup
+    .number()
+    .nullable()
+    .label('Status')
+    .required('Status  is required'),
+  admin_id: yup
+    .number()
+    .nullable()
+    .label('Admin')
+    .required('Admin  is required'),
+  brand_id: yup
+    .number()
+    .nullable()
+    .label('Admin')
+    .required('Brand  is required'),
   address: yup
     .string()
-    .required('Company address is required')
-    .label('Company address'),
-  company_identifier: yup
+    .required('User address is required')
+    .label('User address'),
+  user_identifier: yup
     .string()
-    .required('Company identifier is required')
-    .label('Company identifier'),
+    .required('User identifier is required')
+    .label('User identifier'),
+  title: yup.string().label('Title'),
 })

@@ -14,7 +14,6 @@ export const CustomTable: FC<CustomTableProps<any>> = ({
       <Table
         dataSource={dataSource}
         columns={columns}
-        rowKey={groups => groups.id}
         className='headerHeight'
         scroll={{ x: 1600, y: 'calc(100vh - 200px)' }}
         pagination={{

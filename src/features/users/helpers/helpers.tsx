@@ -1,4 +1,5 @@
 import { UserRole } from '../types'
+import { MODULES } from '../utils/const'
 
 export const getModulesByRole = (
   role_id: number,
@@ -8,53 +9,28 @@ export const getModulesByRole = (
   switch (role_id) {
     case UserRole.OWNER:
     case UserRole.ADMIN:
+    case UserRole.MANAGER:
       activeModules = [
-        'map',
         'dashboard',
-        'appointments',
-        'mail',
-        'proposals',
-        'properties',
-        'clients',
-        'schedules',
-        'marketing',
-        'time_cards',
-        'request_review',
-        'emailCampaign',
+        'leads',
+        'affilates',
+        'deposits',
+        'calendar',
+        'groups',
+        'users',
+        'analitycs',
         'settings',
-        'memberships',
-        'work_schedule',
       ]
       break
-    case UserRole.DISPATCHER:
-      activeModules = [
-        'map',
-        'appointments',
-        'proposals',
-        'properties',
-        'clients',
-      ]
-      break
-    case UserRole.TECHNICIAN:
-      activeModules = ['proposals', 'schedules']
+
+    case UserRole.AGENT:
+      activeModules = ['leads']
       break
     case UserRole.WORKER:
-      activeModules = ['schedules']
+      activeModules = ['leads']
       break
-    case UserRole.ACCOUNTANT:
-      activeModules = [
-        'fast_payment',
-        'accounting',
-        // 'dashboard',
-        'mail',
-        'proposals',
-        'properties',
-        'clients',
-        // 'serviceContract',
-        // 'time_cards',
-        // 'request_review',
-        // 'settings',
-      ]
+    case UserRole.ACCOUNT_MANAGER:
+      activeModules = ['dashboard', 'leads', 'analitycs']
       break
 
     default:

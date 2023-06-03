@@ -1,11 +1,36 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { Checkbox } from 'components/Checkbox/Checkbox'
 import { modulesList } from 'features/Users/utils/const'
 import styled from 'styled-components'
 import { Span } from 'molecules/Span/Span'
 import { H2 } from 'molecules/H2/H2'
+import { User } from 'features/Users/types'
+import { CheckboxChangeEvent } from 'antd/es/checkbox'
 
-export const Permissions = (): React.ReactNode => {
+interface IProps {
+  data: User['permissions']
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  disabled: boolean
+}
+
+export const Permissions = ({
+  data,
+  onChange,
+  disabled,
+}: IProps): React.ReactNode => {
+  const handleChangeModules = (e: CheckboxChangeEvent) => {
+    const { name, checked } = e.target
+    if (!name) return
+    onChange({
+      target: {
+        name: 'permissions',
+        value: {
+          ...data,
+          [name]: checked,
+        },
+      },
+    })
+  }
   return (
     <>
       <H2 style={{ marginBottom: '20px' }}>Permissions</H2>
@@ -13,7 +38,12 @@ export const Permissions = (): React.ReactNode => {
         {modulesList.map(module => (
           <Row key={module.name}>
             <Span>{module.label}</Span>
-            <Checkbox name={module.name} />
+            <Checkbox
+              disabled={disabled}
+              checked={data[module.name]}
+              onChange={handleChangeModules}
+              name={module.name}
+            />
           </Row>
         ))}
       </Wrapper>
