@@ -16,25 +16,25 @@ export const MainRoutes = () => {
       {
         label: 'Leads',
         path: RoutesPath.LEADS_ROUTE,
-        element: lazy(() => import('../pages/Leads/LeadsPage')),
+        element: lazy(() => import('../pages/LeadsPage/LeadsPage')),
         isAccess: true,
       },
       {
         label: 'Groups',
         path: RoutesPath.GROUPS_ROUTE,
-        element: lazy(() => import('../pages/Groups/GroupsPage')),
+        element: lazy(() => import('../pages/GroupsPage/GroupsPage')),
         isAccess: true,
       },
       {
         label: 'Group detail',
         path: RoutesPath.GROUPS_ROUTE + '/:id',
-        element: lazy(() => import('../pages/Groups/GroupPageDetail')),
+        element: lazy(() => import('../pages/GroupsPage/GroupPageDetail')),
         isAccess: true,
       },
       {
         label: 'Users',
         path: RoutesPath.USERS_ROUTE,
-        element: lazy(() => import('../pages/Users/UsersPage')),
+        element: lazy(() => import('../pages/UsersPage/UsersPage')),
         isAccess: true,
       },
       {
@@ -46,31 +46,31 @@ export const MainRoutes = () => {
       {
         label: 'Analytics',
         path: RoutesPath.ANALYTICS_ROUTE,
-        element: lazy(() => import('../pages/Analytics/AnalyticsPage')),
+        element: lazy(() => import('../pages/AnalyticsPage/AnalyticsPage')),
         isAccess: true,
       },
       {
         label: 'Deposits',
         path: RoutesPath.DEPOSITS_ROUTE,
-        element: lazy(() => import('../pages/Deposits/DepositsPage')),
+        element: lazy(() => import('../pages/DepositsPage/DepositsPage')),
         isAccess: true,
       },
       {
         label: 'Affiliates',
         path: RoutesPath.AFFILIATES_ROUTE,
-        element: lazy(() => import('../pages/Affiliates/AffiliatesPage')),
+        element: lazy(() => import('../pages/AffiliatesPage/AffiliatesPage')),
         isAccess: true,
       },
       {
         label: 'Calendar',
         path: RoutesPath.CALENDAR_ROUTE,
-        element: lazy(() => import('../pages/Calendar/CalendarPage')),
+        element: lazy(() => import('../pages/CalendarPage/CalendarPage')),
         isAccess: true,
       },
       {
         label: 'Settings',
         path: RoutesPath.SETTINGS_ROUTE,
-        element: lazy(() => import('../pages/Settings/SettingsPage')),
+        element: lazy(() => import('../pages/SettingsPage/SettingsPage')),
         isAccess: true,
       },
       {

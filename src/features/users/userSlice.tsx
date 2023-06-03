@@ -1,16 +1,25 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import {
+  createAsyncThunk,
+  createSlice,
+  SerializedError,
+} from '@reduxjs/toolkit'
 import { generateRandomLetters } from 'utils/generateRandomLatters'
 import { notification } from 'components/Notification/Notification'
 import * as userAPI from 'api/Users'
-
+import { AxiosResponse } from 'axios'
 import { User, UserRole, UserStatus } from './types'
 import { getModulesByRole } from './helpers/helpers'
 import { AppDispatch, RootState } from 'store/store'
 
+type RejectWithValue<T, E = any> = {
+  error: E
+  payload: T
+  meta: { rejectedWithValue: true }
+}
 export interface AsyncThunkAPI<T = void> {
   dispatch: AppDispatch
   state: RootState
-  rejectValue: T
+  rejectWithValue: (value: T) => RejectWithValue<T, SerializedError>
 }
 
 const initialUser: User = {
@@ -50,11 +59,14 @@ export const createUser = createAsyncThunk<User, User, AsyncThunkAPI>(
   },
 )
 
-export const updateUser = createAsyncThunk<{ user: User }, AsyncThunkAPI>(
+export const updateUser = createAsyncThunk<User, { user: User }, AsyncThunkAPI>(
   'users/updateUser',
   async ({ user }, { rejectWithValue }) => {
     try {
-      const updatedUser = await userAPI.updateUser(user.id, user)
+      const updatedUser: AxiosResponse<User> = await userAPI.updateUser(
+        user.id,
+        user,
+      )
 
       return updatedUser
     } catch (error) {
@@ -87,9 +99,6 @@ const userSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(fetchUser.pending, state => {
-      state.loading = true
-    })
     builder.addCase(fetchUser.fulfilled, (state, { payload }) => {
       state.currentUser = payload
       state.status = 'success'

@@ -5,7 +5,7 @@ export const MainLogo = ({ width = 25, height = 25, color = 'white' }) => (
     x='0px'
     y='0px'
     viewBox='0 0 1000 1000'
-    enable-background='new 0 0 1000 1000'
+    enableBackground='new 0 0 1000 1000'
     fill={color}
   >
     <g>

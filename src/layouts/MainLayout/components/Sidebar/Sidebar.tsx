@@ -73,7 +73,7 @@ const Sidebar = () => {
             <p>Calendar</p>
           </NavLink>
         </li>
-        <li key='7'>
+        <li key='6'>
           <NavLink
             to={RoutesPath.GROUPS_ROUTE}
             className={navData => (navData.isActive ? 'active' : 'none')}
@@ -82,7 +82,7 @@ const Sidebar = () => {
             <p>Groups</p>
           </NavLink>
         </li>
-        <li key='8'>
+        <li key='7'>
           <NavLink
             to={RoutesPath.USERS_ROUTE}
             className={navData => (navData.isActive ? 'active' : 'none')}
@@ -91,7 +91,7 @@ const Sidebar = () => {
             <p>Users</p>
           </NavLink>
         </li>
-        <li key='9'>
+        <li key='8'>
           <NavLink
             to={RoutesPath.ANALYTICS_ROUTE}
             className={navData => (navData.isActive ? 'active' : 'none')}
@@ -100,7 +100,7 @@ const Sidebar = () => {
             <p>Analytics</p>
           </NavLink>
         </li>
-        <li key='6'>
+        <li key='9'>
           <NavLink
             to={RoutesPath.BRANDS_ROUTE}
             className={navData => (navData.isActive ? 'active' : 'none')}
@@ -109,7 +109,7 @@ const Sidebar = () => {
             <p>Brands</p>
           </NavLink>
         </li>
-        <li key='7'>
+        <li key='10'>
           <NavLink
             to={RoutesPath.SETTINGS_ROUTE}
             className={navData => (navData.isActive ? 'active' : 'none')}
