@@ -1,5 +1,5 @@
-export const getTokenFromLS = () => {
-  // const auth = JSON.parse(localStorage.getItem('persist:auth'))
-  // const trimmedToken = auth?.token?.slice(1, -1).replace(/\\/g, '')
-  return JSON.parse(localStorage.getItem('auth'))?.token
+export const getTokenFromLS = (): string | null => {
+  const isAuth: string | null =
+    JSON.parse(localStorage.getItem('auth') as string)?.token ?? null
+  return isAuth
 }

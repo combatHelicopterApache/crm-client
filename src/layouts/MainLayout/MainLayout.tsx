@@ -1,18 +1,35 @@
 import React from 'react'
-import s from './MainLayout.module.css'
 import Sidebar from './components/Sidebar/Sidebar'
 import Header from './components/Header/Header'
+import styled from 'styled-components'
 
-const MainLayout = ({ children }) => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className={s.container}>
+    <Wrapper>
       <Sidebar />
-      <div className={s.inside}>
+      <div className='inside'>
         <Header />
-        <div className={s.content}>{children}</div>
+        <div className='content'>{children}</div>
       </div>
-    </div>
+    </Wrapper>
   )
 }
 
 export default MainLayout
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  background-color: ${({ theme }) => theme.colors.background};
+  height: 100vh;
+  width: 100%;
+
+  & .inside {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  & .content {
+    padding: 1.4rem;
+  }
+`

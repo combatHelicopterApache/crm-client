@@ -22,6 +22,10 @@ export const CustomButton: FC<IProps> = ({
 }
 
 const Wrapper = styled.div`
+  & button {
+    display: block;
+  }
+
   & .add {
     font-size: 0.8rem;
     line-height: 0.8rem;

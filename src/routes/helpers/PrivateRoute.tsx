@@ -1,17 +1,26 @@
-import { ComponentType } from 'react'
 import { Route, RouteProps } from 'react-router-dom'
 import { NotAuthorized } from './NotAuthorized'
 
-interface PrivateRouteProps extends RouteProps {
-  element: ComponentType<any>
+interface PrivateRouteProps {
+  element: React.LazyExoticComponent<() => JSX.Element>
   isAccess: boolean
+  index?: number
 }
 
-export const privateRoute = ({
+type ExtendedRouteProps = PrivateRouteProps & RouteProps
+
+export const privateRoute: React.FC<ExtendedRouteProps> = ({
   element,
   isAccess,
   ...route
-}: PrivateRouteProps) => {
+}): JSX.Element => {
   const Component = isAccess ? element : NotAuthorized
-  return <Route path={route.path} {...route} element={<Component />} />
+  return (
+    <Route
+      key={route.path}
+      path={route.path}
+      element={<Component />}
+      {...route}
+    />
+  )
 }
