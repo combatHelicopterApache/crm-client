@@ -4,7 +4,7 @@ import logo from '../../../../images/logo.png'
 import s from './Logo.module.css'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleMenu } from '../../../../store/menu/menu.slice'
+import { toggleMenu } from '../../../../store/ui/UISlice'
 import { MainLogo } from 'images/icons'
 
 const Logo = () => {

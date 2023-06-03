@@ -3,28 +3,33 @@ import { Table, TableProps } from 'antd'
 import styled from 'styled-components'
 
 interface CustomTableProps<T> extends TableProps<T> {}
+
 export const CustomTable: FC<CustomTableProps<any>> = ({
   columns,
   dataSource,
   ...rest
 }) => {
-  // const rowStyle = (record: any, index: number) => {
-  //   if (index % 2 === 0) {
-  //     return s.light
-  //   } else {
-  //     return s.dark
-  //   }
-  // }
   return (
     <TableWrapper>
       <Table
         dataSource={dataSource}
         columns={columns}
         rowKey={groups => groups.id}
-        // rowClassName={rowStyle}
         className='headerHeight'
-        pagination={{ pageSize: 15 }}
         scroll={{ x: 1600, y: 'calc(100vh - 200px)' }}
+        pagination={{
+          position: ['bottomRight'],
+          showSizeChanger: true,
+          pageSizeOptions: ['25', '50', '100', '250', '500'],
+          total: rest?.pagination?.total ?? 25,
+          pageSize: 20,
+          size: 'small',
+          showTotal: (total, range) => (
+            <p className='pagination'>{`${range[0]}-${range[1]} of ${total} items`}</p>
+          ),
+        }}
+        rowKey='id'
+        showSorterTooltip={false}
         {...rest}
       />
     </TableWrapper>
@@ -103,5 +108,9 @@ const TableWrapper = styled.div`
     .ant-pagination-item
     a {
     color: #ffffff !important;
+  }
+
+  & .pagination {
+    color: white;
   }
 `

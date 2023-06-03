@@ -8,6 +8,8 @@ import { logout } from '../../../../features/auth/authSlice'
 const LoggedUser = () => {
   const dispatch = useDispatch()
 
+  const handleChangeTheme = () => {}
+
   const items = [
     {
       label: (
@@ -16,6 +18,10 @@ const LoggedUser = () => {
           <LogoutOutlined /> Logout{' '}
         </p>
       ),
+      key: '0',
+    },
+    {
+      label: <p onClick={handleChangeTheme}> Dark theme</p>,
       key: '0',
     },
   ]

@@ -25,9 +25,8 @@ const ErrorMessage = styled.p`
 
 const InputWrapper = styled.div`
   & .ant-input {
-    background-color: #333;
-    color: #fff;
-    border-color: #555;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
   }
 
   & .ant-input::placeholder {
@@ -36,8 +35,8 @@ const InputWrapper = styled.div`
 
   & .ant-input:hover,
   & .ant-input:focus {
-    background-color: #444;
-    border-color: #666;
+    background-color: ${({ theme }) => theme.colors.background};
+    background-color: ${({ theme }) => theme.colors.background};
   }
   & .ant-input[aria-invalid='true'] {
     border-color: red;

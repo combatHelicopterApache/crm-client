@@ -9,7 +9,6 @@ import {
   CheckOutlined,
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
-
 import { CustomTable as Table } from 'components/Table/CustomTable'
 import { notification } from 'components/Notification/Notification'
 

@@ -38,6 +38,12 @@ export const MainRoutes = () => {
         isAccess: true,
       },
       {
+        label: 'User',
+        path: RoutesPath.USER_ROUTE,
+        element: lazy(() => import('../pages/UserPage')),
+        isAccess: true,
+      },
+      {
         label: 'Analytics',
         path: RoutesPath.ANALYTICS_ROUTE,
         element: lazy(() => import('../pages/Analytics/AnalyticsPage')),

@@ -4,6 +4,8 @@ export enum RoutesPath {
   LEADS_ROUTE = '/leads',
   GROUPS_ROUTE = '/groups',
   USERS_ROUTE = '/users',
+  USER_ROUTE = '/users/:id',
+  USER_CREATE_ROUTE = '/users/new',
   ANALYTICS_ROUTE = '/analytics',
   LOGIN_ROUTE = '/login',
   AFFILIATES_ROUTE = '/affiliates',

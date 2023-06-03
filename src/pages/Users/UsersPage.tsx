@@ -1,15 +1,14 @@
-import React from 'react';
-import MainLayout from "../../layouts/MainLayout/MainLayout";
-import ControlPanel from "../../components/ControlPanel/ControlPanel";
+import React from 'react'
+import MainLayout from '../../layouts/MainLayout/MainLayout'
+
+import { UsersTable } from 'features/Users/tables/UsersTable'
 
 const HomePage = () => {
-    return (
-        <MainLayout>
-            <ControlPanel>
+  return (
+    <MainLayout>
+      <UsersTable />
+    </MainLayout>
+  )
+}
 
-            </ControlPanel>
-        </MainLayout>
-    );
-};
-
-export default HomePage;
+export default HomePage
