@@ -13,6 +13,7 @@ import {
   DollarOutlined,
   CalendarOutlined,
   SettingOutlined,
+  ApartmentOutlined,
 } from '@ant-design/icons'
 
 import { RoutesPath } from 'routes/types'
@@ -101,6 +102,15 @@ const Sidebar = () => {
         </li>
         <li key='6'>
           <NavLink
+            to={RoutesPath.BRANDS_ROUTE}
+            className={navData => (navData.isActive ? 'active' : 'none')}
+          >
+            <ApartmentOutlined />
+            <p>Brands</p>
+          </NavLink>
+        </li>
+        <li key='7'>
+          <NavLink
             to={RoutesPath.SETTINGS_ROUTE}
             className={navData => (navData.isActive ? 'active' : 'none')}
           >
@@ -121,8 +131,8 @@ interface IStyleProps {
 
 const Wrapper = styled.div<IStyleProps>`
   background-color: ${({ theme }) => theme.colors.secondary};
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 180px;
+  max-width: 180px;
   height: 100vh;
   display: flex;
   flex-direction: column;

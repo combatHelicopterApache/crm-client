@@ -12,6 +12,7 @@ export enum RoutesPath {
   CALENDAR_ROUTE = '/calendar',
   SETTINGS_ROUTE = '/settings',
   DEPOSITS_ROUTE = '/deposits',
+  BRANDS_ROUTE = '/brands',
 }
 
 export enum AdminRoutesPath {

@@ -79,6 +79,12 @@ export const MainRoutes = () => {
         element: lazy(() => import('../pages/LoginPage/LoginPage')),
         isAccess: true,
       },
+      {
+        label: 'Brands',
+        path: RoutesPath.BRANDS_ROUTE,
+        element: lazy(() => import('../pages/BrandsPage')),
+        isAccess: true,
+      },
     ],
     [],
   )
