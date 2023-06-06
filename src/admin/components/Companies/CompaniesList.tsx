@@ -76,6 +76,7 @@ export const CompaniesList = () => {
           return record.key === clickedRowIndex ? undefined : ellipsisStyle
         },
       },
+
       {
         title: 'Company Name',
         dataIndex: 'company_name',
