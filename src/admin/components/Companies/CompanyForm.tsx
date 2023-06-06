@@ -12,6 +12,15 @@ import { notification } from 'components/Notification/Notification'
 import { Spin } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { AdminRoutesPath } from 'routes/types'
+import { TextArea } from 'components/TextArea/TextArea'
+import { createCompany } from 'api/companies'
+import { Select } from 'components/Select/Select'
+
+export enum CompanyStatus {
+  Inactive,
+  Active,
+  Pending,
+}
 
 const defaultState = {
   company_name: '',
@@ -22,6 +31,9 @@ const defaultState = {
   admin_email: '',
   company_identifier: generateRandomLetters(),
   address: '',
+  title: '',
+  notes: '',
+  status: CompanyStatus.Active,
 }
 
 const mask = '+38(999) 99-99-999'
@@ -50,7 +62,13 @@ export const CompanyForm = () => {
   } = methods
 
   const onSubmit = async data => {
-    console.log(data, 'data')
+    try {
+      await createCompany(data)
+      notification('success', 'Company was created successfuly!')
+      navigate(AdminRoutesPath.ADMIN_COMPANIES_ROUTE)
+    } catch (error) {
+      notification('error', 'Something went wrong!')
+    }
   }
 
   const handleCreateCompany = async () => {
@@ -62,8 +80,6 @@ export const CompanyForm = () => {
     setLoading(true)
     try {
       handleSubmit(onSubmit)()
-      notification('success', 'Company was created successfuly!')
-      navigate(AdminRoutesPath.ADMIN_COMPANIES_ROUTE)
     } catch (error) {
       console.log(error)
       notification('error', 'Something went wrong')
@@ -89,6 +105,27 @@ export const CompanyForm = () => {
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Row>
+              <Row>
+                <Controller
+                  name='status'
+                  control={control}
+                  defaultValue={defaultState.status}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      style={{ width: '100%' }}
+                      options={[
+                        { value: CompanyStatus.Active, label: 'Active' },
+                        { value: CompanyStatus.Inactive, label: 'Inactive' },
+                        { value: CompanyStatus.Pending, label: 'Pending' },
+                      ]}
+                      placeholder='Status'
+                      status={errors?.status?.message ? 'error' : undefined}
+                      error={errors?.status?.message}
+                    />
+                  )}
+                />
+              </Row>
               <Controller
                 name='company_name'
                 control={control}
@@ -228,6 +265,7 @@ export const CompanyForm = () => {
                 )}
               />
             </Row>
+
             <Row>
               <Controller
                 name='company_identifier'
@@ -241,6 +279,37 @@ export const CompanyForm = () => {
                       errors?.company_identifier?.message ? 'error' : undefined
                     }
                     error={errors?.company_identifier?.message}
+                  />
+                )}
+              />
+            </Row>
+            <Row>
+              <Controller
+                name='title'
+                control={control}
+                defaultValue={defaultState.title}
+                render={({ field }) => (
+                  <CustomInput
+                    {...field}
+                    placeholder='Title'
+                    status={errors?.title?.message ? 'error' : undefined}
+                    error={errors?.title?.message}
+                  />
+                )}
+              />
+            </Row>
+            <Row>
+              <Controller
+                name='notes'
+                control={control}
+                defaultValue={defaultState.notes}
+                render={({ field }) => (
+                  <TextArea
+                    {...field}
+                    placeholder='Notes'
+                    rows={5}
+                    status={errors?.notes?.message ? 'error' : undefined}
+                    error={errors?.notes?.message}
                   />
                 )}
               />

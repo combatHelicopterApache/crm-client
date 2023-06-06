@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { useAppSelector } from 'store/store'
 import logo from '../../../../images/logo.png'
 import s from './Logo.module.css'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
@@ -10,7 +10,7 @@ import { MainLogo } from 'images/icons'
 const Logo = () => {
   const dispatch = useDispatch()
 
-  const isOpen = useSelector(state => state.MenuToggle.isOpen)
+  const isOpen = useAppSelector(state => state.ui.isOpen)
 
   const HandleClick = () => {
     dispatch(toggleMenu())

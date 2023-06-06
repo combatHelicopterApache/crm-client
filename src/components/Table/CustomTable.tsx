@@ -35,10 +35,23 @@ export const CustomTable: FC<CustomTableProps<any>> = ({
   )
 }
 
+export const ellipsisStyle = {
+  style: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  },
+}
+
 const TableWrapper = styled.div`
   padding: 10px 0;
   .ant-table-body {
-    background-color: #0e0d0d !important;
+    background-color: ${({ theme }) => theme.colors.secondary};
+    /* background-color: #0e0d0d !important; */
+  }
+
+  td.ant-table-cell {
+    color: ${({ theme }) => theme.colors.text} !important;
   }
 
   .ant-table-container::after {
@@ -58,7 +71,7 @@ const TableWrapper = styled.div`
   .ant-pagination .ant-pagination-item a {
     color: #ffffff;
   }
-  .dark {
+  /* .dark {
     background-color: #0e0d0d;
     color: white;
   }
@@ -66,14 +79,14 @@ const TableWrapper = styled.div`
   .light {
     background-color: #1f1f1f;
     color: white;
-  }
+  } */
 
-  .light td,
+  /* .light td,
   .dark td {
     padding: 5px 16px !important;
     font-size: 0.8rem !important;
     border-bottom: 1px solid rgba(119, 121, 157, 0.38) !important;
-  }
+  } */
 
   .headerHeight thead {
     background-color: #0e0d0d !important;
@@ -111,5 +124,11 @@ const TableWrapper = styled.div`
 
   & .pagination {
     color: white;
+  }
+
+  thead th.ant-table-cell {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 `

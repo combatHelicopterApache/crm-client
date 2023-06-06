@@ -9,7 +9,7 @@ import { ThemeProvider } from 'services/ThemeProvider/ThemeProvider'
 import './styles/index.scss'
 
 export const App = () => {
-  const isAdmin = false
+  const isAdmin = true
   return (
     <Suspense fallback={null}>
       <CookiesDetector>
