@@ -2,13 +2,14 @@ import React from 'react'
 import s from './Sidebar.module.css'
 import { NavLink } from 'react-router-dom'
 import Logo from '../Logo/Logo'
-import { MainLogo } from 'images/icons'
+
 import { TeamOutlined, ProjectOutlined } from '@ant-design/icons'
-import { useSelector } from 'react-redux'
+
 import { AdminRoutesPath } from 'routes/types'
+import { useAppSelector } from 'store/store'
 
 const Sidebar = () => {
-  const isOpen = useSelector(state => state.MenuToggle.isOpen)
+  const isOpen = useAppSelector(state => state.ui.isOpen)
 
   return (
     <div className={isOpen ? s.container + ' ' + s.close : s.container}>
