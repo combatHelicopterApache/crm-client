@@ -18,3 +18,7 @@ export const deleteUser = (id: number) => {
 export const updateUser = (id: number, data) => {
   return axiosInstance.put(`/api/user/${id}`, data)
 }
+
+export const getUserSAUsers = () => {
+  return axiosInstance.get(`/user/admin-user`).then(data => data?.data)
+}
