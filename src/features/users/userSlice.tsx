@@ -5,7 +5,7 @@ import {
 } from '@reduxjs/toolkit'
 import { generateRandomLetters } from 'utils/generateRandomLatters'
 import { notification } from 'components/Notification/Notification'
-import * as userAPI from 'api/Users'
+import * as userAPI from 'api/users'
 import { AxiosResponse } from 'axios'
 import { User, UserRole, UserStatus } from './types'
 import { getModulesByRole } from './helpers/helpers'
