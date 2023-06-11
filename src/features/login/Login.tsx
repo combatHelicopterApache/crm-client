@@ -1,48 +1,40 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import s from './Login.module.css'
 import bg from '../../images/login_bg.jpg'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import { Form, Input, Button, message, Spin } from 'antd'
-import { userLogin } from '../../api/login'
-import { useDispatch, useSelector } from 'react-redux'
-import { selectData, setLoginData } from '../auth/authSlice'
+import { Form, Input, Button, Spin } from 'antd'
+import { login, authSelector } from './authSlice'
+import { useAppDispatch, useAppSelector } from 'store/store'
 import { useNavigate } from 'react-router-dom'
+import { RoutesPath, AdminRoutesPath } from 'routes/types'
+import { lastModuleVisited } from 'utils/lastModuleVisit'
 
 export const Login: FC = () => {
-  const [loading, setLoading] = useState(false)
-  // const [login, setLogin] = useState({})
-  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const { loading } = useAppSelector(authSelector)
 
-  const logUser = useSelector(selectData)
-  console.log(logUser)
+  const onSubmit = async (value: []) => {
+    const lastModule = lastModuleVisited('get')
 
-  const onSubmit = (value: []) => {
-    setLoading(true)
-    const loginHandler = async () => {
-      try {
-        const response = await userLogin(value)
-        message.success(response.data.message)
-        dispatch(setLoginData(response.data))
-        if (response.data.status === true) navigate('/')
-      } catch (error) {
-        message.error(error.response?.data?.message)
-      } finally {
-        setLoading(false)
-      }
+    const { payload } = await dispatch(login(value))
+    const { data } = payload
+    if (payload.status && data?.is_admin) {
+      return navigate(lastModule || AdminRoutesPath.ADMIN_COMPANIES_ROUTE)
     }
-
-    loginHandler()
+    if (payload.status && !data?.is_admin) {
+      return navigate(lastModule || RoutesPath.HOME_ROUTE)
+    }
   }
 
   return (
     <div className={s.container} style={{ backgroundImage: `url(${bg})` }}>
       <Spin spinning={loading}>
         <Form name='signin' onFinish={onSubmit}>
-          <Form.Item name='login'>
+          <Form.Item name='email'>
             <Input
               prefix={<UserOutlined className='site-form-item-icon' />}
-              placeholder='Login'
+              placeholder='Email'
             />
           </Form.Item>
 

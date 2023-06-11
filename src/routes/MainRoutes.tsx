@@ -2,10 +2,11 @@ import React, { lazy, Suspense, useMemo } from 'react'
 import { Routes } from 'react-router-dom'
 
 import { privateRoute } from './helpers/PrivateRoute'
+import { publicRoute } from './helpers/PublicRoute'
 import { RoutesPath } from './types'
 
-export const MainRoutes = () => {
-  const routes = useMemo(
+export const MainRoutes = ({ initialized }) => {
+  const privateRoutes = useMemo(
     () => [
       {
         label: 'Home',
@@ -88,10 +89,24 @@ export const MainRoutes = () => {
     ],
     [],
   )
+  const publicRoutes = useMemo(
+    () => [
+      {
+        label: 'Login',
+        path: RoutesPath.LOGIN,
+        element: lazy(() => import('../pages/LoginPage/LoginPage')),
+        isAccess: true,
+      },
+    ],
+    [],
+  )
 
   return (
     <Suspense fallback={null}>
-      <Routes>{routes.map(privateRoute)}</Routes>
+      <Routes>
+        {publicRoutes.map(publicRoute)}
+        {initialized && privateRoutes.map(privateRoute)}
+      </Routes>
     </Suspense>
   )
 }
