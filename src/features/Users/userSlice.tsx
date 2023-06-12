@@ -40,7 +40,7 @@ const initialUser: User = {
 }
 
 export const fetchUser = createAsyncThunk<User, string>(
-  'users/fetchUser',
+  'Users/fetchUser',
   async id => {
     const data = await userAPI.getUser(id)
 
@@ -49,7 +49,7 @@ export const fetchUser = createAsyncThunk<User, string>(
 )
 
 export const createUser = createAsyncThunk<User, User, AsyncThunkAPI>(
-  'users/createUser',
+  'Users/createUser',
   async (user, { rejectWithValue }) => {
     try {
       return await userAPI.createUser(user)
@@ -60,7 +60,7 @@ export const createUser = createAsyncThunk<User, User, AsyncThunkAPI>(
 )
 
 export const updateUser = createAsyncThunk<User, { user: User }, AsyncThunkAPI>(
-  'users/updateUser',
+  'Users/updateUser',
   async ({ user }, { rejectWithValue }) => {
     try {
       const updatedUser: AxiosResponse<User> = await userAPI.updateUser(
