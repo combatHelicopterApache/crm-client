@@ -4,16 +4,19 @@ import {
   LogoutOutlined,
   SettingOutlined,
 } from '@ant-design/icons'
-
+import { useNavigate } from 'react-router-dom'
 import s from './LoggedUser.module.css'
 import { Dropdown, Space, Avatar } from 'antd'
 
-import { logout } from '../../../../features/auth/authSlice'
+import { logout } from '../../../../features/Login/authSlice'
 import { useAppDispatch } from 'store/store'
 import { changeAppTheme } from 'store/ui/UISlice'
+import { RoutesPath } from 'routes/types'
+import { lastModuleVisited } from 'utils/lastModuleVisit'
 
 const LoggedUser = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const [themeMode, setThemeMode] = useState(localStorage.getItem('theme'))
   const handleChangeTheme = () => {
     const theme = localStorage.getItem('theme')
@@ -26,6 +29,12 @@ const LoggedUser = () => {
       dispatch(changeAppTheme('dark'))
       localStorage.setItem('theme', 'dark')
     }
+  }
+
+  const handleLogout = () => {
+    lastModuleVisited('set', window.location.pathname)
+    dispatch(logout())
+    navigate(RoutesPath.LOGIN)
   }
 
   const items = [
@@ -50,9 +59,6 @@ const LoggedUser = () => {
     },
   ]
 
-  const handleLogout = () => {
-    dispatch(logout())
-  }
   return (
     <div className={s.container}>
       <Dropdown

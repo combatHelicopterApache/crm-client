@@ -3,13 +3,20 @@ import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import s from './LoggedUser.module.css'
 import { Dropdown, Space, Avatar } from 'antd'
 import { useDispatch } from 'react-redux'
-import { logout } from '../../../../features/auth/authSlice'
+import { logout } from '../../../../features/Login/authSlice'
+import { useNavigate } from 'react-router-dom'
+import { RoutesPath } from 'routes/types'
+import { lastModuleVisited } from 'utils/lastModuleVisit'
 
 const LoggedUser = () => {
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   const handleChangeTheme = () => {}
-
+  const handleLogout = () => {
+    lastModuleVisited('set', window.location.pathname)
+    dispatch(logout())
+    navigate(RoutesPath.LOGIN)
+  }
   const items = [
     {
       label: (
@@ -26,9 +33,6 @@ const LoggedUser = () => {
     },
   ]
 
-  const handleLogout = () => {
-    dispatch(logout())
-  }
   return (
     <div className={s.container}>
       <Dropdown

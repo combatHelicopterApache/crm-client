@@ -9,20 +9,17 @@ interface PrivateRouteProps {
 
 type ExtendedRouteProps = PrivateRouteProps & RouteProps
 
-export const privateRoute: React.FC<ExtendedRouteProps> = ({
+export const publicRoute: React.FC<ExtendedRouteProps> = ({
   element,
-  isAccess,
   ...route
 }): JSX.Element => {
-  const Component = isAccess ? element : NotAuthorized
-  const isAuth: null | string =
-    JSON.parse(localStorage.getItem('auth') as string)?.token || null
+  const Component = element
 
   return (
     <Route
       key={route.path}
       path={route.path}
-      element={isAuth ? <Component /> : <Navigate to='/login' replace={true} />}
+      element={<Component />}
       {...route}
     />
   )

@@ -2,11 +2,11 @@ import React, { lazy, Suspense, useMemo } from 'react'
 import { Routes } from 'react-router-dom'
 
 import { privateRoute } from './helpers/PrivateRoute'
+import { publicRoute } from './helpers/PublicRoute'
+import { RoutesPath, AdminRoutesPath } from './types'
 
-import { AdminRoutesPath } from './types'
-
-export const AdminRoutes = () => {
-  const routes = useMemo(
+export const AdminRoutes = ({ initialized }) => {
+  const adminRoutes = useMemo(
     () => [
       {
         label: 'Companies',
@@ -48,9 +48,22 @@ export const AdminRoutes = () => {
     [],
   )
 
+  const publicRoutes = useMemo(
+    () => [
+      {
+        label: 'Login',
+        path: RoutesPath.LOGIN,
+        element: lazy(() => import('../pages/LoginPage/LoginPage')),
+        isAccess: true,
+      },
+    ],
+    [],
+  )
+
   return (
     <Suspense fallback={null}>
-      <Routes>{routes.map(privateRoute)}</Routes>
+      <Routes>{publicRoutes.map(publicRoute)}</Routes>
+      <Routes>{initialized && adminRoutes.map(privateRoute)}</Routes>
     </Suspense>
   )
 }
