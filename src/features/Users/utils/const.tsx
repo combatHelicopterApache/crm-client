@@ -1,23 +1,23 @@
 export const modulesList = [
   { name: 'dashboard', label: 'Dashboard' },
   { name: 'leads', label: 'Leads' },
-  { name: 'affilates', label: 'Affilates' },
+  { name: 'affiliates', label: 'Affiliates' },
   { name: 'deposits', label: 'Deposits' },
   { name: 'calendar', label: 'Calendar' },
   { name: 'groups', label: 'Groups' },
   { name: 'users', label: 'Users' },
-  { name: 'analitycs', label: 'Analitycs' },
+  { name: 'analytics', label: 'Analytics' },
   { name: 'settings', label: 'Settings' },
 ]
 
 export const MODULES = {
   dashboard: false,
   leads: false,
-  affilates: false,
+  affiliates: false,
   deposits: false,
   calendar: false,
   groups: false,
   users: false,
-  analitycs: false,
+  analytics: false,
   settings: false,
 }

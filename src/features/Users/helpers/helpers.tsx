@@ -13,12 +13,12 @@ export const getModulesByRole = (
       activeModules = [
         'dashboard',
         'leads',
-        'affilates',
+        'affiliates',
         'deposits',
         'calendar',
         'groups',
         'users',
-        'analitycs',
+        'analytics',
         'settings',
       ]
       break
@@ -30,7 +30,7 @@ export const getModulesByRole = (
       activeModules = ['leads']
       break
     case UserRole.ACCOUNT_MANAGER:
-      activeModules = ['dashboard', 'leads', 'analitycs']
+      activeModules = ['dashboard', 'leads', 'analytics']
       break
 
     default:
