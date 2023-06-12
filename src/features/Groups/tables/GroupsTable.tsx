@@ -74,7 +74,7 @@ const GroupsTable = () => {
                 {
                   key: '1',
                   icon: <FormOutlined />,
-                  label: <Link to={'/groups/' + text.id}>Detail</Link>,
+                  label: <Link to={'/Groups/' + text.id}>Detail</Link>,
                 },
                 {
                   key: '2',

@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const Login: FC = () => {
   const [loading, setLoading] = useState(false)
-  // const [login, setLogin] = useState({})
+  // const [Login, setLogin] = useState({})
   const dispatch = useDispatch()
   const navigate = useNavigate()
 

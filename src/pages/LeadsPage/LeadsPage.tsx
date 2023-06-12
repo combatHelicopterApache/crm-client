@@ -1,6 +1,6 @@
 import React from 'react'
 import MainLayout from '../../layouts/MainLayout/MainLayout'
-import { LeadsTable } from '../../features/leads/tables/LeadsTable'
+import { LeadsTable } from '../../features/Leads/tables/LeadsTable'
 
 const LeadsPage = () => {
   return (

@@ -22,7 +22,7 @@ export interface AsyncThunkAPI<T = void> {
 }
 
 export const login = createAsyncThunk<any, any, AsyncThunkAPI>(
-  'user/login',
+  'user/Login',
   async (crendentials, { rejectWithValue, fulfillWithValue }) => {
     try {
       const authUser = await authAPI.userLogin(crendentials)
@@ -35,7 +35,7 @@ export const login = createAsyncThunk<any, any, AsyncThunkAPI>(
 )
 
 export const loginByToken = createAsyncThunk<any, any, AsyncThunkAPI>(
-  'user/login',
+  'user/Login',
   async (crendentials, { rejectWithValue, fulfillWithValue }) => {
     try {
       const authUser = await authAPI.userLogin(crendentials)
