@@ -23,9 +23,9 @@ export interface AsyncThunkAPI<T = void> {
 
 export const login = createAsyncThunk<any, any, AsyncThunkAPI>(
   'user/Login',
-  async (crendentials, { rejectWithValue, fulfillWithValue }) => {
+  async (credentials, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const authUser = await authAPI.userLogin(crendentials)
+      const authUser = await authAPI.userLogin(credentials)
       fulfillWithValue(authUser)
       return authUser
     } catch (error) {
@@ -36,9 +36,9 @@ export const login = createAsyncThunk<any, any, AsyncThunkAPI>(
 
 export const loginByToken = createAsyncThunk<any, any, AsyncThunkAPI>(
   'user/Login',
-  async (crendentials, { rejectWithValue, fulfillWithValue }) => {
+  async (credentials, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const authUser = await authAPI.userLogin(crendentials)
+      const authUser = await authAPI.userLogin(credentials)
       fulfillWithValue(authUser)
       return authUser
     } catch (error) {
@@ -91,7 +91,7 @@ const authSlice = createSlice({
       state.loading = false
       state.error = false
       setTokenToLS(null)
-      notification('success', `User logout successfuly!`)
+      notification('success', `User logout successfully!`)
     })
   },
 })
