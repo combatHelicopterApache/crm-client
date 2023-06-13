@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useMemo } from 'react'
-import { Routes } from 'react-router-dom'
-
+import { Routes, Route } from 'react-router-dom'
+import { NotAuthorized } from './helpers/NotAuthorized'
 import { privateRoute } from './helpers/PrivateRoute'
 import { publicRoute } from './helpers/PublicRoute'
 import { RoutesPath, AdminRoutesPath } from './types'
@@ -62,8 +62,16 @@ export const AdminRoutes = ({ initialized }) => {
 
   return (
     <Suspense fallback={null}>
-      <Routes>{publicRoutes.map(publicRoute)}</Routes>
-      <Routes>{initialized && adminRoutes.map(privateRoute)}</Routes>
+      <Routes>
+        {publicRoutes.map(publicRoute)}
+        {initialized && adminRoutes.map(privateRoute)}
+        <Route
+          path='*'
+          element={
+            <NotAuthorized path={AdminRoutesPath.ADMIN_COMPANIES_ROUTE} />
+          }
+        />{' '}
+      </Routes>
     </Suspense>
   )
 }

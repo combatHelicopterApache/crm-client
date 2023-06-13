@@ -9,7 +9,7 @@ import { generateRandomLetters } from 'utils/generateRandomLatters'
 import { notification } from 'components/Notification/Notification'
 import { Spin } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AdminRoutesPath } from 'routes/types'
+import { RoutesPath } from 'routes/types'
 import { MainInfo } from './components/MainInfo/MainInfo'
 import { Permissions } from './components/Permissions/Permissions'
 import { User, UserRole } from '../types'
@@ -17,8 +17,11 @@ import { H2 } from 'molecules/H2/H2'
 import { Span } from 'molecules/Span/Span'
 import useUser from '../hooks/useUser'
 import { getModulesByRole } from '../helpers/helpers'
+import { createUser } from '../userSlice'
+import { useDispatch } from 'react-redux'
 
 export const UserForm = () => {
+  const dispatch = useDispatch()
   const { id } = useParams<{ id: string }>()
   const { currentUser: user, status } = useUser(id)
   const [loading, setLoading] = useState(false)
@@ -45,7 +48,9 @@ export const UserForm = () => {
   } = methods
 
   const onSubmit = async (data: User) => {
-    console.log(data, 'data')
+    await dispatch(createUser(data))
+    notification('success', 'User was created successfuly!')
+    navigate(RoutesPath.USERS_ROUTE)
   }
 
   const handleCreateUser = async () => {
@@ -57,8 +62,6 @@ export const UserForm = () => {
     setLoading(true)
     try {
       handleSubmit(onSubmit)()
-      notification('success', 'User was created successfuly!')
-      navigate(AdminRoutesPath.ADMIN_USERS_ROUTE)
     } catch (error) {
       console.log(error)
       notification('error', 'Something went wrong')

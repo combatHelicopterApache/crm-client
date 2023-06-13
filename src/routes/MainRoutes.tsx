@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useMemo } from 'react'
-import { Routes } from 'react-router-dom'
-
+import { Routes, Route } from 'react-router-dom'
+import { NotAuthorized } from './helpers/NotAuthorized'
 import { privateRoute } from './helpers/PrivateRoute'
 import { publicRoute } from './helpers/PublicRoute'
 import { RoutesPath } from './types'
@@ -106,6 +106,10 @@ export const MainRoutes = ({ initialized }) => {
       <Routes>
         {publicRoutes.map(publicRoute)}
         {initialized && privateRoutes.map(privateRoute)}
+        <Route
+          path='*'
+          element={<NotAuthorized path={RoutesPath.HOME_ROUTE} />}
+        />{' '}
       </Routes>
     </Suspense>
   )

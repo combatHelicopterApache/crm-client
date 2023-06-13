@@ -13,6 +13,7 @@ export enum RoutesPath {
   SETTINGS_ROUTE = '/settings',
   DEPOSITS_ROUTE = '/deposits',
   BRANDS_ROUTE = '/brands',
+  ALL = '*',
 }
 
 export enum AdminRoutesPath {

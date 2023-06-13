@@ -7,7 +7,6 @@ import { notification } from 'components/Notification/Notification'
 import * as authAPI from 'api/login'
 import { AppDispatch, RootState } from 'store/store'
 import { setTokenToLS } from 'utils/setTokenToLS'
-import { lastModuleVisited } from 'utils/lastModuleVisit'
 
 type RejectWithValue<T, E = any> = {
   error: E
@@ -35,10 +34,10 @@ export const login = createAsyncThunk<any, any, AsyncThunkAPI>(
 )
 
 export const loginByToken = createAsyncThunk<any, any, AsyncThunkAPI>(
-  'user/Login',
-  async (credentials, { rejectWithValue, fulfillWithValue }) => {
+  'user/login_by_token',
+  async (token, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const authUser = await authAPI.userLogin(credentials)
+      const authUser = await authAPI.getUserByToken({ token })
       fulfillWithValue(authUser)
       return authUser
     } catch (error) {
@@ -92,6 +91,23 @@ const authSlice = createSlice({
       state.error = false
       setTokenToLS(null)
       notification('success', `User logout successfully!`)
+    })
+    builder.addCase(loginByToken.pending, state => {
+      state.loading = true
+    })
+    builder.addCase(loginByToken.fulfilled, (state, { payload }) => {
+      state.token = payload.token
+      state.auth_user = payload.data
+      state.is_admin = payload.data.is_admin
+      state.initialized = true
+      state.loading = false
+      setTokenToLS(payload.token)
+    })
+    builder.addCase(loginByToken.rejected, (state, { payload }) => {
+      state.error = payload?.errors
+      state.loading = false
+      state.initialized = false
+      notification('error', `Something went wrong`)
     })
   },
 })

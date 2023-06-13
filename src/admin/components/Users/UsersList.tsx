@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { CustomButton } from 'components/Button/CustomButton'
 import { useNavigate } from 'react-router-dom'
 import { AdminRoutesPath } from 'routes/types'
-import { getUserSAUsers } from 'api/users'
+import { getUserSAUsers } from 'api/Users'
 import { notification } from 'components/Notification/Notification'
 import moment from 'moment-timezone'
 

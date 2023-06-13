@@ -30,4 +30,5 @@ export interface User {
   background_color: string | null
   user_identifier: string
   notes: string
+  password: string
 }

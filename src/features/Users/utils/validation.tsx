@@ -4,6 +4,11 @@ const phoneRegExp = /^\+38\(\d{3}\) \d{2}-\d{2}-\d{3}$/
 
 export const userFormSchema = yup.object({
   full_name: yup.string().required('User name is required').label('User name'),
+  password: yup
+    .string()
+    .min(3)
+    .required('Password  is required')
+    .label('Password'),
   email: yup
     .string()
     .email('Invalid email address')

@@ -5,7 +5,7 @@ import {
 } from '@reduxjs/toolkit'
 import { generateRandomLetters } from 'utils/generateRandomLatters'
 import { notification } from 'components/Notification/Notification'
-import * as userAPI from 'api/users'
+import * as userAPI from 'api/Users'
 import { AxiosResponse } from 'axios'
 import { User, UserRole, UserStatus } from './types'
 import { getModulesByRole } from './helpers/helpers'
@@ -37,6 +37,7 @@ const initialUser: User = {
   background_color: '#626ed4',
   user_identifier: generateRandomLetters(2),
   notes: '',
+  password: '',
 }
 
 export const fetchUser = createAsyncThunk<User, string>(

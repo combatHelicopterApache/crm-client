@@ -58,7 +58,6 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
               style={{ width: '100%' }}
               onChange={handleChangeUserRole}
               options={[
-                { value: UserRole.OWNER, label: 'Owner' },
                 { value: UserRole.ADMIN, label: 'Admin' },
                 { value: UserRole.MANAGER, label: 'Manager' },
                 { value: UserRole.ACCOUNT_MANAGER, label: 'Account Manager' },
@@ -182,6 +181,21 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
               placeholder='User Email'
               status={errors?.email?.message ? 'error' : undefined}
               error={errors?.email?.message}
+            />
+          )}
+        />
+      </Row>
+      <Row>
+        <Controller
+          name='password'
+          control={control}
+          defaultValue={user.password}
+          render={({ field }) => (
+            <CustomInput
+              {...field}
+              placeholder='Password'
+              status={errors?.password?.message ? 'error' : undefined}
+              error={errors?.password?.message}
             />
           )}
         />
