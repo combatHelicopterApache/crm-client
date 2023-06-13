@@ -18,7 +18,7 @@ const Logo = () => {
 
   return (
     <div className={isOpen ? s.container + ' ' + s.close : s.container}>
-      {isOpen ? null : <MainLogo width={100} height={100} color={'white'} />}
+      {isOpen ? null : <MainLogo  color={'white'} />}
       <button onClick={HandleClick} className={s.btnSplit}>
         {' '}
         {isOpen ? <RightOutlined /> : <LeftOutlined />}{' '}
