@@ -29,7 +29,7 @@ const LoggedUser = () => {
     },
     {
       label: <p onClick={handleChangeTheme}> Dark theme</p>,
-      key: '0',
+      key: '1',
     },
   ]
 

@@ -55,7 +55,7 @@ const LoggedUser = () => {
           {themeMode === 'dark' ? 'Light Mode' : 'Dark Mode'}{' '}
         </p>
       ),
-      key: '0',
+      key: '1',
     },
   ]
 
