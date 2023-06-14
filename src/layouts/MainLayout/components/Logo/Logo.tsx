@@ -1,32 +1,32 @@
 import React from 'react'
-import { LeftOutlined, RightOutlined } from '@ant-design/icons'
-import { toggleMenu } from '../../../../store/ui/UISlice'
-import { MainLogo } from 'images/icons'
-import { useAppSelector, useAppDispatch } from 'store/store'
+import {LeftOutlined, RightOutlined} from '@ant-design/icons'
+import {toggleMenu} from '../../../../store/ui/UISlice'
+import {MainLogo} from 'images/icons'
+import {useAppSelector, useAppDispatch} from 'store/store'
 import styled from 'styled-components'
 
 const Logo = () => {
-  const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch()
 
-  const isOpen = useAppSelector(state => state.ui.isOpen)
+    const isOpen = useAppSelector(state => state.ui.isOpen)
 
-  const HandleClick = () => {
-    dispatch(toggleMenu())
-  }
+    const HandleClick = () => {
+        dispatch(toggleMenu())
+    }
 
-  return (
-    <Wrapper className={isOpen ?? 'close'}>
-      {!isOpen && (
-        <div className='logo-wrapper'>
-          <MainLogo width={100} height={100} />
-        </div>
-      )}
-      <button onClick={HandleClick} className={'btnSplit'}>
-        {' '}
-        {isOpen ? <RightOutlined /> : <LeftOutlined />}{' '}
-      </button>
-    </Wrapper>
-  )
+    return (
+        <Wrapper className={isOpen ?? 'close'}>
+            {!isOpen && (
+                <div className='logo-wrapper'>
+                    <MainLogo/>
+                </div>
+            )}
+            <button onClick={HandleClick} className={'btnSplit'}>
+                {' '}
+                {isOpen ? <RightOutlined/> : <LeftOutlined/>}{' '}
+            </button>
+        </Wrapper>
+    )
 }
 
 export default Logo
@@ -47,6 +47,7 @@ const Wrapper = styled.div`
     position: relative;
     height: 80px;
     padding: 1rem;
+    margin-left: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,15 +66,18 @@ const Wrapper = styled.div`
     background: transparent;
     border: none;
     outline: none;
+    padding: 1rem;
   }
 
   .btnSplit svg {
     width: 20px;
     height: 20px;
-    fill: ${({ theme }) => theme.colors.text};
+    fill: ${({theme}) => theme.colors.text};
   }
 
   & .logo-wrapper svg {
-    fill: ${({ theme }) => theme.colors.text};
+    fill: ${({theme}) => theme.colors.text};
+    width: 100px;
+    height: 50px;
   }
 `

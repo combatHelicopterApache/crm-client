@@ -1,9 +1,8 @@
 import React from 'react'
 import { useAppSelector } from 'store/store'
-import logo from '../../../../images/logo.png'
 import s from './Logo.module.css'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, } from 'react-redux'
 import { toggleMenu } from '../../../../store/ui/UISlice'
 import { MainLogo } from 'images/icons'
 
