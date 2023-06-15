@@ -1,24 +1,24 @@
 import axios from 'axios'
 
 export const createLead = (data: object) => {
-    return axios.post(`/api/lead/create`, data)
+    return axios.post(`/api/v1/lead/create`, data)
 }
 export const getLeadById = (id: number) => {
-    return axios.get(`/api/lead/${id}`)
+    return axios.get(`/api/v1/lead/${id}`)
 }
 
 export const getLeads = () => {
-    return axios.get(`/api/lead/`)
+    return axios.get(`/api/v1/lead/`)
 }
 
 export const deleteLead = (id: number) => {
-    return axios.delete(`/api/lead/${id}`)
+    return axios.delete(`/api/v1/lead/${id}`)
 }
 
 export const updateLead = (id: number) => {
-    return axios.put(`/api/lead/${id}`)
+    return axios.put(`/api/v1/lead/${id}`)
 }
 
 export const changeLeadStatus = (id: number) => {
-    return axios.put(`/api/lead/${id}`)
+    return axios.put(`/api/v1/lead/${id}`)
 }
