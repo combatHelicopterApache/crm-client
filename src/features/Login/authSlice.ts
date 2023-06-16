@@ -107,7 +107,6 @@ const authSlice = createSlice({
       state.error = payload?.errors
       state.loading = false
       state.initialized = false
-      notification('error', `Something went wrong`)
     })
   },
 })

@@ -44,6 +44,25 @@ export const AdminRoutes = ({ initialized }) => {
         element: lazy(() => import('admin/pages/CreateUserPage')),
         isAccess: true,
       },
+
+      {
+        label: 'Brands',
+        path: AdminRoutesPath.ADMIN_BRANDS_ROUTE,
+        element: lazy(() => import('admin/pages/BrandsPage')),
+        isAccess: true,
+      },
+      {
+        label: 'Brand',
+        path: AdminRoutesPath.ADMIN_BRAND_ROUTE,
+        element: lazy(() => import('admin/pages/BrandPage')),
+        isAccess: true,
+      },
+      {
+        label: 'Create Brand',
+        path: AdminRoutesPath.ADMIN_BRAND_CREATE_ROUTE,
+        element: lazy(() => import('admin/pages/CreateBrandPage')),
+        isAccess: true,
+      },
     ],
     [],
   )

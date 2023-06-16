@@ -50,6 +50,13 @@ const TableWrapper = styled.div`
     /* background-color: #0e0d0d !important; */
   }
 
+  & .ant-select-selector {
+    background-color: ${({ theme }) => theme.colors.secondary};
+  }
+  & .ant-select-selection-item {
+    color: ${({ theme }) => theme.colors.text} !important;
+  }
+
   td.ant-table-cell {
     color: ${({ theme }) => theme.colors.text} !important;
   }

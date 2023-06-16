@@ -24,4 +24,8 @@ export enum AdminRoutesPath {
   ADMIN_COMPANIES_ROUTE = '/admin/companies',
   ADMIN_COMPANY_CREATE_ROUTE = '/admin/companies/create',
   ADMIN_COMPANY_ROUTE = '/admin/company/:id',
+
+  ADMIN_BRANDS_ROUTE = '/admin/brands',
+  ADMIN_BRAND_CREATE_ROUTE = '/admin/brand/create',
+  ADMIN_BRAND_ROUTE = '/admin/brand/:id',
 }

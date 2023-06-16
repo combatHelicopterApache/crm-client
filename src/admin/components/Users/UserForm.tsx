@@ -97,6 +97,7 @@ export const UserForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='User name'
+                    label='User name'
                     status={errors?.user_name?.message ? 'error' : undefined}
                     error={errors?.user_name?.message}
                   />
@@ -112,6 +113,7 @@ export const UserForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='User Email'
+                    label='User Email'
                     status={errors?.user_email?.message ? 'error' : undefined}
                     error={errors?.user_email?.message}
                   />
@@ -139,6 +141,7 @@ export const UserForm = () => {
                     {() => (
                       <CustomInput
                         placeholder='User Phone'
+                        label='User Phone'
                         status={
                           errors?.user_phone?.message ? 'error' : undefined
                         }
@@ -158,6 +161,7 @@ export const UserForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='Address'
+                    label='Address'
                     status={errors?.address?.message ? 'error' : undefined}
                     error={errors?.address?.message}
                   />
@@ -174,6 +178,7 @@ export const UserForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='User identifier'
+                    label='User identifier'
                     status={
                       errors?.user_identifier?.message ? 'error' : undefined
                     }

@@ -3,7 +3,11 @@ import s from './Sidebar.module.css'
 import { NavLink } from 'react-router-dom'
 import Logo from '../Logo/Logo'
 
-import { TeamOutlined, ProjectOutlined } from '@ant-design/icons'
+import {
+  TeamOutlined,
+  ProjectOutlined,
+  BranchesOutlined,
+} from '@ant-design/icons'
 
 import { AdminRoutesPath } from 'routes/types'
 import { useAppSelector } from 'store/store'
@@ -31,6 +35,15 @@ const Sidebar = () => {
           >
             <TeamOutlined />
             <p>Users</p>
+          </NavLink>
+        </li>
+        <li key='3'>
+          <NavLink
+            to={AdminRoutesPath.ADMIN_BRANDS_ROUTE}
+            className={navData => (navData.isActive ? s.active : 'none')}
+          >
+            <BranchesOutlined />
+            <p>Brands</p>
           </NavLink>
         </li>
       </nav>

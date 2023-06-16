@@ -105,27 +105,27 @@ export const CompanyForm = () => {
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Row>
-              <Row>
-                <Controller
-                  name='status'
-                  control={control}
-                  defaultValue={defaultState.status}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      style={{ width: '100%' }}
-                      options={[
-                        { value: CompanyStatus.Active, label: 'Active' },
-                        { value: CompanyStatus.Inactive, label: 'Inactive' },
-                        { value: CompanyStatus.Pending, label: 'Pending' },
-                      ]}
-                      placeholder='Status'
-                      status={errors?.status?.message ? 'error' : undefined}
-                      error={errors?.status?.message}
-                    />
-                  )}
-                />
-              </Row>
+              <Controller
+                name='status'
+                control={control}
+                defaultValue={defaultState.status}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    style={{ width: '100%' }}
+                    options={[
+                      { value: CompanyStatus.Active, label: 'Active' },
+                      { value: CompanyStatus.Inactive, label: 'Inactive' },
+                      { value: CompanyStatus.Pending, label: 'Pending' },
+                    ]}
+                    placeholder='Status'
+                    status={errors?.status?.message ? 'error' : undefined}
+                    error={errors?.status?.message}
+                  />
+                )}
+              />
+            </Row>
+            <Row>
               <Controller
                 name='company_name'
                 control={control}
@@ -134,6 +134,7 @@ export const CompanyForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='Company name'
+                    label='Company name'
                     status={errors?.company_name?.message ? 'error' : undefined}
                     error={errors?.company_name?.message}
                   />
@@ -149,6 +150,7 @@ export const CompanyForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='Company Email'
+                    label='Company Email'
                     status={
                       errors?.company_email?.message ? 'error' : undefined
                     }
@@ -178,6 +180,7 @@ export const CompanyForm = () => {
                     {() => (
                       <CustomInput
                         placeholder='Company Phone'
+                        label='Company Phone'
                         status={
                           errors?.company_phone?.message ? 'error' : undefined
                         }
@@ -197,6 +200,7 @@ export const CompanyForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='Address'
+                    label='Address'
                     status={errors?.address?.message ? 'error' : undefined}
                     error={errors?.address?.message}
                   />
@@ -213,6 +217,7 @@ export const CompanyForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='Admin Name'
+                    label='Admin Name'
                     status={errors?.admin_name?.message ? 'error' : undefined}
                     error={errors?.admin_name?.message}
                   />
@@ -228,6 +233,7 @@ export const CompanyForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='Admin Email'
+                    label='Admin Email'
                     status={errors?.admin_email?.message ? 'error' : undefined}
                     error={errors?.admin_email?.message}
                   />
@@ -255,6 +261,7 @@ export const CompanyForm = () => {
                     {() => (
                       <CustomInput
                         placeholder='Admin Phone'
+                        label='Admin Phone'
                         status={
                           errors?.admin_phone?.message ? 'error' : undefined
                         }
@@ -275,6 +282,7 @@ export const CompanyForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='Company identifier'
+                    label='Company identifier'
                     status={
                       errors?.company_identifier?.message ? 'error' : undefined
                     }
@@ -292,6 +300,7 @@ export const CompanyForm = () => {
                   <CustomInput
                     {...field}
                     placeholder='Title'
+                    label='Title'
                     status={errors?.title?.message ? 'error' : undefined}
                     error={errors?.title?.message}
                   />
@@ -307,6 +316,7 @@ export const CompanyForm = () => {
                   <TextArea
                     {...field}
                     placeholder='Notes'
+                    label='Notes'
                     rows={5}
                     status={errors?.notes?.message ? 'error' : undefined}
                     error={errors?.notes?.message}

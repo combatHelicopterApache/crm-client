@@ -7,6 +7,7 @@ const { TextArea: AntdTextArea } = Input
 
 interface CustomInputProps extends TextAreaProps {
   error?: string
+  label?: string
 }
 
 export const TextArea: FC<CustomInputProps> = ({
@@ -15,6 +16,7 @@ export const TextArea: FC<CustomInputProps> = ({
 }): JSX.Element => {
   return (
     <InputWrapper>
+      {!!props?.label && <Label>{props?.label}</Label>}
       <AntdTextArea autoComplete='off' {...props} />
       {!!error && <ErrorMessage>{error}</ErrorMessage>}
     </InputWrapper>
@@ -24,6 +26,12 @@ export const TextArea: FC<CustomInputProps> = ({
 const ErrorMessage = styled.p`
   color: red;
   font-size: 12px;
+`
+const Label = styled.p`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 12px;
+  margin-bottom: 3px;
+  margin-left: 3px;
 `
 
 const InputWrapper = styled.div`

@@ -7,8 +7,7 @@ const axiosInstance = (() => {
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json; charset=utf-8',
-
-    'X-timezone': moment.tz.guess(), // Custom header with current user's timezone
+    'X-timezone': moment.tz.guess(),
   }
 
   return axios.create({
@@ -27,6 +26,16 @@ axiosInstance.interceptors.request.use(
     return config
   },
   error => Promise.reject(error),
+)
+axiosInstance.interceptors.response.use(
+  data => data,
+  error => {
+    if (error.response?.status === 401) {
+      window.location.href = '/login'
+    }
+
+    return Promise.reject(error)
+  },
 )
 
 export default axiosInstance
