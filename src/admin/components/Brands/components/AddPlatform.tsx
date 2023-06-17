@@ -18,17 +18,17 @@ interface IProps {
 }
 
 interface IState {
-  id: string
-  site_logo: string
-  site_name: string
-  site_domains: string[]
+  cfd_id: string
+  cfd_logo: string
+  cfd_name: string
+  cfd_domain: string
 }
 
 const initState: IState = {
-  id: uuidv4(),
-  site_logo: '',
-  site_name: '',
-  site_domains: ['www.example.com'],
+  cfd_id: uuidv4(),
+  cfd_logo: '',
+  cfd_name: '',
+  cfd_domain: '',
 }
 
 export const AddPlatform = ({ visible, onClose, onSave }: IProps) => {
@@ -50,7 +50,7 @@ export const AddPlatform = ({ visible, onClose, onSave }: IProps) => {
 
       setState(prev => ({
         ...prev,
-        site_logo: image?.url ? image?.url : null,
+        cfd_logo: image?.url ? image?.url : null,
       }))
     } catch (error) {
       notification('error', 'Invalid data')
@@ -61,87 +61,49 @@ export const AddPlatform = ({ visible, onClose, onSave }: IProps) => {
     const { value, name } = e.target
     setState(prev => ({ ...prev, [name]: value }))
   }
+  const handleClose = () => {
+    onClose()
+    setState(initState)
+  }
 
-  const handleAddRow = () => {
-    setState(prev => ({
-      ...prev,
-      site_domains: [...prev.site_domains, 'www.example.com'],
-    }))
-  }
-  const handleRemoveRow = (idx: number) => {
-    setState(prev => ({
-      ...prev,
-      site_domains: prev.site_domains.filter((item, i) => i !== idx),
-    }))
-  }
-  const handleChangeRow = (ee: ChangeEvent<HTMLInputElement>, idx: number) => {
-    setState(prev => ({
-      ...prev,
-      site_domains: prev.site_domains.map((item, i) =>
-        i === idx ? e.target.value : item,
-      ),
-    }))
-  }
   return (
     <Drawer
       width={500}
-      title='Add new platform'
-      onClose={onClose}
+      title='Add  platform'
+      onClose={handleClose}
       open={visible}
     >
       <Wrapper>
         <Row>
           <ImageCropper
-            image={state?.site_logo}
+            image={state?.cfd_logo}
             onUploadFinish={handleUploadImage}
-            onDeleteImage={() => setState(prev => ({ ...prev, site_logo: '' }))}
+            onDeleteImage={() => setState(prev => ({ ...prev, cfd_logo: '' }))}
           />
         </Row>
 
         <Row>
           <CustomInput
             onChange={onChange}
-            name='site_name'
-            placeholder='Site Name'
-            label='Site name'
-            // status={errors?.title?.message ? 'error' : undefined}
-            // error={errors?.title?.message}
+            name='cfd_name'
+            value={state.cfd_name}
+            placeholder='CFD Name'
+            label='CFD Name'
           />
         </Row>
         <Row>
-          {state?.site_domains?.map((item, idx) => (
-            <CustomInput
-              key={`${item}-${idx}`}
-              onChange={e => handleChangeRow(e, idx)}
-              name='site_name'
-              value={item}
-              placeholder='www.example.com'
-              style={{ marginBottom: '20px' }}
-              label={
-                idx === 0 ? (
-                  <Span onClick={handleAddRow}>
-                    <LableRow>
-                      <Tooltip title='Add new row'>
-                        Site Domain <PlusOutlined />
-                      </Tooltip>
-                    </LableRow>{' '}
-                  </Span>
-                ) : (
-                  <Span onClick={() => handleRemoveRow(idx)}>
-                    <LableRow>
-                      <Tooltip title='Remove row'>
-                        Site Domain <MinusOutlined />
-                      </Tooltip>
-                    </LableRow>
-                  </Span>
-                )
-              }
-            />
-          ))}
+          <CustomInput
+            onChange={onChange}
+            name='cfd_domain'
+            value={state.cfd_domain}
+            placeholder='www.example.com'
+            style={{ marginBottom: '20px' }}
+            label='CFD Domain'
+          />
         </Row>
       </Wrapper>
       <ControlsWrapper>
-        <CustomButton buttonType='remove'>
+        <CustomButton onClick={handleClose} buttonType='remove'>
           <span>Cancel</span>
         </CustomButton>
         <CustomButton onClick={handleSave}>

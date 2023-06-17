@@ -47,11 +47,10 @@ const TableWrapper = styled.div`
   padding: 10px 0;
   .ant-table-body {
     background-color: ${({ theme }) => theme.colors.secondary};
-    /* background-color: #0e0d0d !important; */
   }
 
   & .ant-select-selector {
-    background-color: ${({ theme }) => theme.colors.secondary};
+    background-color: ${({ theme }) => theme.colors.secondary} !important;
   }
   & .ant-select-selection-item {
     color: ${({ theme }) => theme.colors.text} !important;
@@ -78,22 +77,6 @@ const TableWrapper = styled.div`
   .ant-pagination .ant-pagination-item a {
     color: #ffffff;
   }
-  /* .dark {
-    background-color: #0e0d0d;
-    color: white;
-  }
-
-  .light {
-    background-color: #1f1f1f;
-    color: white;
-  } */
-
-  /* .light td,
-  .dark td {
-    padding: 5px 16px !important;
-    font-size: 0.8rem !important;
-    border-bottom: 1px solid rgba(119, 121, 157, 0.38) !important;
-  } */
 
   .headerHeight thead {
     background-color: #0e0d0d !important;

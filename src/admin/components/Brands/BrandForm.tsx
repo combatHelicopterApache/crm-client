@@ -18,6 +18,10 @@ import { uploadSingleFile } from 'api/Upload'
 import { DashedButton } from 'components/DashedButton/DashedButton'
 import { AddPlatform } from './components/AddPlatform'
 import { AddSite } from './components/AddSite'
+import { PlatformCard } from './components/PlatformCard'
+import { SiteCard } from './components/SiteCard'
+import { H2 } from 'molecules/H2/H2'
+import { createBrand } from 'api/Brands'
 
 export enum BrandStatus {
   Inactive,
@@ -28,7 +32,6 @@ export enum BrandStatus {
 const defaultState = {
   title: 'New Brand',
   description: '',
-  office_id: null,
   logo: '',
   site: [],
   platform: [],
@@ -71,7 +74,7 @@ export const BrandForm = () => {
 
   const onSubmit = async data => {
     try {
-      await createCompany(data)
+      await createBrand(data)
       notification('success', 'Brand was created successfuly!')
       navigate(AdminRoutesPath.ADMIN_BRANDS_ROUTE)
     } catch (error) {
@@ -79,7 +82,7 @@ export const BrandForm = () => {
     }
   }
 
-  const handleCreateCompany = async () => {
+  const handleCreateBrand = async () => {
     const isValid = await trigger()
 
     if (!isValid) {
@@ -114,11 +117,7 @@ export const BrandForm = () => {
     try {
       const image = await uploadSingleFile(fmData)
 
-      const platform = getValues('platform')
-      setValue('platform', {
-        ...platform,
-        cfd_logo: image?.url ? image?.url : null,
-      })
+      setValue('logo', image?.url ? image?.url : null)
     } catch (error) {
       notification('error', 'Invalid data')
     }
@@ -210,15 +209,19 @@ export const BrandForm = () => {
               />
             </Row>
           </Form>
-
-          <Row>
-            {watch('platform').map(item => (
-              <p>{console.log(item)}</p>
+          <H2>Brands Platform</H2>
+          <Row style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            {watch('platform')?.map(item => (
+              <PlatformCard key={item?.id} {...item} />
+            ))}
+            <DashedButton onClick={togglePlatformDrawer} title='Add Platform' />
+          </Row>
+          <H2>Brands Site</H2>
+          <Row style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            {watch('site')?.map(item => (
+              <SiteCard key={item?.id} {...item} />
             ))}
             <DashedButton onClick={toggleSiteDrawer} title='Add Site' />
-          </Row>
-          <Row>
-            <DashedButton onClick={togglePlatformDrawer} title='Add Platform' />
           </Row>
 
           <AddPlatform
@@ -233,7 +236,7 @@ export const BrandForm = () => {
           />
         </FormProvider>
         <CustomButton
-          onClick={handleCreateCompany}
+          onClick={handleCreateBrand}
           style={{ marginLeft: 'auto' }}
         >
           <span>Create</span>
@@ -247,10 +250,4 @@ const Wrapper = styled.div``
 const Form = styled.form``
 const Row = styled.div`
   padding: 10px;
-`
-
-const CustomBtnWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
 `

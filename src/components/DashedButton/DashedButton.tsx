@@ -24,7 +24,8 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100px;
+  height: auto;
+  min-height: 100px;
   width: 70px;
   border: ${({ theme }) => `1px dashed ${theme.colors.text} `};
   border-radius: 10px;
