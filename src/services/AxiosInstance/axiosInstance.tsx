@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { getTokenFromLS } from 'utils/getTokenFromLS'
 import moment from 'moment-timezone'
+import { setTokenToLS } from 'utils/setTokenToLS'
 
 const axiosInstance = (() => {
   const params = {}
@@ -31,6 +32,7 @@ axiosInstance.interceptors.response.use(
   data => data,
   error => {
     if (error.response?.status === 401) {
+      setTokenToLS(null)
       window.location.href = '/login'
     }
 

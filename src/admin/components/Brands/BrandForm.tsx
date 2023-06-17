@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { companyFormSchema } from './utils/validation'
+import { brandFormSchema } from './utils/validation'
 import styled from 'styled-components'
 import { CustomInput } from 'components/Input/CustomInput'
 import { useTitle } from 'hooks/useTitle'
@@ -15,6 +15,9 @@ import { createCompany } from 'api/companies'
 import { Select } from 'components/Select/Select'
 import { ImageCropper } from 'components/ImageCroper/ImageCroper'
 import { uploadSingleFile } from 'api/Upload'
+import { DashedButton } from 'components/DashedButton/DashedButton'
+import { AddPlatform } from './components/AddPlatform'
+import { AddSite } from './components/AddSite'
 
 export enum BrandStatus {
   Inactive,
@@ -26,36 +29,33 @@ const defaultState = {
   title: 'New Brand',
   description: '',
   office_id: null,
-  site: [
-    {
-      site_id: null,
-      site_logo: null,
-      site_name: '',
-      site_domains: '',
-    },
-  ],
-  platform: {
-    cfd_id: '',
-    cfd_logo: '',
-    cfd_name: '',
-    cfd_domain: '',
-  },
+  logo: '',
+  site: [],
+  platform: [],
   status: BrandStatus.Active,
 }
 
-const mask = '+38(999) 99-99-999'
-
 export const BrandForm = () => {
-  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   useTitle('Create Brand')
+  const [loading, setLoading] = useState(false)
+  const [openPlatformDrawer, setOpenPlatformDrawer] = useState(false)
+  const [openSiteDrawer, setOpenSiteDrawer] = useState(false)
+
   const contentRef = useRef<HTMLDivElement>(null)
   const methods = useForm({
-    resolver: yupResolver(companyFormSchema),
+    resolver: yupResolver(brandFormSchema),
     mode: 'onTouched',
     defaultValues: defaultState,
     shouldUnregister: false,
   })
+
+  const togglePlatformDrawer = () => {
+    setOpenPlatformDrawer(prev => !prev)
+  }
+  const toggleSiteDrawer = () => {
+    setOpenSiteDrawer(prev => !prev)
+  }
 
   const {
     formState: { errors, isValid },
@@ -124,6 +124,15 @@ export const BrandForm = () => {
     }
   }
 
+  const handleAddSite = site => {
+    const siteArr = getValues('site')
+    setValue('site', [...siteArr, site])
+  }
+  const handleAddPlatform = platform => {
+    const platformArr = getValues('platform')
+    setValue('platform', [...platformArr, platform])
+  }
+
   return (
     <Spin spinning={loading}>
       <h2 style={{ color: 'white' }}>Create New Brand</h2>
@@ -132,14 +141,14 @@ export const BrandForm = () => {
           <Form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Row>
               <Controller
-                name='platform.cfd_logo'
+                name='logo'
                 control={control}
-                defaultValue={defaultState.platform.cfd_logo}
+                defaultValue={defaultState.logo}
                 render={({ field, value }) => (
                   <ImageCropper
-                    image={value?.platform?.cfd_logo}
+                    image={value?.logo}
                     onUploadFinish={handleUploadImage}
-                    onDeleteImage={() => setValue('platform.cfd_logo', null)}
+                    onDeleteImage={() => setValue('logo', null)}
                   />
                 )}
               />
@@ -182,44 +191,6 @@ export const BrandForm = () => {
                 )}
               />
             </Row>
-            <Row>
-              <Controller
-                name='platform.cfd_name'
-                control={control}
-                defaultValue={defaultState.platform.cfd_name}
-                render={({ field }) => (
-                  <CustomInput
-                    {...field}
-                    placeholder='CFD Name'
-                    label='CFD Name'
-                    status={
-                      errors?.platform?.cfd_name?.message ? 'error' : undefined
-                    }
-                    error={errors?.platform?.cfd_name?.message}
-                  />
-                )}
-              />
-            </Row>
-            <Row>
-              <Controller
-                name='platform.cfd_domain'
-                control={control}
-                defaultValue={defaultState.platform.cfd_domain}
-                render={({ field }) => (
-                  <CustomInput
-                    {...field}
-                    placeholder='CFD Domain'
-                    label='CFD Domain'
-                    status={
-                      errors?.platform?.cfd_domain?.message
-                        ? 'error'
-                        : undefined
-                    }
-                    error={errors?.platform?.cfd_domain?.message}
-                  />
-                )}
-              />
-            </Row>
 
             <Row>
               <Controller
@@ -239,6 +210,27 @@ export const BrandForm = () => {
               />
             </Row>
           </Form>
+
+          <Row>
+            {watch('platform').map(item => (
+              <p>{console.log(item)}</p>
+            ))}
+            <DashedButton onClick={toggleSiteDrawer} title='Add Site' />
+          </Row>
+          <Row>
+            <DashedButton onClick={togglePlatformDrawer} title='Add Platform' />
+          </Row>
+
+          <AddPlatform
+            visible={openPlatformDrawer}
+            onClose={togglePlatformDrawer}
+            onSave={handleAddPlatform}
+          />
+          <AddSite
+            visible={openSiteDrawer}
+            onClose={toggleSiteDrawer}
+            onSave={handleAddSite}
+          />
         </FormProvider>
         <CustomButton
           onClick={handleCreateCompany}
@@ -255,4 +247,10 @@ const Wrapper = styled.div``
 const Form = styled.form``
 const Row = styled.div`
   padding: 10px;
+`
+
+const CustomBtnWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
 `
