@@ -13,6 +13,7 @@ import moment from 'moment-timezone'
 import { Spin } from 'antd'
 import { H2 } from 'molecules/H2/H2'
 import { BrandStatus } from './BrandForm'
+import { Span } from 'molecules/Span/Span'
 
 export const BrandsList = () => {
   const [data, setData] = useState([])
@@ -32,10 +33,10 @@ export const BrandsList = () => {
   })
 
   useEffect(() => {
-    const fetchCompaniesList = async () => {
+    const fetchBrandList = async () => {
       setLoading(true)
       try {
-        const { data, count } = await getBrandsList()
+        const { data, count } = await getBrandsList({})
         setData(data)
         setCount(count)
       } catch (error) {
@@ -44,7 +45,7 @@ export const BrandsList = () => {
         setLoading(false)
       }
     }
-    fetchCompaniesList()
+    fetchBrandList()
   }, [])
 
   const columns = useMemo(
@@ -63,42 +64,12 @@ export const BrandsList = () => {
         dataIndex: 'status',
         key: 'status',
         width: 100,
-        render: value => (
-          <p>
-            {value === BrandStatus.Active
-              ? 'Active'
-              : value === BrandStatus.Inactive
-              ? 'Inctive'
-              : 'Pending'}
-          </p>
-        ),
+        render: value => <Span>{value ? 'Active' : 'Inctive'}</Span>,
         onCell: record => {
           return record.key === clickedRowIndex ? undefined : ellipsisStyle
         },
       },
 
-      {
-        title: 'Company Name',
-        dataIndex: 'company_name',
-        key: 'company_name',
-        onCell: record =>
-          record.key === clickedRowIndex ? undefined : ellipsisStyle,
-      },
-      {
-        title: 'Company Email',
-        dataIndex: 'company_email',
-        key: 'company_email',
-        onCell: record =>
-          record.key === clickedRowIndex ? undefined : ellipsisStyle,
-      },
-      {
-        title: 'Company Phone',
-        dataIndex: 'company_phone',
-        key: 'company_phone',
-        width: 200,
-        onCell: record =>
-          record.key === clickedRowIndex ? undefined : ellipsisStyle,
-      },
       {
         title: 'Title',
         dataIndex: 'title',
@@ -107,34 +78,13 @@ export const BrandsList = () => {
           record.key === clickedRowIndex ? undefined : ellipsisStyle,
       },
       {
-        title: 'Admin Name',
-        dataIndex: 'admin_name',
-        key: 'admin_name',
+        title: 'Notes',
+        dataIndex: 'description',
+        key: 'description',
         onCell: record =>
           record.key === clickedRowIndex ? undefined : ellipsisStyle,
       },
-      {
-        title: 'Admin Email',
-        dataIndex: 'admin_email',
-        key: 'admin_email',
-        onCell: record =>
-          record.key === clickedRowIndex ? undefined : ellipsisStyle,
-      },
-      {
-        title: 'Admin Phone',
-        dataIndex: 'admin_phone',
-        key: 'admin_phone',
-        width: 200,
-        onCell: record =>
-          record.key === clickedRowIndex ? undefined : ellipsisStyle,
-      },
-      {
-        title: 'Company Identifier',
-        dataIndex: 'company_identifier',
-        key: 'company_identifier',
-        onCell: record =>
-          record.key === clickedRowIndex ? undefined : ellipsisStyle,
-      },
+
       {
         title: 'Created at',
         dataIndex: 'createdAt',
@@ -159,7 +109,7 @@ export const BrandsList = () => {
         <CustomButton onClick={handleClick}>
           <span>Add Brand</span>
         </CustomButton>
-        <H2>{`You have ${count} active brand`}</H2>
+        <H2>{`You have ${data?.length || 0} active brand`}</H2>
       </HeadingWrapper>
 
       <Spin spinning={loading}>

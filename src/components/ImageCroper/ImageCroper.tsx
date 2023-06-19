@@ -42,10 +42,10 @@ export const ImageCropper = ({
   }
 
   const uploadButton = (
-    <div>
+    <UploadBtnWrapper>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
+      <UploadBtnTitle>Upload</UploadBtnTitle>
+    </UploadBtnWrapper>
   )
 
   const handleUploadFile = async options => {
@@ -126,4 +126,12 @@ const ImageWrapper = styled.div`
   .company_image {
     border-radius: 0;
   }
+`
+
+const UploadBtnWrapper = styled.div`
+  color: ${({ theme }) => theme.colors.text};
+`
+const UploadBtnTitle = styled.div`
+  color: ${({ theme }) => theme.colors.text};
+  margin-top: 8px;
 `
