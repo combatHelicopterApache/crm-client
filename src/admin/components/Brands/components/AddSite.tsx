@@ -24,14 +24,13 @@ interface IState {
   site_domains: string[]
 }
 
-const initState: IState = {
-  id: uuidv4(),
-  site_logo: '',
-  site_name: '',
-  site_domains: ['www.example.com'],
-}
-
 export const AddSite = ({ visible, onClose, onSave }: IProps) => {
+  const initState: IState = {
+    id: uuidv4(),
+    site_logo: '',
+    site_name: '',
+    site_domains: ['www.example.com'],
+  }
   const [state, setState] = useState<IState>(initState)
 
   const handleSave = () => {

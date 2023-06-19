@@ -14,20 +14,33 @@ import { Spin } from 'antd'
 import { H2 } from 'molecules/H2/H2'
 import { BrandStatus } from './BrandForm'
 import { Span } from 'molecules/Span/Span'
+import { BrandInfo } from './BrandInfo'
 
 export const BrandsList = () => {
   const [data, setData] = useState([])
   const [count, setCount] = useState(0)
   const [loading, setLoading] = useState(false)
   const [clickedRowIndex, setClickedRowIndex] = useState<number | null>(null)
+  const [clickedRowData, setClikedRowData] = useState(null)
+  const [open, setOpen] = useState(false)
   const navigate = useNavigate()
 
   const handleClick = () => {
     return navigate(AdminRoutesPath.ADMIN_BRAND_CREATE_ROUTE)
   }
 
+  const handleOpenBrand = record => {
+    setClikedRowData(record)
+    setOpen(true)
+  }
+  const handleCloseBrand = () => {
+    setClikedRowData(null)
+    setOpen(false)
+  }
+
   const onRow = (record, rowIndex) => ({
     onClick: () => {
+      handleOpenBrand(record)
       setClickedRowIndex(rowIndex)
     },
   })
@@ -115,6 +128,11 @@ export const BrandsList = () => {
       <Spin spinning={loading}>
         <Table dataSource={data} onRow={onRow} columns={columns} />
       </Spin>
+      <BrandInfo
+        visible={open}
+        onClose={handleCloseBrand}
+        brandId={clickedRowData?.id}
+      />
     </Wrapper>
   )
 }

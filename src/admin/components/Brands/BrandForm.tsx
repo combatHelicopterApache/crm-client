@@ -131,6 +131,20 @@ export const BrandForm = () => {
     const platformArr = getValues('platform')
     setValue('platform', [...platformArr, platform])
   }
+  const handleDeleteSite = id => {
+    const siteArr = getValues('site')
+    setValue(
+      'site',
+      siteArr.filter(item => item.id !== id),
+    )
+  }
+  const handleDeletePlatform = id => {
+    const platformArr = getValues('platform')
+    setValue(
+      'platform',
+      platformArr.filter(item => item.cfd_id !== id),
+    )
+  }
 
   return (
     <Spin spinning={loading}>
@@ -212,14 +226,18 @@ export const BrandForm = () => {
           <H2>Brands Platform</H2>
           <Row style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             {watch('platform')?.map(item => (
-              <PlatformCard key={item?.id} {...item} />
+              <PlatformCard
+                onDelete={handleDeletePlatform}
+                key={item?.id}
+                {...item}
+              />
             ))}
             <DashedButton onClick={togglePlatformDrawer} title='Add Platform' />
           </Row>
           <H2>Brands Site</H2>
           <Row style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
             {watch('site')?.map(item => (
-              <SiteCard key={item?.id} {...item} />
+              <SiteCard onDelete={handleDeleteSite} key={item?.id} {...item} />
             ))}
             <DashedButton onClick={toggleSiteDrawer} title='Add Site' />
           </Row>
@@ -246,7 +264,9 @@ export const BrandForm = () => {
   )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  max-width: 600px;
+`
 const Form = styled.form``
 const Row = styled.div`
   padding: 10px;

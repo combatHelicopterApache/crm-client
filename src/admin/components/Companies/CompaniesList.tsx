@@ -25,9 +25,14 @@ export const CompaniesList = () => {
     return navigate(AdminRoutesPath.ADMIN_COMPANY_CREATE_ROUTE)
   }
 
+  const handleOpenCompany = id => {
+    return navigate(`/admin/company/${id}`)
+  }
+
   const onRow = (record, rowIndex) => ({
     onClick: () => {
       setClickedRowIndex(rowIndex)
+      handleOpenCompany(record.id)
     },
   })
 

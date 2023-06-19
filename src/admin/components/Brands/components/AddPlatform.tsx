@@ -24,14 +24,13 @@ interface IState {
   cfd_domain: string
 }
 
-const initState: IState = {
-  cfd_id: uuidv4(),
-  cfd_logo: '',
-  cfd_name: '',
-  cfd_domain: '',
-}
-
 export const AddPlatform = ({ visible, onClose, onSave }: IProps) => {
+  const initState: IState = {
+    cfd_id: uuidv4(),
+    cfd_logo: '',
+    cfd_name: '',
+    cfd_domain: '',
+  }
   const [state, setState] = useState<IState>(initState)
 
   const handleSave = () => {
@@ -72,6 +71,7 @@ export const AddPlatform = ({ visible, onClose, onSave }: IProps) => {
       title='Add  platform'
       onClose={handleClose}
       open={visible}
+      destroyOnClose
     >
       <Wrapper>
         <Row>

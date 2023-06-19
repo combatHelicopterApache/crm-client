@@ -5,6 +5,7 @@ enum PathEnum {
   UPDATE_COMPANY = '/company/company-update',
   DELETE_COMPANY = '/company/company-delete',
   GET_COMPANIES = '/company/companies-list',
+  GET_COMPANY = '/company/company-get',
 }
 
 export const createCompany = data => {
@@ -15,6 +16,11 @@ export const deleteCompany = companyId => {
 }
 export const updateCompany = data => {
   return axiosInstance.post(PathEnum.UPDATE_COMPANY, data)
+}
+export const getCompanyById = params => {
+  return axiosInstance
+    .get(PathEnum.GET_COMPANY, { params })
+    .then(data => data?.data)
 }
 
 export const getCompaniesList = () => {

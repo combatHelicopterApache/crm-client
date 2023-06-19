@@ -34,6 +34,7 @@ const defaultState = {
   title: '',
   notes: '',
   status: CompanyStatus.Active,
+  brands: [],
 }
 
 const mask = '+38(999) 99-99-999'
@@ -101,243 +102,276 @@ export const CompanyForm = () => {
   return (
     <Spin spinning={loading}>
       <h2 style={{ color: 'white' }}>Create New Company</h2>
-      <Wrapper ref={contentRef}>
-        <FormProvider {...methods}>
-          <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <Row>
-              <Controller
-                name='status'
-                control={control}
-                defaultValue={defaultState.status}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    style={{ width: '100%' }}
-                    options={[
-                      { value: CompanyStatus.Active, label: 'Active' },
-                      { value: CompanyStatus.Inactive, label: 'Inactive' },
-                      { value: CompanyStatus.Pending, label: 'Pending' },
-                    ]}
-                    placeholder='Status'
-                    status={errors?.status?.message ? 'error' : undefined}
-                    error={errors?.status?.message}
-                  />
-                )}
-              />
-            </Row>
-            <Row>
-              <Controller
-                name='company_name'
-                control={control}
-                defaultValue={defaultState.company_name}
-                render={({ field }) => (
-                  <CustomInput
-                    {...field}
-                    placeholder='Company name'
-                    label='Company name'
-                    status={errors?.company_name?.message ? 'error' : undefined}
-                    error={errors?.company_name?.message}
-                  />
-                )}
-              />
-            </Row>
-            <Row>
-              <Controller
-                name='company_email'
-                control={control}
-                defaultValue={defaultState.company_email}
-                render={({ field }) => (
-                  <CustomInput
-                    {...field}
-                    placeholder='Company Email'
-                    label='Company Email'
-                    status={
-                      errors?.company_email?.message ? 'error' : undefined
-                    }
-                    error={errors?.company_email?.message}
-                  />
-                )}
-              />
-            </Row>
-            <Row>
-              <Controller
-                name='company_phone'
-                control={control}
-                defaultValue={defaultState.company_phone}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <ReactInputMask
-                    mask={mask}
-                    value={value}
-                    onChange={e => {
-                      onChange(e)
-                      setError('company_phone', {
-                        type: 'custom',
-                        message: '',
-                      })
-                    }}
-                    onBlur={onBlur}
-                  >
-                    {() => (
-                      <CustomInput
-                        placeholder='Company Phone'
-                        label='Company Phone'
-                        status={
-                          errors?.company_phone?.message ? 'error' : undefined
-                        }
-                        error={errors?.company_phone?.message}
-                      />
-                    )}
-                  </ReactInputMask>
-                )}
-              />
-            </Row>
-            <Row>
-              <Controller
-                name='address'
-                control={control}
-                defaultValue={defaultState.address}
-                render={({ field }) => (
-                  <CustomInput
-                    {...field}
-                    placeholder='Address'
-                    label='Address'
-                    status={errors?.address?.message ? 'error' : undefined}
-                    error={errors?.address?.message}
-                  />
-                )}
-              />
-            </Row>
+      <Container>
+        <Wrapper ref={contentRef}>
+          <FormProvider {...methods}>
+            <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <Row>
+                <Controller
+                  name='status'
+                  control={control}
+                  defaultValue={defaultState.status}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      style={{ width: '100%' }}
+                      options={[
+                        { value: CompanyStatus.Active, label: 'Active' },
+                        { value: CompanyStatus.Inactive, label: 'Inactive' },
+                        { value: CompanyStatus.Pending, label: 'Pending' },
+                      ]}
+                      placeholder='Status'
+                      status={errors?.status?.message ? 'error' : undefined}
+                      error={errors?.status?.message}
+                    />
+                  )}
+                />
+              </Row>
+              <Row>
+                <Controller
+                  name='company_name'
+                  control={control}
+                  defaultValue={defaultState.company_name}
+                  render={({ field }) => (
+                    <CustomInput
+                      {...field}
+                      placeholder='Company name'
+                      label='Company name'
+                      status={
+                        errors?.company_name?.message ? 'error' : undefined
+                      }
+                      error={errors?.company_name?.message}
+                    />
+                  )}
+                />
+              </Row>
+              <Row>
+                <Controller
+                  name='company_email'
+                  control={control}
+                  defaultValue={defaultState.company_email}
+                  render={({ field }) => (
+                    <CustomInput
+                      {...field}
+                      placeholder='Company Email'
+                      label='Company Email'
+                      status={
+                        errors?.company_email?.message ? 'error' : undefined
+                      }
+                      error={errors?.company_email?.message}
+                    />
+                  )}
+                />
+              </Row>
+              <Row>
+                <Controller
+                  name='company_phone'
+                  control={control}
+                  defaultValue={defaultState.company_phone}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <ReactInputMask
+                      mask={mask}
+                      value={value}
+                      onChange={e => {
+                        onChange(e)
+                        setError('company_phone', {
+                          type: 'custom',
+                          message: '',
+                        })
+                      }}
+                      onBlur={onBlur}
+                    >
+                      {() => (
+                        <CustomInput
+                          placeholder='Company Phone'
+                          label='Company Phone'
+                          status={
+                            errors?.company_phone?.message ? 'error' : undefined
+                          }
+                          error={errors?.company_phone?.message}
+                        />
+                      )}
+                    </ReactInputMask>
+                  )}
+                />
+              </Row>
+              <Row>
+                <Controller
+                  name='brands'
+                  control={control}
+                  defaultValue={defaultState.brands}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      mode='multiple'
+                      placeholder='Brands'
+                      label='Brands'
+                      status={errors?.brands?.message ? 'error' : undefined}
+                      error={errors?.brands?.message}
+                    />
+                  )}
+                />
+              </Row>
+              <Row>
+                <Controller
+                  name='address'
+                  control={control}
+                  defaultValue={defaultState.address}
+                  render={({ field }) => (
+                    <CustomInput
+                      {...field}
+                      placeholder='Address'
+                      label='Address'
+                      status={errors?.address?.message ? 'error' : undefined}
+                      error={errors?.address?.message}
+                    />
+                  )}
+                />
+              </Row>
 
-            <Row>
-              <Controller
-                name='admin_name'
-                control={control}
-                defaultValue={defaultState.admin_name}
-                render={({ field }) => (
-                  <CustomInput
-                    {...field}
-                    placeholder='Admin Name'
-                    label='Admin Name'
-                    status={errors?.admin_name?.message ? 'error' : undefined}
-                    error={errors?.admin_name?.message}
-                  />
-                )}
-              />
-            </Row>
-            <Row>
-              <Controller
-                name='admin_email'
-                control={control}
-                defaultValue={defaultState.admin_email}
-                render={({ field }) => (
-                  <CustomInput
-                    {...field}
-                    placeholder='Admin Email'
-                    label='Admin Email'
-                    status={errors?.admin_email?.message ? 'error' : undefined}
-                    error={errors?.admin_email?.message}
-                  />
-                )}
-              />
-            </Row>
-            <Row>
-              <Controller
-                name='admin_phone'
-                control={control}
-                defaultValue={defaultState.admin_phone}
-                render={({ field: { value, onChange, onBlur } }) => (
-                  <ReactInputMask
-                    mask={mask}
-                    value={value}
-                    onChange={e => {
-                      onChange(e)
-                      setError('admin_phone', {
-                        type: 'custom',
-                        message: '',
-                      })
-                    }}
-                    onBlur={onBlur}
-                  >
-                    {() => (
-                      <CustomInput
-                        placeholder='Admin Phone'
-                        label='Admin Phone'
-                        status={
-                          errors?.admin_phone?.message ? 'error' : undefined
-                        }
-                        error={errors?.admin_phone?.message}
-                      />
-                    )}
-                  </ReactInputMask>
-                )}
-              />
-            </Row>
+              <Row style={{ marginBottom: '20px' }}>
+                <Controller
+                  name='company_identifier'
+                  control={control}
+                  defaultValue={defaultState.company_identifier}
+                  render={({ field }) => (
+                    <CustomInput
+                      {...field}
+                      placeholder='Company identifier'
+                      label='Company identifier'
+                      status={
+                        errors?.company_identifier?.message
+                          ? 'error'
+                          : undefined
+                      }
+                      error={errors?.company_identifier?.message}
+                    />
+                  )}
+                />
+              </Row>
 
-            <Row>
-              <Controller
-                name='company_identifier'
-                control={control}
-                defaultValue={defaultState.company_identifier}
-                render={({ field }) => (
-                  <CustomInput
-                    {...field}
-                    placeholder='Company identifier'
-                    label='Company identifier'
-                    status={
-                      errors?.company_identifier?.message ? 'error' : undefined
-                    }
-                    error={errors?.company_identifier?.message}
-                  />
-                )}
-              />
-            </Row>
-            <Row>
-              <Controller
-                name='title'
-                control={control}
-                defaultValue={defaultState.title}
-                render={({ field }) => (
-                  <CustomInput
-                    {...field}
-                    placeholder='Title'
-                    label='Title'
-                    status={errors?.title?.message ? 'error' : undefined}
-                    error={errors?.title?.message}
-                  />
-                )}
-              />
-            </Row>
-            <Row>
-              <Controller
-                name='notes'
-                control={control}
-                defaultValue={defaultState.notes}
-                render={({ field }) => (
-                  <TextArea
-                    {...field}
-                    placeholder='Notes'
-                    label='Notes'
-                    rows={5}
-                    status={errors?.notes?.message ? 'error' : undefined}
-                    error={errors?.notes?.message}
-                  />
-                )}
-              />
-            </Row>
-          </Form>
-        </FormProvider>
-        <CustomButton
-          onClick={handleCreateCompany}
-          style={{ marginLeft: 'auto' }}
-        >
-          <span>Create</span>
-        </CustomButton>
-      </Wrapper>
+              <Row>
+                <Controller
+                  name='admin_name'
+                  control={control}
+                  defaultValue={defaultState.admin_name}
+                  render={({ field }) => (
+                    <CustomInput
+                      {...field}
+                      placeholder='Admin Name'
+                      label='Admin Name'
+                      status={errors?.admin_name?.message ? 'error' : undefined}
+                      error={errors?.admin_name?.message}
+                    />
+                  )}
+                />
+              </Row>
+              <Row>
+                <Controller
+                  name='admin_email'
+                  control={control}
+                  defaultValue={defaultState.admin_email}
+                  render={({ field }) => (
+                    <CustomInput
+                      {...field}
+                      placeholder='Admin Email'
+                      label='Admin Email'
+                      status={
+                        errors?.admin_email?.message ? 'error' : undefined
+                      }
+                      error={errors?.admin_email?.message}
+                    />
+                  )}
+                />
+              </Row>
+              <Row>
+                <Controller
+                  name='admin_phone'
+                  control={control}
+                  defaultValue={defaultState.admin_phone}
+                  render={({ field: { value, onChange, onBlur } }) => (
+                    <ReactInputMask
+                      mask={mask}
+                      value={value}
+                      onChange={e => {
+                        onChange(e)
+                        setError('admin_phone', {
+                          type: 'custom',
+                          message: '',
+                        })
+                      }}
+                      onBlur={onBlur}
+                    >
+                      {() => (
+                        <CustomInput
+                          placeholder='Admin Phone'
+                          label='Admin Phone'
+                          status={
+                            errors?.admin_phone?.message ? 'error' : undefined
+                          }
+                          error={errors?.admin_phone?.message}
+                        />
+                      )}
+                    </ReactInputMask>
+                  )}
+                />
+              </Row>
+
+              <Row>
+                <Controller
+                  name='title'
+                  control={control}
+                  defaultValue={defaultState.title}
+                  render={({ field }) => (
+                    <CustomInput
+                      {...field}
+                      placeholder='Title'
+                      label='Title'
+                      status={errors?.title?.message ? 'error' : undefined}
+                      error={errors?.title?.message}
+                    />
+                  )}
+                />
+              </Row>
+              <Row>
+                <Controller
+                  name='notes'
+                  control={control}
+                  defaultValue={defaultState.notes}
+                  render={({ field }) => (
+                    <TextArea
+                      {...field}
+                      placeholder='Notes'
+                      label='Notes'
+                      rows={5}
+                      status={errors?.notes?.message ? 'error' : undefined}
+                      error={errors?.notes?.message}
+                    />
+                  )}
+                />
+              </Row>
+            </Form>
+          </FormProvider>
+          <CustomButton
+            onClick={handleCreateCompany}
+            style={{ marginLeft: 'auto' }}
+          >
+            <span>Create</span>
+          </CustomButton>
+        </Wrapper>
+      </Container>
     </Spin>
   )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  max-width: 600px;
+  width: 100%;
+`
+const Container = styled.div`
+  display: flex;
+  gap: 20px;
+`
 const Form = styled.form``
 const Row = styled.div`
   padding: 10px;
