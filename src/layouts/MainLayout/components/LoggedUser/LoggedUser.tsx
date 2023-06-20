@@ -8,8 +8,12 @@ import { useNavigate } from 'react-router-dom'
 import s from './LoggedUser.module.css'
 import { Dropdown, Space, Avatar } from 'antd'
 
-import { logout } from '../../../../features/Login/authSlice'
-import { useAppDispatch } from 'store/store'
+import {
+  logout,
+  authSelector,
+  logoutFromCompany,
+} from '../../../../features/Login/authSlice'
+import { useAppDispatch, useAppSelector } from 'store/store'
 import { changeAppTheme } from 'store/ui/UISlice'
 import { RoutesPath } from 'routes/types'
 import { lastModuleVisited } from 'utils/lastModuleVisit'
@@ -17,6 +21,7 @@ import { lastModuleVisited } from 'utils/lastModuleVisit'
 const LoggedUser = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const { auth_user } = useAppSelector(authSelector)
   const [themeMode, setThemeMode] = useState(localStorage.getItem('theme'))
   const handleChangeTheme = () => {
     const theme = localStorage.getItem('theme')
@@ -37,12 +42,23 @@ const LoggedUser = () => {
     navigate(RoutesPath.LOGIN)
   }
 
+  const handleBackToAdmin = () => {
+    lastModuleVisited('set', window.location.pathname)
+    dispatch(logoutFromCompany())
+    // navigate(RoutesPath.LOGIN)
+  }
+
   const items = [
     {
       label: (
-        <p onClick={() => handleLogout()}>
+        <p
+          onClick={
+            auth_user?.login_from_admin ? handleBackToAdmin : handleLogout
+          }
+        >
           {' '}
-          <LogoutOutlined /> Logout{' '}
+          <LogoutOutlined />{' '}
+          {auth_user?.login_from_admin ? 'Back to Admin' : 'Logout'}
         </p>
       ),
       key: '0',

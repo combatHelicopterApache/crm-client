@@ -6,6 +6,11 @@ export const createBrand = (data: object) => {
 export const updateBrand = (id: number) => {
   return axiosInstance.put(`/brand/${id}`)
 }
+
+export const patchBrand = (id: number, data) => {
+  return axiosInstance.patch(`/brand/update/${id}`, data)
+}
+
 export const deleteBrand = (id: number) => {
   return axiosInstance.put(`/brand/${id}`)
 }

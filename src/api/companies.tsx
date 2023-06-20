@@ -6,6 +6,7 @@ enum PathEnum {
   DELETE_COMPANY = '/company/company-delete',
   GET_COMPANIES = '/company/companies-list',
   GET_COMPANY = '/company/company-get',
+  PATCH_COMPANY = '/company/company-update/',
 }
 
 export const createCompany = data => {
@@ -16,6 +17,9 @@ export const deleteCompany = companyId => {
 }
 export const updateCompany = data => {
   return axiosInstance.post(PathEnum.UPDATE_COMPANY, data)
+}
+export const patchCompany = (data, companyId) => {
+  return axiosInstance.patch(`${PathEnum.PATCH_COMPANY}/${companyId}`, data)
 }
 export const getCompanyById = params => {
   return axiosInstance

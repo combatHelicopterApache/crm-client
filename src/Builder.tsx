@@ -25,10 +25,10 @@ export const Builder = () => {
         if (!token) return navigate('/login')
 
         const { payload } = await dispatch(loginByToken(token))
-        if (payload?.message?.status === 401) {
-          setTokenToLS(null)
-          navigate('/login')
-        }
+        // if (payload?.message?.status === 401) {
+        //   setTokenToLS(null)
+        //   navigate('/login')
+        // }
       } catch (error) {
         console.error(error)
       }

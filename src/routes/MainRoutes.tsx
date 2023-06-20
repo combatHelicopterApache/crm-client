@@ -106,10 +106,11 @@ export const MainRoutes = ({ initialized }) => {
       <Routes>
         {publicRoutes.map(publicRoute)}
         {initialized && privateRoutes.map(privateRoute)}
+
         <Route
           path='*'
           element={<NotAuthorized path={RoutesPath.HOME_ROUTE} />}
-        />{' '}
+        />
       </Routes>
     </Suspense>
   )

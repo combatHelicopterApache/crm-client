@@ -19,11 +19,16 @@ export const Login: FC = () => {
 
     const { payload } = await dispatch(login(value))
     const { data } = payload
+
     if (payload.status && data?.is_admin) {
       return navigate(lastModule || AdminRoutesPath.ADMIN_COMPANIES_ROUTE)
     }
     if (payload.status && !data?.is_admin) {
       return navigate(lastModule || RoutesPath.HOME_ROUTE)
+    }
+
+    if (!payload?.status) {
+      return navigate(RoutesPath.LOGIN)
     }
   }
 

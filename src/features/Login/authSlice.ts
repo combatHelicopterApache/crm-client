@@ -33,6 +33,32 @@ export const login = createAsyncThunk<any, any, AsyncThunkAPI>(
   },
 )
 
+export const loginToCompany = createAsyncThunk<any, any, AsyncThunkAPI>(
+  'user/login-to-campany',
+  async (companyId, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const authUser = await authAPI.loginToCompany(companyId)
+      console.log(authUser, 'authUser')
+      fulfillWithValue(authUser)
+      return authUser
+    } catch (error) {
+      return rejectWithValue(error.response.data)
+    }
+  },
+)
+export const logoutFromCompany = createAsyncThunk<any, any, AsyncThunkAPI>(
+  'user/back-to-admin',
+  async (_, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const authUser = await authAPI.logoutFromCompany()
+      fulfillWithValue(authUser)
+      return authUser
+    } catch (error) {
+      return rejectWithValue(error.response.data)
+    }
+  },
+)
+
 export const loginByToken = createAsyncThunk<any, any, AsyncThunkAPI>(
   'user/login_by_token',
   async (token, { rejectWithValue, fulfillWithValue }) => {
@@ -41,7 +67,7 @@ export const loginByToken = createAsyncThunk<any, any, AsyncThunkAPI>(
       fulfillWithValue(authUser)
       return authUser
     } catch (error) {
-      return rejectWithValue(error.response.data)
+      return rejectWithValue(error)
     }
   },
 )
@@ -81,7 +107,7 @@ const authSlice = createSlice({
       state.error = payload?.errors
       state.loading = false
       state.initialized = false
-      notification('error', `Something went wrong`)
+      notification('error', payload?.message)
     })
     builder.addCase(logout.fulfilled, state => {
       state.auth_user = null
@@ -107,6 +133,46 @@ const authSlice = createSlice({
       state.error = payload?.errors
       state.loading = false
       state.initialized = false
+    })
+
+    builder.addCase(loginToCompany.pending, state => {
+      state.loading = true
+    })
+    builder.addCase(loginToCompany.fulfilled, (state, { payload }) => {
+      state.token = payload.token
+      state.auth_user = payload.data
+      state.is_admin = payload.data.is_admin
+      state.initialized = true
+      state.loading = false
+      notification('success', payload.message)
+      setTokenToLS(payload.token)
+      window.location.href = '/'
+    })
+    builder.addCase(loginToCompany.rejected, (state, { payload }) => {
+      state.error = payload?.errors
+      state.loading = false
+      state.initialized = false
+      notification('error', payload?.message)
+    })
+
+    builder.addCase(logoutFromCompany.pending, state => {
+      state.loading = true
+    })
+    builder.addCase(logoutFromCompany.fulfilled, (state, { payload }) => {
+      state.token = payload.token
+      state.auth_user = payload.data
+      state.is_admin = payload.data.is_admin
+      state.initialized = true
+      state.loading = false
+      notification('success', payload.message)
+      setTokenToLS(payload.token)
+      window.location.href = '/admin/companies'
+    })
+    builder.addCase(logoutFromCompany.rejected, (state, { payload }) => {
+      state.error = payload?.errors
+      state.loading = false
+      state.initialized = false
+      notification('error', payload?.message)
     })
   },
 })
