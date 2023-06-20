@@ -156,7 +156,7 @@ const Wrapper = styled.div<IStyleProps>`
     color: ${({theme}) => theme.colors.text};
     display: flex;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem;
     border-bottom: 1px solid #181818;
     font-size: 0.8rem;
   }

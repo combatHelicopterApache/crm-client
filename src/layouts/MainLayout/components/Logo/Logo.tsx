@@ -66,7 +66,6 @@ const Wrapper = styled.div`
     background: transparent;
     border: none;
     outline: none;
-    padding: 1rem;
   }
 
   .btnSplit svg {
