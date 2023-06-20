@@ -130,9 +130,10 @@ interface IStyleProps {
 }
 
 const Wrapper = styled.div<IStyleProps>`
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({theme}) => theme.colors.secondary};
   min-width: 180px;
-  max-width: 180px;
+  max-width: 300px;
+  width: 300px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -147,25 +148,35 @@ const Wrapper = styled.div<IStyleProps>`
   }
 
   & .list {
-    padding: 1rem;
+    //padding: 1rem;
     overflow-y: auto;
   }
 
   & .list li a {
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({theme}) => theme.colors.text};
     display: flex;
     align-items: center;
-    padding: 1rem 1rem;
-    border-bottom: 1px solid #1f1f1f;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #181818;
     font-size: 0.8rem;
   }
 
-  & .list li a.active {
-    color: #345dff;
+  //& .list li a.active {
+  //  color: #345dff;
+  //}
+
+  & .list li:has(> a.active) {
+    background-color: #5385f9;
+  }
+
+  & .list li a span > svg {
+    width: 1.2rem;
+    height: 1.2rem;
   }
 
   & .list li a p {
-    margin-left: 0.4rem;
+    font-size: .8rem;
+    margin-left: 1rem;
     margin-bottom: 0rem;
   }
 `
