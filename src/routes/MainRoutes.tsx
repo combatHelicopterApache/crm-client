@@ -1,9 +1,10 @@
 import React, { lazy, Suspense, useMemo } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Outlet } from 'react-router-dom'
 import { NotAuthorized } from './helpers/NotAuthorized'
 import { privateRoute } from './helpers/PrivateRoute'
 import { publicRoute } from './helpers/PublicRoute'
 import { RoutesPath } from './types'
+import { SettingsRoutes } from './SettingsRoutes'
 
 export const MainRoutes = ({ initialized }) => {
   const privateRoutes = useMemo(
@@ -32,18 +33,7 @@ export const MainRoutes = ({ initialized }) => {
         element: lazy(() => import('../pages/GroupsPage/GroupPageDetail')),
         isAccess: true,
       },
-      {
-        label: 'Users',
-        path: RoutesPath.USERS_ROUTE,
-        element: lazy(() => import('../pages/UsersPage/UsersPage')),
-        isAccess: true,
-      },
-      {
-        label: 'User',
-        path: RoutesPath.USER_ROUTE,
-        element: lazy(() => import('../pages/UserPage')),
-        isAccess: true,
-      },
+
       {
         label: 'Analytics',
         path: RoutesPath.ANALYTICS_ROUTE,
@@ -71,7 +61,7 @@ export const MainRoutes = ({ initialized }) => {
       {
         label: 'Settings',
         path: RoutesPath.SETTINGS_ROUTE,
-        element: lazy(() => import('../pages/SettingsPage/SettingsPage')),
+        element: lazy(() => import('../pages/SettingsPage/index')),
         isAccess: true,
       },
       {
@@ -107,10 +97,10 @@ export const MainRoutes = ({ initialized }) => {
         {publicRoutes.map(publicRoute)}
         {initialized && privateRoutes.map(privateRoute)}
 
-        <Route
+        {/* <Route
           path='*'
           element={<NotAuthorized path={RoutesPath.HOME_ROUTE} />}
-        />
+        /> */}
       </Routes>
     </Suspense>
   )

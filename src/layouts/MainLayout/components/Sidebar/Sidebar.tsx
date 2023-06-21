@@ -111,8 +111,10 @@ const Sidebar = () => {
         {/*</li>*/}
         <li key='10'>
           <NavLink
-            to={RoutesPath.SETTINGS_ROUTE}
-            className={navData => (navData.isActive ? 'active' : 'none')}
+            to={`/settings${RoutesPath.SETTINGS_ROUTE_COMPANY}`}
+            className={() =>
+              window.location.pathname.includes('settings') ? 'active' : 'none'
+            }
           >
             <SettingOutlined />
             <p>Settings</p>
@@ -130,7 +132,7 @@ interface IStyleProps {
 }
 
 const Wrapper = styled.div<IStyleProps>`
-  background-color: ${({theme}) => theme.colors.secondary};
+  background-color: ${({ theme }) => theme.colors.secondary};
   min-width: 180px;
   max-width: 300px;
   width: 300px;
@@ -153,7 +155,7 @@ const Wrapper = styled.div<IStyleProps>`
   }
 
   & .list li a {
-    color: ${({theme}) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.text};
     display: flex;
     align-items: center;
     padding: 1rem;
@@ -175,7 +177,7 @@ const Wrapper = styled.div<IStyleProps>`
   }
 
   & .list li a p {
-    font-size: .8rem;
+    font-size: 0.8rem;
     margin-left: 1rem;
     margin-bottom: 0rem;
   }

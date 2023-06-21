@@ -13,7 +13,7 @@ const Header = () => {
 export default Header
 
 const Wrapper = styled.div`
-  height: 80px;
+  height: 55px;
   background-color: ${({ theme }) => theme.colors.secondary};
   width: 100%;
   display: flex;

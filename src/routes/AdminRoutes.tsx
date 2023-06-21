@@ -85,12 +85,12 @@ export const AdminRoutes = ({ initialized }) => {
         {publicRoutes.map(publicRoute)}
         {initialized && adminRoutes.map(privateRoute)}
 
-        <Route
+        {/* <Route
           path='*'
           element={
             <NotAuthorized path={AdminRoutesPath.ADMIN_COMPANIES_ROUTE} />
           }
-        />
+        /> */}
       </Routes>
     </Suspense>
   )

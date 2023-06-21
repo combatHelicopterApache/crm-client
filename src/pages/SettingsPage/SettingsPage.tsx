@@ -1,8 +1,11 @@
 import React from 'react'
-import MainLayout from '../../layouts/MainLayout/MainLayout'
+import { SettingsLayout } from 'layouts/SettingsLayout/SettingsLayout'
+import { SettingsRoutes } from 'routes/SettingsRoutes'
 
-const SettingsPage = () => {
-  return <MainLayout></MainLayout>
+export const SettingsPage = () => {
+  return (
+    <SettingsLayout>
+      <SettingsRoutes />
+    </SettingsLayout>
+  )
 }
-
-export default SettingsPage

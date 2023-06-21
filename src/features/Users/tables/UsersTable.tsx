@@ -75,7 +75,7 @@ export const UsersTable = () => {
   )
 
   const handleNavigate = () => {
-    navigate(`${RoutesPath.USER_CREATE_ROUTE}`)
+    navigate(`/settings/users/new`)
   }
 
   const fetchUsersList = async params => {
