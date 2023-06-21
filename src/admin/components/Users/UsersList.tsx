@@ -7,13 +7,15 @@ import styled from 'styled-components'
 import { CustomButton } from 'components/Button/CustomButton'
 import { useNavigate } from 'react-router-dom'
 import { AdminRoutesPath } from 'routes/types'
-import { getUserSAUsers } from 'api/Users'
+import { getUserSAUsers, deleteUser } from 'api/Users'
 import { notification } from 'components/Notification/Notification'
 import moment from 'moment-timezone'
+import { TableActions } from 'components/TableActions/TableActions'
 
 export const UsersList = () => {
   const navigate = useNavigate()
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
   const [clickedRowIndex, setClickedRowIndex] = useState<number | null>(null)
 
   const handleClick = () => {
@@ -23,6 +25,36 @@ export const UsersList = () => {
     onClick: () => {
       setClickedRowIndex(rowIndex)
     },
+  })
+
+  const fetchUsers = async () => {
+    try {
+      setLoading(true)
+      const { data, status } = await getUserSAUsers()
+      setData(data)
+      setLoading(false)
+    } catch (error) {
+      notification('error', 'Something went wrong')
+    }
+  }
+
+  const handleDeleteUser = async id => {
+    try {
+      setLoading(true)
+      const res = await deleteUser(id)
+      await fetchUsers()
+      setLoading(false)
+    } catch (error) {
+      notification('error', 'Something went wrong')
+    }
+  }
+
+  const tableActionProps = record => ({
+    todos: ['delete'],
+    callbacks: [() => handleDeleteUser(record.id)],
+    preloaders: [loading],
+    tooltips: ['Remove this user?'],
+    popConfirms: ['Are you sure?'],
   })
 
   const columns = useMemo(
@@ -76,32 +108,31 @@ export const UsersList = () => {
 
       {
         title: 'Created at',
-        dataIndex: 'createdAt',
-        key: 'createdAt',
+        dataIndex: 'created_at',
+        key: 'created_at',
         render: (value, record) =>
           moment(value || moment()).format('DD/MM/YYYY'),
       },
       {
         title: 'Updated at',
-        dataIndex: 'updatedAt',
-        key: 'updatedAt',
+        dataIndex: 'updated_at',
+        key: 'updated_at',
         render: (value, record) =>
           moment(value || moment()).format('DD/MM/YYYY'),
+      },
+      {
+        title: 'Actions',
+        dataIndex: 'actions',
+        key: 'actions',
+        render: (value, record) => (
+          <TableActions {...tableActionProps(record)} />
+        ),
       },
     ],
     [clickedRowIndex],
   )
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const { data, status } = await getUserSAUsers()
-
-        setData(data)
-      } catch (error) {
-        notification('error', 'Something went wrong')
-      }
-    }
     fetchUsers()
   }, [])
   return (

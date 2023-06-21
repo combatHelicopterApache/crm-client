@@ -69,7 +69,7 @@ export const CompaniesList = () => {
         key: 'status',
         width: 100,
         render: value => (
-          <p>
+          <p style={{ margin: '0' }}>
             {value === CompanyStatus.Active
               ? 'Active'
               : value === CompanyStatus.Inactive

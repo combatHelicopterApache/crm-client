@@ -12,7 +12,7 @@ import { notification } from 'components/Notification/Notification'
 import moment from 'moment-timezone'
 import { Spin } from 'antd'
 import { H2 } from 'molecules/H2/H2'
-import { BrandStatus } from './BrandForm'
+
 import { Span } from 'molecules/Span/Span'
 import { BrandInfo } from './BrandInfo'
 
@@ -74,8 +74,8 @@ export const BrandsList = () => {
       },
       {
         title: 'Status',
-        dataIndex: 'status',
-        key: 'status',
+        dataIndex: 'active',
+        key: 'active',
         width: 100,
         render: value => <Span>{value ? 'Active' : 'Inctive'}</Span>,
         onCell: record => {

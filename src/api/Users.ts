@@ -12,7 +12,7 @@ export const getUsers = params => {
 }
 
 export const deleteUser = (id: number) => {
-  return axiosInstance.delete(`/api/user/${id}`)
+  return axiosInstance.delete(`/user/${id}`)
 }
 
 export const updateUser = (id: number, data) => {
