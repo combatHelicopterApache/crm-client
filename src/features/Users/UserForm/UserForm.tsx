@@ -140,11 +140,14 @@ export const UserForm = () => {
 }
 
 const Wrapper = styled.div``
-const Form = styled.form``
+const Form = styled.form`
+  width: 40%;
+`
 
 const ControlsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
   gap: 10px;
+  
 `
