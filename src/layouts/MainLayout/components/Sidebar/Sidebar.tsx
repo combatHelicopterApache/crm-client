@@ -73,24 +73,24 @@ const Sidebar = () => {
             <p>Calendar</p>
           </NavLink>
         </li>
-        <li key='6'>
-          <NavLink
-            to={RoutesPath.GROUPS_ROUTE}
-            className={navData => (navData.isActive ? 'active' : 'none')}
-          >
-            <TeamOutlined />
-            <p>Groups</p>
-          </NavLink>
-        </li>
-        <li key='7'>
-          <NavLink
-            to={RoutesPath.USERS_ROUTE}
-            className={navData => (navData.isActive ? 'active' : 'none')}
-          >
-            <UserOutlined />
-            <p>Users</p>
-          </NavLink>
-        </li>
+        {/*<li key='6'>*/}
+        {/*  <NavLink*/}
+        {/*    to={RoutesPath.GROUPS_ROUTE}*/}
+        {/*    className={navData => (navData.isActive ? 'active' : 'none')}*/}
+        {/*  >*/}
+        {/*    <TeamOutlined />*/}
+        {/*    <p>Groups</p>*/}
+        {/*  </NavLink>*/}
+        {/*</li>*/}
+        {/*<li key='7'>*/}
+        {/*  <NavLink*/}
+        {/*    to={RoutesPath.USERS_ROUTE}*/}
+        {/*    className={navData => (navData.isActive ? 'active' : 'none')}*/}
+        {/*  >*/}
+        {/*    <UserOutlined />*/}
+        {/*    <p>Users</p>*/}
+        {/*  </NavLink>*/}
+        {/*</li>*/}
         <li key='8'>
           <NavLink
             to={RoutesPath.ANALYTICS_ROUTE}
@@ -100,15 +100,15 @@ const Sidebar = () => {
             <p>Analytics</p>
           </NavLink>
         </li>
-        <li key='9'>
-          <NavLink
-            to={RoutesPath.BRANDS_ROUTE}
-            className={navData => (navData.isActive ? 'active' : 'none')}
-          >
-            <ApartmentOutlined />
-            <p>Brands</p>
-          </NavLink>
-        </li>
+        {/*<li key='9'>*/}
+        {/*  <NavLink*/}
+        {/*    to={RoutesPath.BRANDS_ROUTE}*/}
+        {/*    className={navData => (navData.isActive ? 'active' : 'none')}*/}
+        {/*  >*/}
+        {/*    <ApartmentOutlined />*/}
+        {/*    <p>Brands</p>*/}
+        {/*  </NavLink>*/}
+        {/*</li>*/}
         <li key='10'>
           <NavLink
             to={RoutesPath.SETTINGS_ROUTE}
