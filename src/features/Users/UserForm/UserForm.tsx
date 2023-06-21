@@ -139,9 +139,11 @@ export const UserForm = () => {
   )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  width: 50%;
+`
 const Form = styled.form`
-  width: 40%;
+  
 `
 
 const ControlsWrapper = styled.div`
