@@ -15,9 +15,10 @@ export const CustomTable: FC<CustomTableProps<any>> = ({
         dataSource={dataSource}
         columns={columns}
         className='headerHeight'
+        style={{height: '80vh'}}
         scroll={{ x: 1600, y: 'calc(100vh - 200px)' }}
         pagination={{
-          position: ['bottomRight'],
+          position: ['topRight','bottomRight'],
           showSizeChanger: true,
           pageSizeOptions: ['25', '50', '100', '250', '500'],
           total: rest?.pagination?.total ?? 25,
