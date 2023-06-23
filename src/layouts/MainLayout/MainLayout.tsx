@@ -29,7 +29,7 @@ const Wrapper = styled.div`
     overflow-x: auto;
   }
 
-  & .content {
-    padding: 1.4rem;
-  }
+  //& .content {
+  //  padding: 1.4rem;
+  //}
 `
