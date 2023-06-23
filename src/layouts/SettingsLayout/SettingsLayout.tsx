@@ -72,7 +72,7 @@ export const SettingsLayout = ({ children }: React.PropsWithChildren) => {
       </HeadingWrapper>
 
       <ContentWrapper>
-        {current && <Title> {current}</Title>}
+        {/*{current && <Title> {current}</Title>}*/}
         {children}
       </ContentWrapper>
     </MainLayout>
@@ -85,10 +85,10 @@ const Title = styled.h2`
   padding: 10px 0;
 `
 const HeadingWrapper = styled.div`
-  margin-top: -10px;
+  //margin-top: -10px;
   & ul,
   .ant-menu-light {
-    background-color: ${({ theme }) => theme.colors.background} !important;
+    background-color: ${({ theme }) => theme.colors.secondary} !important;
   }
 `
 const ContentWrapper = styled.div`

@@ -16,6 +16,7 @@ export const CustomTable: FC<CustomTableProps<any>> = ({
         columns={columns}
         className='headerHeight'
         style={{height: '80vh'}}
+        size={'small'}
         scroll={{ x: 1600, y: 'calc(100vh - 200px)' }}
         pagination={{
           position: ['topRight','bottomRight'],

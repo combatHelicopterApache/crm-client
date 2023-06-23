@@ -101,7 +101,7 @@ export const UserForm = () => {
 
   return (
     <Spin spinning={loading}>
-      <H2>Create New User</H2>
+      {/*<H2>Create New User</H2>*/}
       <Wrapper ref={contentRef}>
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(onSubmit)} noValidate>

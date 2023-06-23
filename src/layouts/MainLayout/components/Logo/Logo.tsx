@@ -40,7 +40,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid #3d3c3c;
 
   &.close {
     width: 100%;
