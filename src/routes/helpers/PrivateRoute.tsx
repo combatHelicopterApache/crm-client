@@ -14,7 +14,7 @@ export const privateRoute: React.FC<ExtendedRouteProps> = ({
   isAccess,
   ...route
 }): JSX.Element => {
-  const Component = isAccess ? element : NotAuthorized
+  const Component = element
   const isAuth: null | string =
     JSON.parse(localStorage.getItem('auth') as string)?.token || null
 
@@ -22,7 +22,15 @@ export const privateRoute: React.FC<ExtendedRouteProps> = ({
     <Route
       key={route.path}
       path={route.path}
-      element={isAuth ? <Component /> : <Navigate to='/login' replace={true} />}
+      element={
+        !isAuth ? (
+          <Navigate to='/login' replace={true} />
+        ) : !isAccess ? (
+          <NotAuthorized path='/' />
+        ) : (
+          <Component />
+        )
+      }
       {...route}
     />
   )

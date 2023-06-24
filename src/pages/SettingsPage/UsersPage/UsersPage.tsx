@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { UsersTable } from 'features/Users/tables/UsersTable'
+import { UsersTable } from 'features/Settings/Users/tables/UsersTable'
 
 export const UsersPage = () => {
   return <UsersTable />

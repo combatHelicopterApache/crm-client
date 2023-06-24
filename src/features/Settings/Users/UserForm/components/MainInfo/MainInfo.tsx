@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import ReactInputMask from 'react-input-mask'
 import { CustomInput } from 'components/Input/CustomInput'
 import { Controller, useFormContext } from 'react-hook-form'
-import { User, UserRole, UserStatus } from 'features/Users/types'
+import { User, UserRole, UserRoleStr } from 'features/Settings/Users/types'
 import { Select } from 'components/Select/Select'
 import { ColorPicker } from 'antd'
 import { TextArea } from 'components/TextArea/TextArea'
@@ -21,6 +21,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
     formState: { errors },
     control,
     setError,
+    watch,
   } = useFormContext()
 
   return (
@@ -51,7 +52,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
         <Controller
           name='role_id'
           control={control}
-          defaultValue={user.role_id}
+          defaultValue={UserRoleStr[user.role_id]}
           render={({ field }) => (
             <Select
               {...field}
@@ -73,17 +74,16 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
       </Row>
       <Row>
         <Controller
-          name='status'
+          name='active'
           control={control}
-          defaultValue={user.status}
+          defaultValue={user.status ? 'Active' : 'Inactive'}
           render={({ field }) => (
             <Select
               {...field}
               style={{ width: '100%' }}
               options={[
-                { value: UserStatus.Active, label: 'Active' },
-                { value: UserStatus.Inactive, label: 'Inactive' },
-                { value: UserStatus.Pending, label: 'Pending' },
+                { value: true, label: 'Active' },
+                { value: false, label: 'Inactive' },
               ]}
               placeholder='Status'
               status={errors?.status?.message ? 'error' : undefined}
@@ -185,21 +185,24 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
           )}
         />
       </Row>
-      <Row>
-        <Controller
-          name='password'
-          control={control}
-          defaultValue={user.password}
-          render={({ field }) => (
-            <CustomInput
-              {...field}
-              placeholder='Password'
-              status={errors?.password?.message ? 'error' : undefined}
-              error={errors?.password?.message}
-            />
-          )}
-        />
-      </Row>
+      {!user?.id && (
+        <Row>
+          <Controller
+            name='password'
+            control={control}
+            defaultValue={user.password}
+            render={({ field }) => (
+              <CustomInput
+                {...field}
+                placeholder='Password'
+                status={errors?.password?.message ? 'error' : undefined}
+                error={errors?.password?.message}
+              />
+            )}
+          />
+        </Row>
+      )}
+
       <Row>
         <Controller
           name='phone'

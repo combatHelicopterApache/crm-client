@@ -99,9 +99,14 @@ export const UserForm = () => {
     return () => subscription.unsubscribe()
   }, [])
 
+  useEffect(() => {
+    if (user?.id && id !== 'new') {
+      methods.reset(user)
+    }
+  }, [user, methods])
+
   return (
     <Spin spinning={loading}>
-      {/*<H2>Create New User</H2>*/}
       <Wrapper ref={contentRef}>
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -142,14 +147,11 @@ export const UserForm = () => {
 const Wrapper = styled.div`
   width: 50%;
 `
-const Form = styled.form`
-  
-`
+const Form = styled.form``
 
 const ControlsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
   gap: 10px;
-  
 `

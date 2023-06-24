@@ -1,10 +1,10 @@
 import React, { ChangeEvent } from 'react'
 import { Checkbox } from 'components/Checkbox/Checkbox'
-import { modulesList } from 'features/Users/utils/const'
+import { modulesList } from 'features/Settings/Users/utils/const'
 import styled from 'styled-components'
 import { Span } from 'molecules/Span/Span'
 import { H2 } from 'molecules/H2/H2'
-import { User } from 'features/Users/types'
+import { User } from 'features/Settings/Users/types'
 import { CheckboxChangeEvent } from 'antd/es/checkbox'
 
 interface IProps {

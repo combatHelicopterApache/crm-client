@@ -1,80 +1,104 @@
-import React, { lazy, Suspense, useMemo } from 'react'
-import { Routes, Route, Outlet } from 'react-router-dom'
+import React, { Suspense, useMemo } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import { NotAuthorized } from './helpers/NotAuthorized'
 import { privateRoute } from './helpers/PrivateRoute'
 import { publicRoute } from './helpers/PublicRoute'
 import { RoutesPath } from './types'
-import { SettingsRoutes } from './SettingsRoutes'
+import lazyWithRetry from 'services/LazyWithRetry/LazyWithRetry'
 
-export const MainRoutes = ({ initialized }) => {
+export const MainRoutes = ({ initialized, authUser }) => {
+  const {
+    users,
+    settings,
+    offices,
+    leads,
+    groups,
+    deposits,
+    company_info,
+    calendar,
+    analytics,
+    affiliates,
+  } = authUser?.permissions
+
   const privateRoutes = useMemo(
     () => [
       {
         label: 'Home',
         path: RoutesPath.HOME_ROUTE,
-        element: lazy(() => import('../pages/HomePage/HomePage')),
-        isAccess: true,
+        element: lazyWithRetry(() => import('../pages/HomePage/HomePage')),
+        isAccess: authUser?.active,
       },
       {
         label: 'Leads',
         path: RoutesPath.LEADS_ROUTE,
-        element: lazy(() => import('../pages/LeadsPage/LeadsPage')),
-        isAccess: true,
+        element: lazyWithRetry(() => import('../pages/LeadsPage/LeadsPage')),
+        // isAccess: authUser?.active && leads,
+        isAccess: false,
       },
       {
         label: 'Groups',
         path: RoutesPath.GROUPS_ROUTE,
-        element: lazy(() => import('../pages/GroupsPage/GroupsPage')),
-        isAccess: true,
+        element: lazyWithRetry(() => import('../pages/GroupsPage/GroupsPage')),
+        isAccess: authUser?.active,
       },
       {
         label: 'Group detail',
         path: RoutesPath.GROUPS_ROUTE + '/:id',
-        element: lazy(() => import('../pages/GroupsPage/GroupPageDetail')),
-        isAccess: true,
+        element: lazyWithRetry(
+          () => import('../pages/GroupsPage/GroupPageDetail'),
+        ),
+        isAccess: authUser?.active,
       },
 
       {
         label: 'Analytics',
         path: RoutesPath.ANALYTICS_ROUTE,
-        element: lazy(() => import('../pages/AnalyticsPage/AnalyticsPage')),
-        isAccess: true,
+        element: lazyWithRetry(
+          () => import('../pages/AnalyticsPage/AnalyticsPage'),
+        ),
+        isAccess: authUser?.active && analytics,
       },
       {
         label: 'Deposits',
         path: RoutesPath.DEPOSITS_ROUTE,
-        element: lazy(() => import('../pages/DepositsPage/DepositsPage')),
-        isAccess: true,
+        element: lazyWithRetry(
+          () => import('../pages/DepositsPage/DepositsPage'),
+        ),
+        isAccess: authUser?.active && deposits,
       },
       {
         label: 'Affiliates',
         path: RoutesPath.AFFILIATES_ROUTE,
-        element: lazy(() => import('../pages/AffiliatesPage/AffiliatesPage')),
-        isAccess: true,
+        element: lazyWithRetry(
+          () => import('../pages/AffiliatesPage/AffiliatesPage'),
+        ),
+        isAccess: authUser?.active && affiliates,
       },
       {
         label: 'Calendar',
         path: RoutesPath.CALENDAR_ROUTE,
-        element: lazy(() => import('../pages/CalendarPage/CalendarPage')),
-        isAccess: true,
+        element: lazyWithRetry(
+          () => import('../pages/CalendarPage/CalendarPage'),
+        ),
+        isAccess: authUser?.active && calendar,
       },
       {
         label: 'Settings',
         path: RoutesPath.SETTINGS_ROUTE,
-        element: lazy(() => import('../pages/SettingsPage/index')),
-        isAccess: true,
+        element: lazyWithRetry(() => import('../pages/SettingsPage/index')),
+        isAccess: authUser?.active && settings,
       },
       {
         label: 'Login',
         path: RoutesPath.LOGIN_ROUTE,
-        element: lazy(() => import('../pages/LoginPage/LoginPage')),
+        element: lazyWithRetry(() => import('../pages/LoginPage/LoginPage')),
         isAccess: true,
       },
       {
         label: 'Brands',
         path: RoutesPath.BRANDS_ROUTE,
-        element: lazy(() => import('../pages/BrandsPage')),
-        isAccess: true,
+        element: lazyWithRetry(() => import('../pages/BrandsPage')),
+        isAccess: authUser?.active,
       },
     ],
     [],
@@ -84,7 +108,7 @@ export const MainRoutes = ({ initialized }) => {
       {
         label: 'Login',
         path: RoutesPath.LOGIN,
-        element: lazy(() => import('../pages/LoginPage/LoginPage')),
+        element: lazyWithRetry(() => import('../pages/LoginPage/LoginPage')),
         isAccess: true,
       },
     ],
@@ -97,10 +121,10 @@ export const MainRoutes = ({ initialized }) => {
         {publicRoutes.map(publicRoute)}
         {initialized && privateRoutes.map(privateRoute)}
 
-        {/* <Route
+        <Route
           path='*'
           element={<NotAuthorized path={RoutesPath.HOME_ROUTE} />}
-        /> */}
+        />
       </Routes>
     </Suspense>
   )

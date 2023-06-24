@@ -4,14 +4,17 @@ import styled from 'styled-components'
 import { CustomButton } from 'components/Button/CustomButton'
 import { Span } from 'molecules/Span/Span'
 import { useNavigate } from 'react-router-dom'
-import { RoutesPath } from 'routes/types'
+import { Spin } from 'antd'
 import { notification } from 'components/Notification/Notification'
 import { getUsers } from 'api/Users'
 import moment from 'moment-timezone'
+import { TableActions } from 'components/TableActions/TableActions'
 
 export const UsersTable = () => {
   const navigate = useNavigate()
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(false)
+
   const columns = useMemo(
     () => [
       {
@@ -69,6 +72,14 @@ export const UsersTable = () => {
         dataIndex: 'user_identifier',
         key: 'user_identifier',
       },
+      {
+        title: 'Actions',
+        dataIndex: 'actions',
+        key: 'actions',
+        render: (value, record) => (
+          <TableActions {...tableActionProps(record)} />
+        ),
+      },
     ],
 
     [],
@@ -77,13 +88,22 @@ export const UsersTable = () => {
   const handleNavigate = () => {
     navigate(`/settings/users/new`)
   }
+  const handleEditUser = id => {
+    navigate(`/settings/users/${id}`)
+  }
+  const handleDeleteUser = async () => {
+    console.log('delete')
+  }
 
   const fetchUsersList = async params => {
     try {
-      const { data, status } = await getUsers(params)
+      setLoading(true)
+      const { data } = await getUsers(params)
       setData(data)
     } catch (error) {
       notification('error', 'Something went wrong!')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -91,12 +111,25 @@ export const UsersTable = () => {
     fetchUsersList({})
   }, [])
 
+  const tableActionProps = record => ({
+    todos: ['edit', 'delete'],
+    callbacks: [
+      () => handleEditUser(record.id),
+      () => handleDeleteUser(record.id),
+    ],
+    preloaders: [loading],
+    tooltips: ['Edit this user.', 'Remove this user?'],
+    popConfirms: [false, 'Are you sure?'],
+  })
+
   return (
     <Wrapper>
-      <CustomButton onClick={handleNavigate}>
-        <Span>Create User</Span>
-      </CustomButton>
-      <CustomTable dataSource={data} columns={columns} />
+      <Spin spinning={loading}>
+        <CustomButton onClick={handleNavigate}>
+          <Span>Create User</Span>
+        </CustomButton>
+        <CustomTable dataSource={data} columns={columns} />
+      </Spin>
     </Wrapper>
   )
 }

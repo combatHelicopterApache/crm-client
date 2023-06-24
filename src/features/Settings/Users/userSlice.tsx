@@ -45,7 +45,7 @@ export const fetchUser = createAsyncThunk<User, string>(
   async id => {
     const data = await userAPI.getUser(id)
 
-    return data
+    return data?.data
   },
 )
 

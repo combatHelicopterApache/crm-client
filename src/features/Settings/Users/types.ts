@@ -7,6 +7,15 @@ export enum UserRole {
   WORKER = 6,
   ACCOUNT_MANAGER = 7,
 }
+export const UserRoleStr = {
+  1: 'SUPER_ADMIN',
+  2: 'OWNER',
+  3: 'ADMIN',
+  4: 'MANAGER',
+  5: 'AGENT',
+  6: 'WORKER',
+  7: 'ACCOUNT_MANAGER',
+}
 
 export enum UserStatus {
   Inactive,

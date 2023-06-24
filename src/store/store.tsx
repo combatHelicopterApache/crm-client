@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import ui from './ui/UISlice'
 import auth from '../features/Login/authSlice'
-import user from 'features/Users/userSlice'
+import user from 'features/Settings/Users/userSlice'
 
 const rootReducer = combineReducers({
   auth,

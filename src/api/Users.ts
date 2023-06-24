@@ -4,7 +4,7 @@ export const createUser = (data: object) => {
   return axiosInstance.post(`/user/create`, data)
 }
 export const getUser = (id: number) => {
-  return axiosInstance.get(`/api/user/${id}`)
+  return axiosInstance.get(`/user/${id}`).then(data => data?.data)
 }
 
 export const getUsers = params => {

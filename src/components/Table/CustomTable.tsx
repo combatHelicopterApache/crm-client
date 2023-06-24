@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
 import { Table, TableProps } from 'antd'
 import styled from 'styled-components'
+import { P } from 'molecules/P/P'
 
 interface CustomTableProps<T> extends TableProps<T> {}
 
@@ -15,18 +16,18 @@ export const CustomTable: FC<CustomTableProps<any>> = ({
         dataSource={dataSource}
         columns={columns}
         className='headerHeight'
-        style={{height: '80vh'}}
+        style={{ height: '80vh' }}
         size={'small'}
         scroll={{ x: 1600, y: 'calc(100vh - 200px)' }}
         pagination={{
-          position: ['topRight','bottomRight'],
+          position: ['bottomRight'],
           showSizeChanger: true,
           pageSizeOptions: ['25', '50', '100', '250', '500'],
           total: rest?.pagination?.total ?? 25,
           pageSize: 20,
           size: 'small',
           showTotal: (total, range) => (
-            <p className='pagination'>{`${range[0]}-${range[1]} of ${total} items`}</p>
+            <P className='pagination'>{`${range[0]}-${range[1]} of ${total} items`}</P>
           ),
         }}
         rowKey='id'
@@ -60,6 +61,12 @@ const TableWrapper = styled.div`
 
   td.ant-table-cell {
     color: ${({ theme }) => theme.colors.text} !important;
+  }
+  & .ant-table-container {
+    height: 78vh;
+  }
+  & .ant-table-body {
+    height: 96%;
   }
 
   .ant-table-container::after {

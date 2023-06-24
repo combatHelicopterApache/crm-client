@@ -24,11 +24,7 @@ export const Builder = () => {
 
         if (!token) return navigate('/login')
 
-        const { payload } = await dispatch(loginByToken(token))
-        // if (payload?.message?.status === 401) {
-        //   setTokenToLS(null)
-        //   navigate('/login')
-        // }
+        await dispatch(loginByToken(token))
       } catch (error) {
         console.error(error)
       }
@@ -38,6 +34,8 @@ export const Builder = () => {
 
   if (loading)
     return <Spin style={{ position: 'absolute', left: '50%', top: '50%' }} />
+
+  if (!loading && !auth_user?.id) return navigate('/login')
 
   return is_admin ? (
     <AdminRoutes initialized={initialized} authUser={auth_user} />
