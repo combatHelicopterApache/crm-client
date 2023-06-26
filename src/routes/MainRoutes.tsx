@@ -18,7 +18,7 @@ export const MainRoutes = ({ initialized, authUser }) => {
     calendar,
     analytics,
     affiliates,
-  } = authUser?.permissions
+  } = authUser?.permissions || {}
 
   const privateRoutes = useMemo(
     () => [

@@ -35,7 +35,7 @@ export const Builder = () => {
   if (loading)
     return <Spin style={{ position: 'absolute', left: '50%', top: '50%' }} />
 
-  if (!loading && !auth_user?.id) return navigate('/login')
+  // if (!loading && !auth_user?.id) return navigate('/login')
 
   return is_admin ? (
     <AdminRoutes initialized={initialized} authUser={auth_user} />

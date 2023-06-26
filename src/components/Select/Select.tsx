@@ -7,7 +7,7 @@ export const Select: FC<
 > = props => {
   return (
     <Wrapper>
-      {!!props?.label && <Label>{props?.label}</Label>}
+      {!!props?.label && <Label  >{props?.label}</Label>}
       <AntdSelect {...props} />
       {!!props?.error && <ErrorMessage>{props?.error}</ErrorMessage>}
     </Wrapper>
@@ -21,6 +21,7 @@ const ErrorMessage = styled.p`
 
 const Label = styled.p`
   color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => (theme.colors.text ? 'red' : 'blue')};
   font-size: 12px;
   margin-bottom: 3px;
   margin-left: 3px;
