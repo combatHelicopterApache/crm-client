@@ -1,7 +1,8 @@
 import React, { FC } from 'react'
-import { Input, InputProps } from 'antd'
+import { InputProps } from 'antd'
 import styled from 'styled-components'
 
+import TextField from '@mui/material/TextField';
 interface CustomInputProps extends InputProps {
   error?: string
   label?: string
@@ -15,7 +16,7 @@ export const CustomInput: FC<CustomInputProps> = ({
   return (
     <InputWrapper>
       {!!label && <Label>{label}</Label>}
-      <Input autoComplete='off' {...props} />
+      <TextField autoComplete='off' {...props} label="Outlined" variant={'outlined'} />
       {!!error && <ErrorMessage>{error}</ErrorMessage>}
     </InputWrapper>
   )
