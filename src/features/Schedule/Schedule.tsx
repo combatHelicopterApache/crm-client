@@ -274,6 +274,7 @@ export const Schedule = () => {
 }
 
 const Wrapper = styled.div`
+  padding: 1.4rem;
   & .rs__cell.rs__header {
     background-color: ${({ theme }) => theme.colors.background} !important;
     & .MuiTypography-body1 {
