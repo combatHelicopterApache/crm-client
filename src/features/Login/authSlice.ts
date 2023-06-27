@@ -4,7 +4,7 @@ import {
   SerializedError,
 } from '@reduxjs/toolkit'
 import { notification } from 'components/Notification/Notification'
-import * as authAPI from 'api/login'
+import * as authAPI from 'api/Login'
 import { AppDispatch, RootState } from 'store/store'
 import { setTokenToLS } from 'utils/setTokenToLS'
 
