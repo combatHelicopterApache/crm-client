@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import { InputProps } from 'antd'
 import styled from 'styled-components'
+import { TextFieldProps } from '@mui/material/TextField'
+import TextField from '@mui/material/TextField'
 
-import TextField from '@mui/material/TextField';
-interface CustomInputProps extends InputProps {
+interface CustomInputProps extends TextFieldProps {
   error?: string
   label?: string
 }
@@ -15,8 +15,15 @@ export const CustomInput: FC<CustomInputProps> = ({
 }): JSX.Element => {
   return (
     <InputWrapper>
-      {!!label && <Label>{label}</Label>}
-      <TextField autoComplete='off' {...props} label="Outlined" variant={'outlined'} />
+      {/* {!!label && <Label>{label}</Label>} */}
+      <TextField
+        autoComplete='off'
+        label={label}
+        size='small'
+        variant='outlined'
+        fullWidth
+        {...props}
+      />
       {!!error && <ErrorMessage>{error}</ErrorMessage>}
     </InputWrapper>
   )
@@ -34,6 +41,25 @@ const Label = styled.p`
 `
 
 const InputWrapper = styled.div`
+  width: 100%;
+
+  & .MuiFormLabel-root {
+    color: ${({ theme }) => theme.colors.text};
+    font-size: 14px;
+    top: 2px;
+  }
+  & input::placeholder {
+    color: ${({ theme }) => theme.colors.text};
+  }
+  & input {
+    width: 100%;
+  }
+  & .MuiOutlinedInput-notchedOutline {
+    /* background-color: ${({ theme }) => theme.colors.background}; */
+    color: ${({ theme }) => theme.colors.text};
+    border-color: ${({ theme }) => theme.colors.text};
+  }
+
   & .ant-input {
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};

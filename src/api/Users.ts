@@ -26,3 +26,7 @@ export const getUserSAUsers = () => {
 export const getUserByToken = params => {
   return axiosInstance.get(`/user/token`, { params }).then(data => data?.data)
 }
+
+export const getUsersList = () => {
+  return axiosInstance.get(`user/user-list`).then(data => data?.data)
+}

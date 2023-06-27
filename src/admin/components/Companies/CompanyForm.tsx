@@ -13,7 +13,7 @@ import { Spin } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { AdminRoutesPath } from 'routes/types'
 import { TextArea } from 'components/TextArea/TextArea'
-import { createCompany } from 'api/companies'
+import { createCompany } from 'api/Companies'
 import { Select } from 'components/Select/Select'
 
 export enum CompanyStatus {

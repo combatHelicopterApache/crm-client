@@ -52,6 +52,10 @@ const TableWrapper = styled.div`
     background-color: ${({ theme }) => theme.colors.secondary};
   }
 
+  & tr.ant-table-placeholder {
+    background-color: ${({ theme }) => theme.colors.secondary} !important;
+  }
+
   & .ant-select-selector {
     background-color: ${({ theme }) => theme.colors.secondary} !important;
   }
