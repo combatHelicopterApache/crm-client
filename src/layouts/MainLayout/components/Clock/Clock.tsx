@@ -31,6 +31,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  font-size: 0.6rem;
   & h2 {
     margin: 0;
   }
