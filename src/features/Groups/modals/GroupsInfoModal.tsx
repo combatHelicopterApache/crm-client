@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Modal, Descriptions, message, Spin, Button } from 'antd'
-import { getGroupById } from '../../../api/groups'
+import { getGroupById } from '../../../api/Groups'
 
 interface IProps {
   id: string
