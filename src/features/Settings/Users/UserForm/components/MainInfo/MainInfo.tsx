@@ -8,6 +8,8 @@ import { Select } from 'components/Select/Select'
 import { ColorPicker } from 'antd'
 import { TextArea } from 'components/TextArea/TextArea'
 import { Span } from 'molecules/Span/Span'
+import { useUsers } from 'hooks/useUsers'
+import { useBrands } from 'hooks/useBrands'
 
 const mask = '+38(999) 99-99-999'
 
@@ -17,6 +19,8 @@ interface IProps {
 }
 
 export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
+  const { users } = useUsers()
+  const { brands } = useBrands()
   const {
     formState: { errors },
     control,
@@ -57,6 +61,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
             <Select
               {...field}
               style={{ width: '100%' }}
+              label='User Role'
               onChange={handleChangeUserRole}
               options={[
                 { value: UserRole.ADMIN, label: 'Admin' },
@@ -80,6 +85,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
           render={({ field }) => (
             <Select
               {...field}
+              label='Status'
               style={{ width: '100%' }}
               options={[
                 { value: true, label: 'Active' },
@@ -101,12 +107,11 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
             <Select
               {...field}
               style={{ width: '100%' }}
-              options={[
-                { value: 1, label: 'Alex' },
-                { value: 2, label: 'Jonh' },
-                { value: 3, label: 'Ashly' },
-              ]}
-              placeholder='Manager'
+              label='User Admin'
+              options={users?.map(user => ({
+                value: user.id,
+                label: user.full_name,
+              }))}
               status={errors?.admin_id?.message ? 'error' : undefined}
               error={errors?.admin_id?.message}
             />
@@ -121,12 +126,13 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
           render={({ field }) => (
             <Select
               {...field}
+              label='User Brand'
               style={{ width: '100%' }}
-              options={[
-                { value: 1, label: 'Rozetka' },
-                { value: 2, label: 'Citrus' },
-                { value: 3, label: 'Apple' },
-              ]}
+              type='multiple'
+              options={brands?.map(brand => ({
+                value: brand.id,
+                label: brand.title,
+              }))}
               placeholder='Brand'
               status={errors?.brand_id?.message ? 'error' : undefined}
               error={errors?.brand_id?.message}
@@ -142,13 +148,12 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
           render={({ field }) => (
             <Select
               {...field}
+              label='User Manager'
               style={{ width: '100%' }}
-              options={[
-                { value: 1, label: 'Alex' },
-                { value: 2, label: 'Jonh' },
-                { value: 3, label: 'Ashly' },
-              ]}
-              placeholder='Manager'
+              options={users?.map(user => ({
+                value: user.id,
+                label: user.full_name,
+              }))}
               status={errors?.manager_id?.message ? 'error' : undefined}
               error={errors?.manager_id?.message}
             />
@@ -164,6 +169,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
             <CustomInput
               {...field}
               placeholder='User Name'
+              label='User Name'
               status={errors?.full_name?.message ? 'error' : undefined}
               error={errors?.full_name?.message}
             />
@@ -179,6 +185,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
             <CustomInput
               {...field}
               placeholder='User Email'
+              label='User Email'
               status={errors?.email?.message ? 'error' : undefined}
               error={errors?.email?.message}
             />
@@ -195,6 +202,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
               <CustomInput
                 {...field}
                 placeholder='Password'
+                label='Password'
                 status={errors?.password?.message ? 'error' : undefined}
                 error={errors?.password?.message}
               />
@@ -224,6 +232,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
               {() => (
                 <CustomInput
                   placeholder='User Phone'
+                  label='User Phone'
                   status={errors?.phone?.message ? 'error' : undefined}
                   error={errors?.phone?.message}
                 />
@@ -241,6 +250,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
             <CustomInput
               {...field}
               placeholder='Address'
+              label='Address'
               status={errors?.address?.message ? 'error' : undefined}
               error={errors?.address?.message}
             />
@@ -256,6 +266,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
             <CustomInput
               {...field}
               placeholder='Title'
+              label='Title'
               status={errors?.title?.message ? 'error' : undefined}
               error={errors?.title?.message}
             />
@@ -272,6 +283,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
             <CustomInput
               {...field}
               placeholder='User identifier'
+              label='User identifier'
               status={errors?.user_identifier?.message ? 'error' : undefined}
               error={errors?.user_identifier?.message}
             />
@@ -287,6 +299,7 @@ export const MainInfo = ({ user, handleChangeUserRole }: IProps) => {
             <TextArea
               {...field}
               placeholder='Notes'
+              label='Notes'
               rows={5}
               status={errors?.notes?.message ? 'error' : undefined}
               error={errors?.notes?.message}

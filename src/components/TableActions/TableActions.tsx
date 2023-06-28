@@ -69,9 +69,8 @@ const Wrapper = styled.div`
     align-items: center;
 
     & .btn-light {
-      background-color: ${({ theme }) => theme.colors.secondary} !important;
+      background-color: transparent;
       border-color: ${({ theme }) => theme.colors.secondary} !important;
-      background-color: black;
       border: none;
       box-shadow: none;
       padding: 0.25rem;
@@ -80,13 +79,12 @@ const Wrapper = styled.div`
       &:visited,
       &:disabled,
       &.disabled {
-        background-color: unset !important;
+        background-color: transparent;
         border-color: unset !important;
         border: none !important;
         box-shadow: none !important;
         button {
-          background-color: ${({ theme }) =>
-            theme.colors.background} !important;
+          background-color: transparent;
           border-color: ${({ theme }) => theme.colors.background} !important;
           border: none !important;
           box-shadow: none !important;

@@ -22,7 +22,7 @@ export const userFormSchema = yup.object({
     .label('User phone')
     .required('User Phone is required'),
   manager_id: yup
-    .number()
+    .string()
     .nullable()
     .required('Manager is required')
     .label('Manager'),
@@ -31,18 +31,18 @@ export const userFormSchema = yup.object({
     .nullable()
     .label('Role ')
     .required('User Role  is required'),
-  status: yup
-    .number()
+  active: yup
+    .boolean()
     .nullable()
     .label('Status')
     .required('Status  is required'),
   admin_id: yup
-    .number()
+    .string()
     .nullable()
     .label('Admin')
     .required('Admin  is required'),
   brand_id: yup
-    .number()
+    .string()
     .nullable()
     .label('Admin')
     .required('Brand  is required'),

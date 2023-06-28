@@ -47,10 +47,13 @@ export const ellipsisStyle = {
 }
 
 const TableWrapper = styled.div`
-  padding: 10px 0;
+  padding: 10px;
   .ant-table-body {
     background-color: ${({ theme }) => theme.colors.secondary};
   }
+  /* & .ant-table-tbody {
+    height: 100vh;
+  } */
 
   & tr.ant-table-placeholder {
     background-color: ${({ theme }) => theme.colors.secondary} !important;
@@ -65,6 +68,17 @@ const TableWrapper = styled.div`
 
   td.ant-table-cell {
     color: ${({ theme }) => theme.colors.text} !important;
+    background-color: ${({ theme }) => theme.colors.secondary};
+  }
+  & .ant-table-cell-row-hover {
+    background-color: ${({ theme }) => theme.colors.secondary} !important;
+  }
+  & .ant-table-cell-scrollbar {
+    background-color: ${({ theme }) => theme.colors.secondary} !important;
+    border-bottom: ${({ theme }) =>
+      `1px solid ${theme.colors.secondary}`} !important;
+    box-shadow: ${({ theme }) =>
+      `0 1px 0 1px ${theme.colors.secondary}`} !important;
   }
   & .ant-table-container {
     height: 78vh;

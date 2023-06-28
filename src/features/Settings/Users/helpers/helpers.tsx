@@ -20,6 +20,7 @@ export const getModulesByRole = (
         'users',
         'analytics',
         'settings',
+        'company_info',
       ]
       break
 

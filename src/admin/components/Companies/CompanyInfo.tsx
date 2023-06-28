@@ -96,14 +96,8 @@ export const CompanyInfo = () => {
                 { value: CompanyStatus.Pending, label: 'Pending' },
               ]}
               value={state?.status}
-              onChange={value =>
-                onChange({
-                  target: {
-                    name: 'status',
-                    value: value,
-                  },
-                })
-              }
+              name='status'
+              onChange={onChange}
               placeholder='Status'
             />
           </P>

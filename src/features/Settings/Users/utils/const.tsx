@@ -8,6 +8,7 @@ export const modulesList = [
   { name: 'users', label: 'Users' },
   { name: 'analytics', label: 'Analytics' },
   { name: 'settings', label: 'Settings' },
+  { name: 'company_info', label: 'Company' },
 ]
 
 export const MODULES = {
@@ -20,4 +21,5 @@ export const MODULES = {
   users: false,
   analytics: false,
   settings: false,
+  company_info: false,
 }

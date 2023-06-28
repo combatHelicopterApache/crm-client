@@ -2,18 +2,15 @@ import React, { FC } from 'react'
 // import { Select as AntdSelect, SelectProps } from 'antd'
 import styled from 'styled-components'
 import { Select as MuiSelect, SelectProps } from '@mui/material'
-
+import { Empty } from 'antd'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
-import FormHelperText from '@mui/material/FormHelperText'
+// import FormHelperText from '@mui/material/FormHelperText'
 import FormControl from '@mui/material/FormControl'
 
-export const Select: FC<SelectProps & { error: string }> = props => {
+export const Select: FC<SelectProps> = props => {
   return (
     <Wrapper>
-      {/* {!!props?.label && <Label>{props?.label}</Label>} */}
-      {/* <MuiSelect fullWidth variant='outlined' size='small' {...props} /> */}
-      {/* {!!props?.error && <ErrorMessage>{props?.error}</ErrorMessage>} */}
       <FormControl sx={{ width: '100%' }}>
         {props?.label && <InputLabel id='label'>{props?.label}</InputLabel>}
         <MuiSelect
@@ -23,11 +20,17 @@ export const Select: FC<SelectProps & { error: string }> = props => {
           fullWidth
           {...props}
         >
-          {props?.options?.map((item, idx) => (
-            <MenuItem value={item?.value}>{item?.label}</MenuItem>
-          ))}
+          {!!props?.options?.length ? (
+            props?.options?.map((item, idx) => (
+              <MenuItem className='select-item' key={idx} value={item?.value}>
+                {item?.label}
+              </MenuItem>
+            ))
+          ) : (
+            <Empty />
+          )}
         </MuiSelect>
-        {/* <FormHelperText>With label + helper text</FormHelperText> */}
+        {!!props?.error && <ErrorMessage>{props?.error}</ErrorMessage>}
       </FormControl>
     </Wrapper>
   )
@@ -38,13 +41,13 @@ const ErrorMessage = styled.p`
   font-size: 12px;
 `
 
-const Label = styled.p`
-  color: ${({ theme }) => theme.colors.text};
-  color: ${({ theme }) => (theme.colors.text ? 'red' : 'blue')};
-  font-size: 12px;
-  margin-bottom: 3px;
-  margin-left: 3px;
-`
+// const Label = styled.p`
+//   color: ${({ theme }) => theme.colors.text};
+//   color: ${({ theme }) => (theme.colors.text ? 'red' : 'blue')};
+//   font-size: 12px;
+//   margin-bottom: 3px;
+//   margin-left: 3px;
+// `
 
 const Wrapper = styled.div`
   width: 100%;

@@ -3,12 +3,7 @@ import styled from 'styled-components'
 import { TextFieldProps } from '@mui/material/TextField'
 import TextField from '@mui/material/TextField'
 
-interface CustomInputProps extends TextFieldProps {
-  error?: string
-  label?: string
-}
-
-export const CustomInput: FC<CustomInputProps> = ({
+export const CustomInput: FC<TextFieldProps> = ({
   error,
   label,
   ...props
@@ -53,6 +48,7 @@ const InputWrapper = styled.div`
   }
   & input {
     width: 100%;
+    color: ${({ theme }) => theme.colors.text};
   }
   & .MuiOutlinedInput-notchedOutline {
     /* background-color: ${({ theme }) => theme.colors.background}; */

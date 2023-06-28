@@ -24,20 +24,62 @@ export interface AsyncThunkAPI<T = void> {
 
 const initialUser: User = {
   full_name: '',
+  title: '',
   email: '',
   phone: '',
-  address: '',
-  permissions: getModulesByRole(2),
-  role_id: UserRole.AGENT,
-  manager_id: null,
-  admin_id: null,
-  brand_id: null,
-  status: UserStatus.Active,
-  title: '',
-  background_color: '#626ed4',
-  user_identifier: generateRandomLetters(2),
-  notes: '',
   password: '',
+  is_admin: false,
+  user_logo: '',
+  active: true,
+  role_id: UserRole.AGENT,
+  role_name: 'AGENT',
+  company_id: '',
+  company_name: '',
+  background_color: '#626ed4',
+  notes: '',
+  address: '',
+  user_identifier: generateRandomLetters(2),
+  permissions: getModulesByRole(5),
+  user_ips: [],
+  last_login: '',
+  login_from_admin: false,
+  brands: [],
+  desk_id: '',
+  desk_name: '',
+  manager_id: '',
+  manager_name: '',
+  owner_id: '',
+  owner_name: '',
+  time_cards: { time_start: '10:00', time_end: '19:00' },
+  user_sales_role_id: 1,
+  user_sales_role: 'sales',
+  restrictions: {
+    lead: {
+      lead_upload: true,
+      lead_download: true,
+      lead_events: [2, 5],
+    },
+    affiliates: {
+      affiliates_events: [2, 5],
+    },
+    deposits: {
+      deposits_events: [2, 5],
+    },
+    calendar: {
+      calendar_events: [2, 5],
+    },
+    groups: {
+      groups_events: [2, 5],
+    },
+    analytics: {
+      analytics_events: [2, 5],
+    },
+    settings: {
+      user_events: [5],
+      office_events: [5],
+      company_events: [5],
+    },
+  },
 }
 
 export const fetchUser = createAsyncThunk<User, string>(

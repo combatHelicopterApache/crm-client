@@ -20,3 +20,7 @@ export const getBrandsList = params => {
 export const getBrandById = (id: string) => {
   return axiosInstance.get(`/brand/${id}`).then(data => data.data)
 }
+
+export const getBrands = () => {
+  return axiosInstance.get('/brand/brand-list').then(data => data.data)
+}

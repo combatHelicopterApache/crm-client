@@ -7,9 +7,16 @@ import { notification } from 'components/Notification/Notification'
 import styled from 'styled-components'
 import { CustomTable } from 'components/Table/CustomTable'
 import { Span } from 'molecules/Span/Span'
-import { getOfficesList } from 'api/Offices'
+import {
+  getOfficesList,
+  createOffice,
+  deleteOffice,
+  updateOffice,
+} from 'api/Offices'
 import { EditOffice } from './components/EditOffice'
-import { ColumnProps } from 'antd/es/table'
+
+import { ColumnsType } from 'antd/es/table'
+
 import { Office } from './types'
 
 const initState: Office = {
@@ -31,68 +38,72 @@ export const Offices = () => {
   const [visible, setVisible] = useState(false)
   const [office, setOffice] = useState<Office>(initState)
 
-  const columns: ColumnProps<Office[]> = useMemo(
+  const columns: ColumnsType<Office[]> = useMemo(
     () => [
       {
-        title: 'Full Name',
-        dataIndex: 'full_name',
+        title: 'Title',
+        dataIndex: 'title',
         key: 'name',
       },
 
       {
-        title: 'Email',
-        dataIndex: 'email',
-        key: 'email',
+        title: 'Status',
+        dataIndex: 'active',
+        key: 'active',
+        render: value => (value ? 'Active' : 'Inactive'),
       },
       {
-        title: 'Phone',
-        dataIndex: 'phone',
-        key: 'phone',
+        title: 'Description',
+        dataIndex: 'description',
+        key: 'description',
       },
       {
-        title: 'Role',
-        dataIndex: 'role_name',
-        key: 'role_name',
-      },
-      {
-        title: 'Title',
-        dataIndex: 'title',
-        key: 'title',
-      },
-      {
-        title: 'Notes',
-        dataIndex: 'notes',
-        key: 'notes',
-      },
-      {
-        title: 'Manager',
-        dataIndex: 'manager_name',
-        key: 'manager_name',
+        title: 'Address',
+        dataIndex: 'address',
+        key: 'address',
       },
       {
         title: 'Created at',
         dataIndex: 'created_at',
         key: 'created_at',
-        render: value =>
-          value ? moment(value).format('DD/MM/YYYY HH:MM A') : '-',
+        render: value => moment(value).format('DD/MM/YYYY HH:MM A'),
       },
       {
-        title: 'Last Login',
-        dataIndex: 'last_login',
-        key: 'last_login',
-        render: value =>
-          value ? moment(value).format('DD/MM/YYYY HH:MM A') : '-',
+        title: 'Updated at',
+        dataIndex: 'updated_at',
+        key: 'updated_at',
+        render: value => moment(value).format('DD/MM/YYYY HH:MM A'),
+      },
+
+      {
+        title: 'Manager ID',
+        dataIndex: 'manager_id',
+        key: 'manager_id',
       },
       {
-        title: 'Identifier',
-        dataIndex: 'user_identifier',
-        key: 'user_identifier',
+        title: 'Work Start',
+        dataIndex: 'time_cards',
+        key: 'time_cards',
+        render: value =>
+          value?.time_start
+            ? moment(value.time_start, 'HH:mm').format('HH:mm A')
+            : '-',
       },
+      {
+        title: 'Work End',
+        dataIndex: 'time_cards',
+        key: 'time_cards',
+        render: value =>
+          value?.time_end
+            ? moment(value.time_end, 'HH:mm').format(' HH:mm A')
+            : '-',
+      },
+
       {
         title: 'Actions',
         dataIndex: 'actions',
         key: 'actions',
-        render: (value, record) => (
+        render: (value, record: Office) => (
           <TableActions {...tableActionProps(record)} />
         ),
       },
@@ -101,19 +112,28 @@ export const Offices = () => {
     [],
   )
 
-  const handleNavigate = () => {
-    // navigate(`/settings/users/new`)
-  }
-  const handleEditUser = id => {
-    // navigate(`/settings/users/${id}`)
-  }
-  const handleDeleteUser = async () => {
-    console.log('delete')
+  const handleEditOffice = (record: Office) => {
+    setVisible(true)
+    setOffice(record)
   }
 
   const handleClickCreateOffice = () => {
     setVisible(true)
     setOffice(initState)
+  }
+
+  const handleChange = e => {
+    const { name, value } = e.target
+    if (name === 'time_start' || name === 'time_end') {
+      return setOffice(prev => ({
+        ...prev,
+        time_cards: {
+          ...prev.time_cards,
+          [name]: value,
+        },
+      }))
+    }
+    setOffice(prev => ({ ...prev, [name]: value }))
   }
 
   const fetchOfficesList = async params => {
@@ -129,15 +149,55 @@ export const Offices = () => {
     }
   }
 
+  const handleSave = async () => {
+    setLoading(true)
+    try {
+      await createOffice(office)
+      await fetchOfficesList({})
+      setVisible(false)
+    } catch (error) {
+      notification('error', error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+  const handleDeleteOffice = async (id: Office['id']) => {
+    setLoading(true)
+    try {
+      await deleteOffice(id)
+      await fetchOfficesList({})
+    } catch (error) {
+      notification('error', error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleUpdate = async () => {
+    setLoading(true)
+    try {
+      await updateOffice(office)
+      await fetchOfficesList({})
+    } catch (error) {
+      notification('error', error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleCancel = id => {
+    setOffice(data.find(d => d.id === id))
+  }
+
   useEffect(() => {
     fetchOfficesList({})
   }, [])
 
-  const tableActionProps = record => ({
+  const tableActionProps = (record: Office) => ({
     todos: ['edit', 'delete'],
     callbacks: [
-      () => handleEditUser(record.id),
-      () => handleDeleteUser(record.id),
+      () => handleEditOffice(record),
+      () => handleDeleteOffice(record.id),
     ],
     preloaders: [loading],
     tooltips: ['Edit this office.', 'Remove this office?'],
@@ -155,7 +215,14 @@ export const Offices = () => {
       <EditOffice
         visible={visible}
         office={office}
-        onClose={() => setVisible(false)}
+        handleSave={handleSave}
+        onClose={() => {
+          setVisible(false)
+          setOffice(initState)
+        }}
+        onChange={handleChange}
+        handleUpdate={handleUpdate}
+        handleCancel={handleCancel}
       />
     </Wrapper>
   )

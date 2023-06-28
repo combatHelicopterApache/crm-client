@@ -5,7 +5,7 @@ import { userFormSchema } from '../utils/validation'
 import styled from 'styled-components'
 import { useTitle } from 'hooks/useTitle'
 import { CustomButton } from 'components/Button/CustomButton'
-import { generateRandomLetters } from 'utils/generateRandomLatters'
+
 import { notification } from 'components/Notification/Notification'
 import { Spin } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -13,12 +13,13 @@ import { RoutesPath } from 'routes/types'
 import { MainInfo } from './components/MainInfo/MainInfo'
 import { Permissions } from './components/Permissions/Permissions'
 import { User, UserRole } from '../types'
-import { H2 } from 'molecules/H2/H2'
+
 import { Span } from 'molecules/Span/Span'
 import useUser from '../hooks/useUser'
 import { getModulesByRole } from '../helpers/helpers'
 import { createUser } from '../userSlice'
 import { useDispatch } from 'react-redux'
+import { Restrictions } from './components/Restrictions/Restrictions'
 
 export const UserForm = () => {
   const dispatch = useDispatch()
@@ -79,12 +80,11 @@ export const UserForm = () => {
   }
 
   const handleChangeUserRole = (
-    value: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const roleId: UserRole = +value
-
+    const roleId: UserRole = +e.target.value
     setValue('role_id', roleId)
-    if (!user.id) {
+    if (!user?.id) {
       setValue('permissions', getModulesByRole(roleId))
     }
   }
@@ -111,17 +111,129 @@ export const UserForm = () => {
         <FormProvider {...methods}>
           <Form onSubmit={handleSubmit(onSubmit)} noValidate>
             <MainInfo user={user} handleChangeUserRole={handleChangeUserRole} />
-            <Controller
-              name='permissions'
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <Permissions
-                  data={value}
-                  disabled={!user?.role_id || status === 'loading'}
-                  onChange={onChange}
-                />
-              )}
-            />
+            <PermBlock>
+              {' '}
+              <Controller
+                name='permissions'
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Permissions
+                    data={value}
+                    disabled={!user?.role_id || status === 'loading'}
+                    onChange={onChange}
+                  />
+                )}
+              />
+              <Controller
+                name='restrictions.lead.lead_events'
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Restrictions
+                    data={value}
+                    disabled={!user?.role_id || status === 'loading'}
+                    onChange={onChange}
+                    title='User Restrictions'
+                    label='Leads Event'
+                  />
+                )}
+              />
+              <Controller
+                name='restrictions.affiliates.affiliates_events'
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Restrictions
+                    data={value}
+                    disabled={!user?.role_id || status === 'loading'}
+                    onChange={onChange}
+                    label='Affiliates Event'
+                  />
+                )}
+              />
+              <Controller
+                name='restrictions.deposits.deposits_events'
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Restrictions
+                    data={value}
+                    disabled={!user?.role_id || status === 'loading'}
+                    onChange={onChange}
+                    label='Deposits Event'
+                  />
+                )}
+              />
+              <Controller
+                name='restrictions.calendar.calendar_events'
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Restrictions
+                    data={value}
+                    disabled={!user?.role_id || status === 'loading'}
+                    onChange={onChange}
+                    label='Calendar Event'
+                  />
+                )}
+              />
+              <Controller
+                name='restrictions.groups.groups_events'
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Restrictions
+                    data={value}
+                    disabled={!user?.role_id || status === 'loading'}
+                    onChange={onChange}
+                    label='Groups Event'
+                  />
+                )}
+              />
+              <Controller
+                name='restrictions.analytics.analytics_events'
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Restrictions
+                    data={value}
+                    disabled={!user?.role_id || status === 'loading'}
+                    onChange={onChange}
+                    label='Analytics Event'
+                  />
+                )}
+              />
+              <Controller
+                name='restrictions.settings.user_events'
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Restrictions
+                    data={value}
+                    disabled={!user?.role_id || status === 'loading'}
+                    onChange={onChange}
+                    label='User Settings Event'
+                  />
+                )}
+              />
+              <Controller
+                name='restrictions.settings.office_events'
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Restrictions
+                    data={value}
+                    disabled={!user?.role_id || status === 'loading'}
+                    onChange={onChange}
+                    label='Office Settings Event'
+                  />
+                )}
+              />
+              <Controller
+                name='restrictions.settings.company_events'
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Restrictions
+                    data={value}
+                    disabled={!user?.role_id || status === 'loading'}
+                    onChange={onChange}
+                    label='Company Settings Event'
+                  />
+                )}
+              />
+            </PermBlock>
           </Form>
         </FormProvider>
         <ControlsWrapper>
@@ -145,13 +257,20 @@ export const UserForm = () => {
 }
 
 const Wrapper = styled.div`
-  width: 50%;
+  /* width: 50%; */
 `
-const Form = styled.form``
+const Form = styled.form`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+`
 
 const ControlsWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: end;
   gap: 10px;
+`
+const PermBlock = styled.div`
+  margin-top: 40px;
 `

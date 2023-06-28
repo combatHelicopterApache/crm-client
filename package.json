@@ -24,6 +24,7 @@
     "antd-img-crop": "^4.12.2",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
+    "dayjs": "^1.11.8",
     "env-cmd": "^10.1.0",
     "eslint-plugin-react": "^7.32.2",
     "install": "^0.13.0",
