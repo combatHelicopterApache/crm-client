@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Spin, Popover, Tag, Dropdown } from 'antd'
-import { getLeads } from '../../../api/leads'
+import { getLeads } from '../../../api/Leads'
 import {
   EyeOutlined,
   FormOutlined,
@@ -21,7 +21,8 @@ export const LeadsTable = () => {
     const fetchLeads = async () => {
       try {
         const response = await getLeads()
-        setLeads(response.data.leadData)
+        console.log(response.data)
+        setLeads(response.data)
       } catch {
         notification('error', 'An error occurred while loading data')
       } finally {
@@ -102,6 +103,11 @@ export const LeadsTable = () => {
       key: 'affiliate',
     },
     {
+      title: 'Country',
+      dataIndex: 'geo',
+      key: 'geo',
+    },
+    {
       title: 'Source',
       dataIndex: 'source',
       key: 'source',
@@ -113,15 +119,15 @@ export const LeadsTable = () => {
     },
     {
       title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'status_name',
+      key: 'status_name',
       width: 100,
       render: (text: any, tag: any) => (
         <Tag
           color={text.toUpperCase() === 'NEW' ? 'green' : 'red'}
-          key={text.status}
+          key={text.status_name}
         >
-          {tag.status.toUpperCase()}
+          {tag.status_name.toUpperCase()}
         </Tag>
       ),
     },

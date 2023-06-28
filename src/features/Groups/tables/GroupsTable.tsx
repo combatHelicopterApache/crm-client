@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { message, Dropdown, Modal, Spin } from 'antd'
-import { deleteGroup, getGroups } from '../../../api/groups'
+import { deleteGroup, getGroups } from '../../../api/Groups'
 
 import {
   UnorderedListOutlined,
