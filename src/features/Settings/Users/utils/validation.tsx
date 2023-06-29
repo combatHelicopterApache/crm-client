@@ -4,11 +4,15 @@ const phoneRegExp = /^\+38\(\d{3}\) \d{2}-\d{2}-\d{3}$/
 
 export const userFormSchema = yup.object({
   full_name: yup.string().required('User name is required').label('User name'),
-  password: yup
-    .string()
-    .min(3)
-    .required('Password  is required')
-    .label('Password'),
+  // password: yup
+  //   .string()
+  //   .min(3)
+  //   .when('user.id', {
+  //     is: undefined,
+  //     then: yup.string().required('Password is required'),
+  //     otherwise: yup.string().notRequired(),
+  //   })
+  //   .label('Password'),
   email: yup
     .string()
     .email('Invalid email address')
@@ -21,11 +25,11 @@ export const userFormSchema = yup.object({
     .nullable()
     .label('User phone')
     .required('User Phone is required'),
-  manager_id: yup
-    .string()
-    .nullable()
-    .required('Manager is required')
-    .label('Manager'),
+  // manager_id: yup
+  //   .string()
+  //   .nullable()
+  //   .required('Manager is required')
+  //   .label('Manager'),
   role_id: yup
     .number()
     .nullable()
@@ -36,16 +40,12 @@ export const userFormSchema = yup.object({
     .nullable()
     .label('Status')
     .required('Status  is required'),
-  admin_id: yup
-    .string()
-    .nullable()
-    .label('Admin')
-    .required('Admin  is required'),
-  brand_id: yup
-    .string()
-    .nullable()
-    .label('Admin')
-    .required('Brand  is required'),
+  // admin_id: yup
+  //   .string()
+  //   .nullable()
+  //   .label('Admin')
+  //   .required('Admin  is required'),
+  // brands: yup.array().nullable().label('Admin').required('Brand  is required'),
   address: yup
     .string()
     .required('User address is required')

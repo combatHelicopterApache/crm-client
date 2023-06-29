@@ -22,12 +22,18 @@ export enum UserStatus {
   Active,
   Pending,
 }
+export enum UserSalesRoleID {
+  SALES = 1,
+  RETENTION = 2,
+  BOTH = 3,
+}
 
 export enum UserSalesId {
   SALES = 1,
 }
 export enum UserSalesRole {
   SALES = 'sales',
+  RETENTION = 'retentions',
 }
 
 export interface User {
@@ -75,8 +81,8 @@ export interface User {
       company_events: number[]
     }
   }
-  user_sales_role_id: UserSalesId
-  user_sales_role: UserSalesRole
+  user_sales_role_id: UserSalesRoleID[]
+
   user_ips: string[]
   last_login: string
   login_from_admin: boolean
@@ -87,6 +93,7 @@ export interface User {
   manager_name: string
   owner_id: string
   owner_name: string
+  languages: []
   time_cards: {
     time_start: string
     time_end: string

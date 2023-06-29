@@ -36,13 +36,13 @@ export const Permissions = ({
       <H2 style={{ marginBottom: '20px' }}>Permissions</H2>
       <Wrapper>
         {modulesList.map(module => (
-          <Row key={module.name}>
-            <Span>{module.label}</Span>
+          <Row key={module?.name}>
+            <Span>{module?.label}</Span>
             <Checkbox
               disabled={disabled}
-              checked={data[module.name]}
+              checked={data?.[module?.name]}
               onChange={handleChangeModules}
-              name={module.name}
+              name={module?.name}
             />
           </Row>
         ))}

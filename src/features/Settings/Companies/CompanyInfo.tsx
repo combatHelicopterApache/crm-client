@@ -130,7 +130,12 @@ export const CompanyInfo = () => {
   )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  background-color: ${({ theme }) => theme.colors.secondary};
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+`
 
 const BrandWrapper = styled.div`
   position: relative;

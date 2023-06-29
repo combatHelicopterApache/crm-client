@@ -51,8 +51,8 @@ const initialUser: User = {
   owner_id: '',
   owner_name: '',
   time_cards: { time_start: '10:00', time_end: '19:00' },
-  user_sales_role_id: 1,
-  user_sales_role: 'sales',
+  user_sales_role_id: [1],
+  languages: [],
   restrictions: {
     lead: {
       lead_upload: true,
@@ -104,7 +104,7 @@ export const createUser = createAsyncThunk<User, User, AsyncThunkAPI>(
 
 export const updateUser = createAsyncThunk<User, { user: User }, AsyncThunkAPI>(
   'Users/updateUser',
-  async ({ user }, { rejectWithValue }) => {
+  async (user, { rejectWithValue }) => {
     try {
       const updatedUser: AxiosResponse<User> = await userAPI.updateUser(
         user.id,

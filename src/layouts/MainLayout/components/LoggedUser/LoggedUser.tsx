@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import s from './LoggedUser.module.css'
-import { Dropdown, Space, Avatar } from 'antd'
+import { Dropdown, Space } from 'antd'
 
 import {
   logout,
@@ -17,6 +17,7 @@ import { useAppDispatch, useAppSelector } from 'store/store'
 import { changeAppTheme } from 'store/ui/UISlice'
 import { RoutesPath } from 'routes/types'
 import { lastModuleVisited } from 'utils/lastModuleVisit'
+import { Avatar } from 'components/Avatar/Avatar'
 
 const LoggedUser = () => {
   const dispatch = useAppDispatch()
@@ -85,7 +86,14 @@ const LoggedUser = () => {
       >
         <a onClick={e => e.preventDefault()} href='#/'>
           <Space>
-            <Avatar icon={<UserOutlined />} />
+            <Avatar
+              size={40}
+              color={'rgb(83, 133, 249)'}
+              pictureURL={auth_user?.user_logo}
+              title={auth_user?.full_name || 'User'}
+            >
+              {auth_user?.full_name}
+            </Avatar>
           </Space>
         </a>
       </Dropdown>

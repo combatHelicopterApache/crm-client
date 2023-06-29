@@ -55,13 +55,15 @@ const Wrapper = styled.div`
   & #label,
   #helper-label {
     color: ${({ theme }) => theme.colors.text} !important;
+    font-size: 13px;
   }
   & #label {
-    top: -6px;
+    top: 0px;
   }
 
   & .MuiOutlinedInput-notchedOutline {
-    border-color: ${({ theme }) => theme.colors.text} !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    /* border-color: ${({ theme }) => theme.colors.text} !important; */
   }
   & .MuiSvgIcon-root {
     color: ${({ theme }) => theme.colors.text} !important;

@@ -40,20 +40,24 @@ const InputWrapper = styled.div`
 
   & .MuiFormLabel-root {
     color: ${({ theme }) => theme.colors.text};
-    font-size: 14px;
+    font-size: 13px;
     top: 2px;
   }
   & input::placeholder {
     color: ${({ theme }) => theme.colors.text};
+    font-size: 13px;
   }
   & input {
     width: 100%;
     color: ${({ theme }) => theme.colors.text};
+    font-size: 13px;
   }
   & .MuiOutlinedInput-notchedOutline {
     /* background-color: ${({ theme }) => theme.colors.background}; */
     color: ${({ theme }) => theme.colors.text};
-    border-color: ${({ theme }) => theme.colors.text};
+    /* border-color: ${({ theme }) => theme.colors.text}; */
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    font-size: 13px;
   }
 
   & .ant-input {

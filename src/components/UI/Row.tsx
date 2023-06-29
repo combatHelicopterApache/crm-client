@@ -68,7 +68,7 @@ const SettingsRowStyled = styled.div<{ width?: number; padding: number }>(
     display: 'grid',
     gridTemplateColumns: `${width || 200}px 1fr`,
     padding: '12px 0',
-    borderBottom: `1px solid ${theme.colors.text}`,
+    borderBottom: `1px solid  rgba(255, 255, 255, 0.3)`,
     paddingLeft: padding || 0,
     alignItems: 'center',
   }),

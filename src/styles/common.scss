@@ -15,3 +15,27 @@
     }
   }
 }
+
+.dark-theme .MuiPaper-root {
+  background-color: var(--mainGray) !important;
+  & .select-item {
+    color: rgba(123, 182, 241, 1) !important;
+  }
+  & .Mui-selected.select-item {
+    color: var(--whiteColor) !important;
+  }
+}
+
+.ant-picker-panel-container {
+  background-color: var(--mainGray) !important;
+  & .ant-picker-time-panel-cell-inner {
+    color: var(--whiteColor) !important;
+  }
+  & .ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+    color: var(--whiteColor) !important;
+    background-color: black !important;
+  }
+  & .ant-picker-now-btn {
+    color: var(--whiteColor) !important;
+  }
+}

@@ -17,9 +17,10 @@ import { User, UserRole } from '../types'
 import { Span } from 'molecules/Span/Span'
 import useUser from '../hooks/useUser'
 import { getModulesByRole } from '../helpers/helpers'
-import { createUser } from '../userSlice'
+import { createUser, updateUser, resetUser } from '../userSlice'
 import { useDispatch } from 'react-redux'
 import { Restrictions } from './components/Restrictions/Restrictions'
+import { deleteUser } from 'api/Users'
 
 export const UserForm = () => {
   const dispatch = useDispatch()
@@ -46,15 +47,26 @@ export const UserForm = () => {
     trigger,
     setValue,
     setError,
+    getValues,
   } = methods
 
   const onSubmit = async (data: User) => {
-    await dispatch(createUser(data))
-    notification('success', 'User was created successfuly!')
-    navigate(RoutesPath.USERS_ROUTE)
+    try {
+      if (data?.id) {
+        await dispatch(updateUser(data))
+      }
+      if (!data?.id) {
+        await dispatch(createUser(data))
+      }
+      dispatch(resetUser())
+      navigate(`/settings${RoutesPath.USERS_ROUTE}`)
+    } catch (error) {
+      console.log(error)
+      notification('error', 'Something went wrong')
+    }
   }
 
-  const handleCreateUser = async () => {
+  const handleSaveUser = async () => {
     const isValid = await trigger()
 
     if (!isValid) {
@@ -72,7 +84,14 @@ export const UserForm = () => {
   }
 
   const handleDeleteUser = async () => {
-    console.log('delete')
+    try {
+      await deleteUser(user?.id)
+      notification('success', 'User was deleted successfuly!')
+      navigate(`/settings${RoutesPath.USERS_ROUTE}`)
+      dispatch(resetUser())
+    } catch (error) {
+      notification('error', error.message || 'Something went wrong')
+    }
   }
 
   const handleClearForm = () => {
@@ -132,7 +151,7 @@ export const UserForm = () => {
                     data={value}
                     disabled={!user?.role_id || status === 'loading'}
                     onChange={onChange}
-                    title='User Restrictions'
+                    title='Restrictions'
                     label='Leads Event'
                   />
                 )}
@@ -247,8 +266,8 @@ export const UserForm = () => {
               <Span>Clear</Span>
             </CustomButton>
           )}
-          <CustomButton onClick={handleCreateUser}>
-            <Span>Create</Span>
+          <CustomButton onClick={handleSaveUser}>
+            <Span>{user?.id ? 'Update' : 'Create'}</Span>
           </CustomButton>
         </ControlsWrapper>
       </Wrapper>
@@ -260,9 +279,13 @@ const Wrapper = styled.div`
   /* width: 50%; */
 `
 const Form = styled.form`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  @media screen and (min-width: 800px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
 `
 
 const ControlsWrapper = styled.div`
@@ -273,4 +296,8 @@ const ControlsWrapper = styled.div`
 `
 const PermBlock = styled.div`
   margin-top: 40px;
+  background-color: ${({ theme }) => theme.colors.secondary};
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
 `
