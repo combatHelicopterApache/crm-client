@@ -20,7 +20,7 @@ export const CustomTable: FC<CustomTableProps<any>> = ({
         size={'small'}
         scroll={{ x: 1600, y: 'calc(100vh - 200px)' }}
         pagination={{
-          position: ['bottomRight'],
+          position: ['bottomRight', 'topRight'],
           showSizeChanger: true,
           pageSizeOptions: ['25', '50', '100', '250', '500'],
           total: rest?.pagination?.total ?? 25,
@@ -85,6 +85,11 @@ const TableWrapper = styled.div`
   }
   & .ant-table-body {
     height: 96%;
+  }
+
+   .ant-table-tbody >tr >td {
+    transition: background 0.2s,border-color 0.2s;
+    border-bottom: 1px solid transparent !important;
   }
 
   .ant-table-container::after {

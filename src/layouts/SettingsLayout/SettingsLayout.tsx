@@ -92,5 +92,5 @@ const HeadingWrapper = styled.div`
   }
 `
 const ContentWrapper = styled.div`
-  padding: 10px 20px;
+  padding: 16px;
 `

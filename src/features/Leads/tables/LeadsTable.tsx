@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Spin, Popover, Tag, Dropdown } from 'antd'
+import {Spin, Popover, Tag, Dropdown, Space} from 'antd'
 import { getLeads } from '../../../api/Leads'
 import {
   EyeOutlined,
@@ -9,8 +9,12 @@ import {
   CheckOutlined,
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
-import { CustomTable as Table } from 'components/Table/CustomTable'
+import {CustomTable, CustomTable as Table} from 'components/Table/CustomTable'
 import { notification } from 'components/Notification/Notification'
+import {CustomButton} from "../../../components/Button/CustomButton";
+import {Span} from "../../../molecules/Span/Span";
+import styled from "styled-components";
+import { useNavigate } from 'react-router-dom'
 
 export const LeadsTable = () => {
   const [leads, setLeads] = useState([])
@@ -119,16 +123,19 @@ export const LeadsTable = () => {
     },
     {
       title: 'Status',
-      dataIndex: 'status_name',
-      key: 'status_name',
+      dataIndex: 'status',
+      key: 'status',
       width: 100,
       render: (text: any, tag: any) => (
-        <Tag
-          color={text.toUpperCase() === 'NEW' ? 'green' : 'red'}
-          key={text.status_name}
-        >
-          {tag.status_name.toUpperCase()}
-        </Tag>
+          <Space>
+              <Tag
+                  color={text?.status?.color}
+                  key={text?.status?.title}
+              >
+                {tag?.status?.title?.toUpperCase()}
+              </Tag>
+          </Space>
+
       ),
     },
     {
@@ -151,8 +158,12 @@ export const LeadsTable = () => {
   return (
     <>
       <Spin spinning={loading}>
-        <Table dataSource={leads} columns={columns} />
+        <Wrapper>
+          <CustomTable dataSource={leads} columns={columns} />
+        </Wrapper>
       </Spin>
     </>
   )
 }
+
+const Wrapper = styled.div``
