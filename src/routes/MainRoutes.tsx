@@ -35,6 +35,12 @@ export const MainRoutes = ({ initialized, authUser }) => {
         isAccess: authUser?.active && leads,
       },
       {
+        label: 'Lead',
+        path: RoutesPath.LEAD_ROUTE,
+        element: lazyWithRetry(() => import('../pages/LeadPage')),
+        isAccess: authUser?.active && leads,
+      },
+      {
         label: 'Groups',
         path: RoutesPath.GROUPS_ROUTE,
         element: lazyWithRetry(() => import('../pages/GroupsPage/GroupsPage')),

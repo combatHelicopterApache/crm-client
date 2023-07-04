@@ -1,28 +1,29 @@
-import React, { FC } from 'react'
+import React, { FC, forwardRef } from 'react'
 import styled from 'styled-components'
 import { TextFieldProps } from '@mui/material/TextField'
 import TextField from '@mui/material/TextField'
 
-export const CustomInput: FC<TextFieldProps> = ({
-  error,
-  label,
-  ...props
-}): JSX.Element => {
-  return (
-    <InputWrapper>
-      {/* {!!label && <Label>{label}</Label>} */}
-      <TextField
-        autoComplete='off'
-        label={label}
-        size='small'
-        variant='outlined'
-        fullWidth
-        {...props}
-      />
-      {!!error && <ErrorMessage>{error}</ErrorMessage>}
-    </InputWrapper>
-  )
-}
+export const CustomInput = forwardRef<HTMLDivElement, TextFieldProps>(
+  ({ error, label, ...props }, ref) => {
+    return (
+      <InputWrapper>
+        {/* {!!label && <Label>{label}</Label>} */}
+        <TextField
+          ref={ref}
+          autoComplete='off'
+          label={label}
+          size='small'
+          variant='outlined'
+          fullWidth
+          {...props}
+        />
+        {!!error && <ErrorMessage>{error}</ErrorMessage>}
+      </InputWrapper>
+    )
+  },
+)
+
+CustomInput.displayName = 'CustomInput'
 
 const ErrorMessage = styled.p`
   color: red;
