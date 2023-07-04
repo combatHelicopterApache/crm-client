@@ -10,6 +10,7 @@ import {
   Edit,
   ContentCopy,
   Email,
+  Phone,
 } from '@mui/icons-material'
 
 // const style = { cursor: 'pointer' }
@@ -59,6 +60,10 @@ export const Button = ({
 
     case 'mail': {
       icon = <Email />
+      break
+    }
+    case 'phone': {
+      icon = <Phone />
       break
     }
 

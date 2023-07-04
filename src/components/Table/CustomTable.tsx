@@ -20,7 +20,7 @@ export const CustomTable: FC<CustomTableProps<any>> = ({
         size={'small'}
         scroll={{ x: 1600, y: 'calc(100vh - 200px)' }}
         pagination={{
-          position: ['bottomRight', 'topRight'],
+          position: ['bottomRight'],
           showSizeChanger: true,
           pageSizeOptions: ['25', '50', '100', '250', '500'],
           total: rest?.pagination?.total ?? 25,
@@ -82,13 +82,14 @@ const TableWrapper = styled.div`
   }
   & .ant-table-container {
     height: 78vh;
+    background-color: ${({ theme }) => theme.colors.background} !important;
   }
   & .ant-table-body {
     height: 96%;
   }
 
-   .ant-table-tbody >tr >td {
-    transition: background 0.2s,border-color 0.2s;
+  .ant-table-tbody > tr > td {
+    transition: background 0.2s, border-color 0.2s;
     border-bottom: 1px solid transparent !important;
   }
 
@@ -152,5 +153,18 @@ const TableWrapper = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+
+  & .ant-table-row-selected > td {
+    background-color: ${({ theme }) => theme.colors.background} !important;
+  }
+  & .ant-table-filter-trigger:not(.active) svg {
+    fill: ${({ theme }) => theme.colors.text} !important;
+  }
+  & .ant-table-column-sorter-up:not(.active) svg {
+    fill: ${({ theme }) => theme.colors.text} !important;
+  }
+  & .ant-table-column-sorter-down:not(.active) svg {
+    fill: ${({ theme }) => theme.colors.text} !important;
   }
 `
