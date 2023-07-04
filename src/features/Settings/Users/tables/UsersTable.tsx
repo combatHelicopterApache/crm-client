@@ -9,11 +9,16 @@ import { notification } from 'components/Notification/Notification'
 import { getUsers } from 'api/Users'
 import moment from 'moment-timezone'
 import { TableActions } from 'components/TableActions/TableActions'
+import { ControlsButton } from 'components/ControlsButton/ControlsButton'
 
 export const UsersTable = () => {
   const navigate = useNavigate()
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(false)
+  const [clickedRowIndex, setClickedRowIndex] = useState<number | null>(null)
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const [checkedRows, setCheckedRows] = useState([])
 
   const columns = useMemo(
     () => [
@@ -85,7 +90,7 @@ export const UsersTable = () => {
     [],
   )
 
-  const handleNavigate = () => {
+  const handleCreateUser = () => {
     navigate(`/settings/users/new`)
   }
   const handleEditUser = id => {
@@ -122,13 +127,53 @@ export const UsersTable = () => {
     popConfirms: [false, 'Are you sure?'],
   })
 
+  const controlsActionProps = record => ({
+    todos: ['add', 'delete'],
+    callbacks: [handleCreateUser, () => null],
+    preloaders: [loading, loading],
+    disabled: [null, !checkedRows?.length],
+    tooltips: ['Add new  user?', 'Delete selected user (s)?'],
+    popConfirms: ['Are you sure?'],
+  })
+  const onRow = (record: IClient, rowIndex: number) => ({
+    onClick: () => {
+      setClickedRowIndex(rowIndex)
+    },
+  })
+
+  const rowSelection = {
+    selectedRowKeys,
+    columnWidth: 30,
+    onChange: (
+      selectedRowKeys: React.SetStateAction<never[]>,
+      selectedRows: {
+        map: (arg0: (row: any) => any) => React.SetStateAction<never[]>
+      },
+    ) => {
+      setCheckedRows(
+        selectedRows.map(row => ({ ...row, display_info: row.name })),
+      )
+      setSelectedRowKeys(selectedRowKeys)
+    },
+    getCheckboxProps: (record: IClient) => ({
+      disabled:
+        (!checkedRows.map(({ id }) => id).includes(record.id) &&
+          checkedRows?.length === 2) ||
+        (checkedRows.length && record.type !== checkedRows?.[0]?.type), // Column configuration not to be checked
+      name: record.name,
+    }),
+  }
+
   return (
     <Wrapper>
       <Spin spinning={loading}>
-        <CustomButton onClick={handleNavigate}>
-          <Span>Create User</Span>
-        </CustomButton>
-        <CustomTable dataSource={data} columns={columns} />
+        <ControlsButton {...controlsActionProps(data)} />
+        <CustomTable
+          onRow={onRow}
+          rowSelection={rowSelection}
+          dataSource={data}
+          columns={columns}
+        />
       </Spin>
     </Wrapper>
   )

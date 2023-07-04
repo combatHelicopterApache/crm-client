@@ -14,7 +14,7 @@ import {
   updateOffice,
 } from 'api/Offices'
 import { EditOffice } from './components/EditOffice'
-
+import { ControlsButton } from 'components/ControlsButton/ControlsButton'
 import { ColumnsType } from 'antd/es/table'
 
 import { Office } from './types'
@@ -37,6 +37,10 @@ export const Offices = () => {
   const [loading, setLoading] = useState(false)
   const [visible, setVisible] = useState(false)
   const [office, setOffice] = useState<Office>(initState)
+  const [clickedRowIndex, setClickedRowIndex] = useState<number | null>(null)
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const [checkedRows, setCheckedRows] = useState([])
 
   const columns: ColumnsType<Office[]> = useMemo(
     () => [
@@ -203,14 +207,53 @@ export const Offices = () => {
     tooltips: ['Edit this office.', 'Remove this office?'],
     popConfirms: [false, 'Are you sure?'],
   })
+  const controlsActionProps = (record: Office) => ({
+    todos: ['add', 'delete', 'edit'],
+    callbacks: [handleClickCreateOffice, () => null],
+    preloaders: [loading, loading],
+    disabled: [null, !checkedRows?.length, !checkedRows?.length],
+    tooltips: ['Add new  user?', 'Delete selected user (s)?'],
+    popConfirms: ['Are you sure?'],
+  })
+  const onRow = (record: Office, rowIndex: number) => ({
+    onClick: () => {
+      setClickedRowIndex(rowIndex)
+    },
+  })
+
+  const rowSelection = {
+    selectedRowKeys,
+    columnWidth: 30,
+    onChange: (
+      selectedRowKeys: React.SetStateAction<never[]>,
+      selectedRows: {
+        map: (arg0: (row: any) => any) => React.SetStateAction<never[]>
+      },
+    ) => {
+      setCheckedRows(
+        selectedRows.map(row => ({ ...row, display_info: row.name })),
+      )
+      setSelectedRowKeys(selectedRowKeys)
+    },
+    getCheckboxProps: (record: IClient) => ({
+      disabled:
+        (!checkedRows.map(({ id }) => id).includes(record.id) &&
+          checkedRows?.length === 2) ||
+        (checkedRows.length && record.type !== checkedRows?.[0]?.type), // Column configuration not to be checked
+      name: record.name,
+    }),
+  }
 
   return (
     <Wrapper>
       <Spin spinning={loading}>
-        <CustomButton onClick={handleClickCreateOffice}>
-          <Span>Create Office</Span>
-        </CustomButton>
-        <CustomTable dataSource={data} columns={columns} />
+        <ControlsButton {...controlsActionProps(data)} />
+        <CustomTable
+          onRow={onRow}
+          rowSelection={rowSelection}
+          dataSource={data}
+          columns={columns}
+        />
       </Spin>
       <EditOffice
         visible={visible}

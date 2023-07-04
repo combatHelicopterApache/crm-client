@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Spin, Popover, Tag, Dropdown, Space } from 'antd'
+import { Spin, Popover, Tag, Dropdown, Space, Tooltip } from 'antd'
 import { getLeads } from '../../../api/Leads'
 import {
   EyeOutlined,
@@ -24,6 +24,10 @@ import { SorterResult } from 'antd/es/table/interface'
 import { SearchFilter } from 'components/Table/components/SearchFilter'
 import { FilterDropdownProps } from 'antd/es/table/interface'
 import { ControlsButton } from 'components/ControlsButton/ControlsButton'
+import { NavLink } from 'react-router-dom'
+import { countryByCode } from 'utils/countryList'
+
+import { ColumnsType, TableProps } from 'antd/es/table'
 
 const { Paragraph } = Typography
 
@@ -33,6 +37,22 @@ const renderCopyableText = text => {
       <Paragraph copyable={{ tooltips: false }}>{text}</Paragraph>
     </CopyWrapper>
   )
+}
+
+const ClientTypeFilters = [
+  {
+    text: 'Sales',
+    value: 'sales',
+  },
+  {
+    text: 'Retention',
+    value: 'retention',
+  },
+]
+
+const wordToUpperCase = (firstLater, ...rest) => {
+  debugger
+  return firstLater?.toUpperCase() + rest?.join('')?.toLowerCase()
 }
 
 export const LeadsTable = () => {
@@ -102,6 +122,7 @@ export const LeadsTable = () => {
     sorter: SorterResult<IProposalsTableItem>,
   ) => {
     setTableFilters(filters)
+
     fetchLeads({
       //search: undefined,
       page: pagination.current,
@@ -153,7 +174,7 @@ export const LeadsTable = () => {
     popConfirms: ['Are you sure?'],
   })
 
-  const columns = [
+  const columns: ColumnsType<[]> = [
     {
       title: 'Lead ID',
       dataIndex: 'uid',
@@ -223,6 +244,11 @@ export const LeadsTable = () => {
       key: 'geo',
       width: 150,
       sorter: true,
+      render: coutry => (
+        <Tooltip placement='left' title={countryByCode?.[coutry]?.name}>
+          <Flag>{countryByCode?.[coutry]?.emoji || '-'}</Flag>
+        </Tooltip>
+      ),
       filterDropdown: (props: FilterDropdownProps) => (
         <SearchFilter title={'Country'} {...props} />
       ),
@@ -243,8 +269,13 @@ export const LeadsTable = () => {
       key: 'manager',
       width: 150,
       sorter: true,
+      render: manager => (
+        <NavLink to={`settings/user/${manager?.id}`}>
+          {manager?.full_name || '-'}
+        </NavLink>
+      ),
       filterDropdown: (props: FilterDropdownProps) => (
-        <SearchFilter title={'Source'} {...props} />
+        <SearchFilter title={'Manager'} {...props} />
       ),
     },
     {
@@ -254,10 +285,22 @@ export const LeadsTable = () => {
       width: 100,
       sorter: true,
       filterDropdown: (props: FilterDropdownProps) => (
-        <SearchFilter title={'Source'} {...props} />
+        <SearchFilter title={'Status'} {...props} />
       ),
       render: (status: any) => (
         <LeadStatus status={status?.title} color={status?.color} />
+      ),
+    },
+    {
+      title: 'Client Type',
+      dataIndex: 'client_type',
+      key: 'client_type',
+      width: 100,
+      sorter: true,
+      filters: ClientTypeFilters,
+      filterDropdown: true,
+      render: (status: any) => (
+        <LeadStatus status={wordToUpperCase(...status)} color={'#1976d2'} />
       ),
     },
     {
@@ -267,7 +310,7 @@ export const LeadsTable = () => {
       width: 150,
       sorter: true,
       filterDropdown: (props: FilterDropdownProps) => (
-        <SearchFilter title={'Source'} {...props} />
+        <SearchFilter title={'Balance'} {...props} />
       ),
     },
     {
@@ -317,12 +360,12 @@ export const LeadsTable = () => {
         <SearchFilter title={'Source'} {...props} />
       ),
     },
-    {
-      title: 'Actions',
-      dataIndex: 'actions',
-      key: 'actions',
-      render: (value, record) => <TableActions {...tableActionProps(record)} />,
-    },
+    // {
+    //   title: 'Actions',
+    //   dataIndex: 'actions',
+    //   key: 'actions',
+    //   render: (value, record) => <TableActions {...tableActionProps(record)} />,
+    // },
   ]
 
   return (
@@ -349,4 +392,9 @@ const CopyWrapper = styled.div`
     color: ${({ theme }) => theme.colors.text} !important;
     margin-bottom: 0;
   }
+`
+
+const Flag = styled.div`
+  margin: 0;
+  font-size: 24px;
 `
