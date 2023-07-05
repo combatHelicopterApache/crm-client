@@ -64,7 +64,8 @@ export const MessagesDrawer: FC<IProps> = ({ onClose, open, comments }) => {
         description: value,
         attached_files: null,
       })
-      setMessages(res.data)
+
+      setMessages(prev => ({ ...prev, comments: [...prev.comments, res.data] }))
       setValue('')
     } catch (error) {
       notification('error', error.message)
@@ -98,7 +99,10 @@ export const MessagesDrawer: FC<IProps> = ({ onClose, open, comments }) => {
                 <CommentUnit key={idx} comment={item} />
               ))
             ) : (
-              <Empty description='No comment yet' />
+              <Empty
+                style={{ margin: '0 auto' }}
+                description='No comment yet'
+              />
             )}
           </CommentsList>
           <InputWrapper>
