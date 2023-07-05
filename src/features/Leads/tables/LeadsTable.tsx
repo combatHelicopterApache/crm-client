@@ -51,7 +51,6 @@ const ClientTypeFilters = [
 ]
 
 const wordToUpperCase = (firstLater, ...rest) => {
-  debugger
   return firstLater?.toUpperCase() + rest?.join('')?.toLowerCase()
 }
 
