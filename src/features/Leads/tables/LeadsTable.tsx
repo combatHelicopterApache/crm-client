@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Spin, Popover, Tag, Dropdown, Space, Tooltip } from 'antd'
 import { getLeads } from '../../../api/Leads'
-import {
-  EyeOutlined,
-  FormOutlined,
-  UnorderedListOutlined,
-  UsergroupDeleteOutlined,
-  CheckOutlined,
-} from '@ant-design/icons'
+
 import { Link } from 'react-router-dom'
 import { CustomTable, CustomTable as Table } from 'components/Table/CustomTable'
 import { notification } from 'components/Notification/Notification'
@@ -26,8 +20,11 @@ import { FilterDropdownProps } from 'antd/es/table/interface'
 import { ControlsButton } from 'components/ControlsButton/ControlsButton'
 import { NavLink } from 'react-router-dom'
 import { countryByCode } from 'utils/countryList'
-
+import { CommentPopover } from '../components/CommentPopover'
 import { ColumnsType, TableProps } from 'antd/es/table'
+import { MessagesDrawer } from '../components/MessagesDrawer'
+import { geoToLocalTime } from 'utils/geoToLocalTime'
+import { P } from 'molecules/P/P'
 
 const { Paragraph } = Typography
 
@@ -51,7 +48,6 @@ const ClientTypeFilters = [
 ]
 
 const wordToUpperCase = (firstLater, ...rest) => {
-  debugger
   return firstLater?.toUpperCase() + rest?.join('')?.toLowerCase()
 }
 
@@ -60,7 +56,8 @@ export const LeadsTable = () => {
   const [leads, setLeads] = useState([])
   const [loading, setLoading] = useState(false)
   const [clickedRowIndex, setClickedRowIndex] = useState<number | null>(null)
-
+  const [comments, setComments] = useState({})
+  const [openComments, setOpenComments] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState([])
   const [checkedRows, setCheckedRows] = useState([])
   const [sortField, setSortField] = useState<string | null>(null)
@@ -149,6 +146,16 @@ export const LeadsTable = () => {
 
   const handleOpenLead = id => {
     return navigate(`/lead/${id}`)
+  }
+
+  const handleOpenCommentsList = comments => {
+    setComments(comments)
+    setOpenComments(true)
+  }
+  const handleCloseCommentsList = () => {
+    setComments({})
+    setOpenComments(false)
+    fetchLeads({})
   }
 
   const tableActionProps = record => ({
@@ -254,6 +261,14 @@ export const LeadsTable = () => {
       ),
     },
     {
+      title: 'Local Time',
+      dataIndex: 'geo',
+      key: 'geo',
+      width: 150,
+      sorter: true,
+      render: coutry => <P>{geoToLocalTime(coutry)}</P>,
+    },
+    {
       title: 'Source',
       dataIndex: 'source',
       key: 'source',
@@ -304,6 +319,20 @@ export const LeadsTable = () => {
       ),
     },
     {
+      title: 'Comments',
+      dataIndex: 'comments_list',
+      key: 'comments_list',
+      width: 200,
+      sorter: true,
+      render: (comments_list: any) => (
+        <CommentPopover
+          title='Last Comment'
+          onOpen={() => handleOpenCommentsList(comments_list)}
+          comments_list={comments_list}
+        />
+      ),
+    },
+    {
       title: 'Balance',
       dataIndex: 'balance',
       key: 'balance',
@@ -323,16 +352,7 @@ export const LeadsTable = () => {
         <SearchFilter title={'Source'} {...props} />
       ),
     },
-    {
-      title: ' Comments',
-      dataIndex: 'comments',
-      key: 'comments',
-      width: 250,
-      sorter: true,
-      filterDropdown: (props: FilterDropdownProps) => (
-        <SearchFilter title={'Source'} {...props} />
-      ),
-    },
+
     {
       title: 'Created at',
       dataIndex: 'created_at',
@@ -347,7 +367,8 @@ export const LeadsTable = () => {
       key: 'updated_at',
       width: 150,
       sorter: true,
-      render: (data: number) => moment(data).format('DD/MM/YYYY HH:mm'),
+      render: (data: number) =>
+        data ? moment(data).format('DD/MM/YYYY HH:mm') : '-',
     },
     {
       title: 'Created by',
@@ -360,12 +381,12 @@ export const LeadsTable = () => {
         <SearchFilter title={'Source'} {...props} />
       ),
     },
-    // {
-    //   title: 'Actions',
-    //   dataIndex: 'actions',
-    //   key: 'actions',
-    //   render: (value, record) => <TableActions {...tableActionProps(record)} />,
-    // },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      key: 'actions',
+      render: (value, record) => <TableActions {...tableActionProps(record)} />,
+    },
   ]
 
   return (
@@ -379,6 +400,11 @@ export const LeadsTable = () => {
             dataSource={leads}
             columns={columns}
             onChange={handleTableChange}
+          />
+          <MessagesDrawer
+            comments={comments}
+            open={openComments}
+            onClose={handleCloseCommentsList}
           />
         </Wrapper>
       </Spin>
