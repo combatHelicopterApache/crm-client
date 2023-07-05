@@ -4,21 +4,29 @@ import { toggleMenu } from '../../../../store/ui/UISlice'
 import { MainLogo } from 'images/icons'
 import { useAppSelector, useAppDispatch } from 'store/store'
 import styled from 'styled-components'
+import { authSelector } from 'features/Login/authSlice'
+import { P } from 'molecules/P/P'
 
 const Logo = () => {
   const dispatch = useAppDispatch()
-
+  const auth = useAppSelector(authSelector)
   const isOpen = useAppSelector(state => state.ui.isOpen)
 
   const HandleClick = () => {
     dispatch(toggleMenu())
   }
 
+  console.log(auth)
+
   return (
     <Wrapper className={isOpen ?? 'close'}>
       {!isOpen && (
         <div className='logo-wrapper'>
-          <MainLogo />
+          {auth?.auth_user?.company_name ? (
+            <P style={{ fontSize: '26px' }}>{auth?.auth_user?.company_name}</P>
+          ) : (
+            <MainLogo />
+          )}
         </div>
       )}
       <button onClick={HandleClick} className={'btnSplit'}>
