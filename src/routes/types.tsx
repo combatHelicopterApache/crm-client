@@ -15,6 +15,7 @@ export enum RoutesPath {
   SETTINGS_ROUTE_USERS = '/users',
   SETTINGS_ROUTE_COMPANY = '/company-info',
   SETTINGS_ROUTE_OFFICES = '/offices',
+  SETTINGS_ROUTE_STATUS = '/lead-status',
   SETTINGS_ROUTE_USER = '/users/:id',
   DEPOSITS_ROUTE = '/deposits',
   BRANDS_ROUTE = '/brands',
