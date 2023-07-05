@@ -19,9 +19,10 @@ export const CommentPopover: FC<IProps> = ({
   onOpen,
   title,
 }) => {
+  const lastElement = comments_list?.commentary_list.length - 1 || 0
   const content = (
     <div>
-      <p>{comments_list?.commentary_list?.[0]?.description}</p>
+      <p>{comments_list?.commentary_list?.[lastElement]?.description}</p>
       <Button style={{ marginLeft: 'auto' }} onClick={onOpen} type='primary'>
         View all
       </Button>
@@ -39,16 +40,14 @@ export const CommentPopover: FC<IProps> = ({
                 textOverflow: 'ellipsis',
               }}
             >
-              {comments_list?.commentary_list?.[0]?.description > 10
-                ? comments_list?.commentary_list?.[0]?.description?.slice(
-                    0,
-                    10,
-                  ) + '...'
-                : comments_list?.commentary_list?.[0]?.description}{' '}
+              {comments_list?.commentary_list?.[lastElement]?.description > 10
+                ? comments_list?.commentary_list?.[
+                    lastElement
+                  ]?.description?.slice(0, 10) + '...'
+                : comments_list?.commentary_list?.[lastElement]
+                    ?.description}{' '}
             </P>
-            {!!comments_list?.commentary_list?.length && (
-              <Count>+{comments_list?.commentary_list?.length}</Count>
-            )}
+            {!!lastElement > 1 && <Count>+{lastElement - 1}</Count>}
           </Row>
         </Popover>
       ) : (
