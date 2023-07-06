@@ -24,6 +24,7 @@ export const CompanyInfo = () => {
   const [edit, setEdit] = useState(false)
   const [editedValue, setEditedValue] = useState({})
 
+  console.log(companyId)
   useEffect(() => {
     const fetchCompany = async () => {
       setLoading(true)

@@ -13,7 +13,7 @@ export const createCompany = data => {
   return axiosInstance.post(PathEnum.CREATE_COMPANY, data)
 }
 export const deleteCompany = companyId => {
-  return axiosInstance.delete(`${PathEnum.DELETE_COMPANY}?id=${companyId}`)
+  return axiosInstance.delete(`${PathEnum.DELETE_COMPANY}/${companyId}`)
 }
 export const updateCompany = data => {
   return axiosInstance.post(PathEnum.UPDATE_COMPANY, data)
@@ -21,9 +21,9 @@ export const updateCompany = data => {
 export const patchCompany = (data, companyId) => {
   return axiosInstance.patch(`${PathEnum.PATCH_COMPANY}/${companyId}`, data)
 }
-export const getCompanyById = params => {
+export const getCompanyById = companyId => {
   return axiosInstance
-    .get(PathEnum.GET_COMPANY, { params })
+    .get(`${PathEnum.GET_COMPANY}/${companyId.id}`)
     .then(data => data?.data)
 }
 
