@@ -15,7 +15,7 @@ export const deleteBrand = (id: number) => {
   return axiosInstance.put(`/brand/${id}`)
 }
 export const getBrandsList = params => {
-  return axiosInstance.get(`/brand`, { params }).then(data => data.data)
+  return axiosInstance.get(`/brand/admin-list`, { params }).then(data => data.data)
 }
 export const getBrandById = (id: string) => {
   return axiosInstance.get(`/brand/${id}`).then(data => data.data)
