@@ -44,6 +44,15 @@ export const SettingsRoutes = () => {
         ),
         isAccess: true,
       },
+      {
+        path: RoutesPath.SETTINGS_ROUTE_STATUS,
+        title: 'Statuses',
+        exact: true,
+        element: lazyWithRetry(
+          () => import('../pages/SettingsPage/LeadStatusPage'),
+        ),
+        isAccess: true,
+      },
     ],
     [window.location.pathname],
   )

@@ -40,6 +40,11 @@ export const SettingsLayout = ({ children }: React.PropsWithChildren) => {
       to: `/settings${RoutesPath.SETTINGS_ROUTE_OFFICES}`,
       isAccess: true,
     },
+    {
+      label: 'Lead Status',
+      to: `/settings${RoutesPath.SETTINGS_ROUTE_STATUS}`,
+      isAccess: true,
+    },
   ]
 
   useEffect(() => {
