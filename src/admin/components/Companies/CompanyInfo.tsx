@@ -15,7 +15,7 @@ import { loginToCompany } from 'features/Login/authSlice'
 import { useDispatch } from 'react-redux'
 
 export const CompanyInfo = () => {
-  const navigate = useNavigate()
+
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const [company, setCompany] = useState({})
@@ -24,7 +24,6 @@ export const CompanyInfo = () => {
   const [edit, setEdit] = useState(false)
   const [editedValue, setEditedValue] = useState({})
 
-  console.log(companyId)
   useEffect(() => {
     const fetchCompany = async () => {
       setLoading(true)
