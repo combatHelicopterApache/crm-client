@@ -19,7 +19,7 @@ export const CommentPopover: FC<IProps> = ({
   onOpen,
   title,
 }) => {
-  const lastElement = comments_list?.commentary_list.length - 1 || 0
+  const lastElement = comments_list?.commentary_list?.length - 1 || 0
   const content = (
     <div>
       <p>{comments_list?.commentary_list?.[lastElement]?.description}</p>

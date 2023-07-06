@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import { CustomButton } from 'components/Button/CustomButton'
 import { Edit as EditIcon } from '@mui/icons-material'
 import { P } from 'molecules/P/P'
-
+import { Button } from '@mui/material'
+import { Save, Cancel } from '@mui/icons-material'
 interface Props {
   children: React.ReactNode
   value: string | number | JSX.Element
@@ -68,12 +69,22 @@ export const EditableBlock = ({
 
           {!editMode && (
             <Buttons>
-              <CustomButton onClick={handleSave}>
-                <P>Save</P>
-              </CustomButton>
-              <CustomButton buttonType='remove' onClick={handleCancel}>
-                <P>Cancel</P>
-              </CustomButton>
+              <Button
+                size='small'
+                color='success'
+                startIcon={<Save />}
+                onClick={handleSave}
+              >
+                Save
+              </Button>
+              <Button
+                color='error'
+                size='small'
+                startIcon={<Cancel />}
+                onClick={handleCancel}
+              >
+                Cancel
+              </Button>
             </Buttons>
           )}
         </Content>
