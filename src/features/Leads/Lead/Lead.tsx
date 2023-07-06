@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Tabs, Tab } from '@mui/material'
 import { P } from 'molecules/P/P'
 import { Personal } from './components/Personal/Personal'
+import { Accounts } from './components/Accounts/Accounts'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -55,7 +56,7 @@ export const Lead = () => {
         <Personal />
       </TabPanel>
       <TabPanel value={value} title='Accounts' index={1}>
-        Personal
+        <Accounts />
       </TabPanel>
       <TabPanel value={value} title='Deposits' index={2}>
         Deposits
@@ -96,7 +97,7 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Content>
-          <P>{title}</P>
+          {/* <P>{title}</P> */}
           {children}
         </Content>
       )}
