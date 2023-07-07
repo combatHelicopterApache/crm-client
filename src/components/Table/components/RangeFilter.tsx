@@ -9,6 +9,15 @@ import { Search, Cancel } from '@mui/icons-material'
 const Wrapper = styled.div`
   padding: 10px;
   width: 250px;
+  & input {
+    color: ${({ theme }) => theme.colors.background} !important;
+  }
+  & input::placeholder {
+    color: ${({ theme }) => theme.colors.background} !important;
+  }
+  & .MuiInputLabel-root {
+    color: ${({ theme }) => theme.colors.background} !important;
+  }
 
   hr {
     margin-bottom: 0;
@@ -56,15 +65,19 @@ export const RangePickerFilter: React.FC<FilterDropdownProps> = ({
       <Row>
         <CustomInput
           label='From'
+          placeholder='From'
           value={range.from}
           name='from'
           onChange={handleChange}
+          variant='outlined'
         />
         <CustomInput
           label='To'
+          placeholder='To'
           value={range.to}
           name='to'
           onChange={handleChange}
+          variant='outlined'
         />
       </Row>
       <hr />

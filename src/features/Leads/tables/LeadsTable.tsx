@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Spin, Popover, Tag, Dropdown, Space, Tooltip } from 'antd'
-import { getLeads } from '../../../api/Leads'
-
-import { Link } from 'react-router-dom'
+import { Spin, Tooltip } from 'antd'
+import { getLeads, deleteLead } from '../../../api/Leads'
 import { CustomTable, CustomTable as Table } from 'components/Table/CustomTable'
 import { notification } from 'components/Notification/Notification'
-import { CustomButton } from '../../../components/Button/CustomButton'
 import { Span } from '../../../molecules/Span/Span'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
@@ -28,6 +25,10 @@ import { P } from 'molecules/P/P'
 import { useStatus } from 'hooks/useStatus'
 import { useUsers } from 'hooks/useUsers'
 import { DateRangeFilter } from 'components/Table/components/DateRangeFilter'
+import { RangePickerFilter } from 'components/Table/components/RangeFilter'
+import { Select } from 'components/Select/Select'
+import { CreateLead } from '../components/CreateLead'
+import { createLead } from '../../../api/Leads'
 
 const { Paragraph } = Typography
 
@@ -68,6 +69,8 @@ export const LeadsTable = () => {
   const [sortField, setSortField] = useState<string | null>(null)
   const [sortOrder, setSortOrder] = useState<string | null>(null)
   const [tableFilters, setTableFilters] = useState({})
+  const [openLead, setOpenLead] = useState(false)
+
   const [pagination, setPagination] = useState({
     page: 1,
     per_page: 25,
@@ -110,10 +113,10 @@ export const LeadsTable = () => {
       setSelectedRowKeys(selectedRowKeys)
     },
     getCheckboxProps: (record: IClient) => ({
-      disabled:
-        (!checkedRows.map(({ id }) => id).includes(record.id) &&
-          checkedRows?.length === 2) ||
-        (checkedRows.length && record.type !== checkedRows?.[0]?.type), // Column configuration not to be checked
+      // disabled:
+      //   (!checkedRows.map(({ id }) => id).includes(record.id) &&
+      //     checkedRows?.length === 2) ||
+      //   (checkedRows.length && record.type !== checkedRows?.[0]?.type),
       name: record.name,
     }),
   }
@@ -163,27 +166,81 @@ export const LeadsTable = () => {
     fetchLeads({})
   }
 
+  const handleDelete = async id => {
+    try {
+      await deleteLead(id)
+      setLeads(prev => prev.filter(lead => lead.id !== id))
+    } catch (error) {
+      notification('error', error.message)
+    }
+  }
+
+  const handleAttachUser = async (userId, leadId) => {
+    setLeads(prev =>
+      prev.map(item =>
+        item.id === leadId ? { ...item, assigned_to: userId } : item,
+      ),
+    )
+  }
+
+  const onOpenLeadForm = () => {
+    setOpenLead(true)
+  }
+  const onCloseLeadForm = () => {
+    setOpenLead(false)
+  }
+
+  const onSave = async lead => {
+    try {
+      const res = await createLead(lead)
+      onCloseLeadForm()
+    } catch (error) {
+      notification('error', error.message)
+    }
+  }
+
   const tableActionProps = record => ({
     todos: ['delete', 'view', 'phone'],
-    callbacks: [() => null, () => handleOpenLead(record.id), () => null],
+    callbacks: [
+      () => handleDelete(record.id),
+      () => handleOpenLead(record.id),
+      () => null,
+    ],
     preloaders: [loading, loading, loading],
+    disabled: [false, false, true],
     tooltips: [
       'Remove this lead?',
       'Open this lead in the new tab?',
       'Are you want to Call?',
     ],
-    popConfirms: ['Are you sure?'],
+    popConfirms: ['Are you sure that you want to delete this lead?'],
   })
   const controlsActionProps = record => ({
-    todos: ['add', 'edit', 'copy'],
-    callbacks: [() => null, () => handleOpenLead(record.id), () => null],
-    preloaders: [loading, loading, loading],
+    todos: ['add', 'edit', 'copy', 'delete'],
+    callbacks: [
+      onOpenLeadForm,
+      () => handleOpenLead(checkedRows[0]?.id),
+      () => null,
+      () => handleDelete(checkedRows[0]?.id),
+    ],
+    preloaders: [loading, loading, loading, loading],
+    disabled: [
+      false,
+      checkedRows.length !== 1,
+      checkedRows.length !== 1,
+      checkedRows.length !== 1,
+    ],
     tooltips: [
       'Remove this lead?',
       'Open this lead in the new tab?',
       'Are you want to Call?',
     ],
-    popConfirms: ['Are you sure?'],
+    popConfirms: [
+      false,
+      false,
+      false,
+      'Are you sure that you want to delete this lead?',
+    ],
   })
 
   const columns: ColumnsType<[]> = [
@@ -312,10 +369,16 @@ export const LeadsTable = () => {
       width: 150,
       sorter: true,
       filters: users?.map(item => ({ text: item.full_name, value: item.id })),
-      render: manager => (
-        <NavLink to={`settings/user/${manager?.id}`}>
-          {manager?.full_name || '-'}
-        </NavLink>
+      render: (userId, record) => (
+        <Select
+          value={userId}
+          size='small'
+          onChange={e => handleAttachUser(e.target.value, record.id)}
+          options={users?.map(item => ({
+            label: item.full_name,
+            value: item.id,
+          }))}
+        />
       ),
     },
     {
@@ -361,7 +424,7 @@ export const LeadsTable = () => {
       width: 150,
       sorter: true,
       filterDropdown: (props: FilterDropdownProps) => (
-        <SearchFilter title={'Balance'} {...props} />
+        <RangePickerFilter {...props} />
       ),
     },
     {
@@ -400,10 +463,8 @@ export const LeadsTable = () => {
       key: 'created_by',
       width: 150,
       sorter: true,
+      filters: users?.map(item => ({ text: item.full_name, value: item.id })),
       render: (user: number) => (user ? user : ''),
-      filterDropdown: (props: FilterDropdownProps) => (
-        <SearchFilter title={'Source'} {...props} />
-      ),
     },
     {
       title: 'Actions',
@@ -430,6 +491,11 @@ export const LeadsTable = () => {
             comments={comments}
             open={openComments}
             onClose={handleCloseCommentsList}
+          />
+          <CreateLead
+            onClose={onCloseLeadForm}
+            open={openLead}
+            onSave={onSave}
           />
         </Wrapper>
       </Spin>

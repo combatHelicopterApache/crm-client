@@ -23,6 +23,9 @@ import { Comments } from 'components/Comments/Comments'
 import { useBrands } from 'hooks/useBrands'
 import { useUsers } from 'hooks/useUsers'
 import { useStatus } from 'hooks/useStatus'
+import { LeadStatus } from 'features/Leads/components/LeadStatus'
+import { countries, countryByCode } from 'utils/countryList'
+import { renderCopyableText } from 'utils/renderCopyableText'
 
 export const Personal = () => {
   const { id: leadId } = useParams<{ id: string }>()
@@ -103,6 +106,11 @@ export const Personal = () => {
                 </IconButton>
               </Tooltip>
             </IconsWrapper>
+            <Row title='Lead ID'>
+              <EditableBlock disabled value={renderCopyableText(lead?.uid)}>
+                <CustomInput value={lead?.uid} />
+              </EditableBlock>
+            </Row>
             <Row title='First Name'>
               <EditableBlock value={lead?.first_name}>
                 <CustomInput value={lead?.first_name} />
@@ -114,8 +122,32 @@ export const Personal = () => {
               </EditableBlock>
             </Row>
             <Row title='Country'>
-              <EditableBlock value={lead?.geo}>
-                <CustomInput value={lead?.geo} />
+              <EditableBlock
+                value={
+                  <p
+                    style={{
+                      display: 'flex',
+                      gap: '10px',
+                      margin: '0',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <span>{lead?.geo}</span>
+                    <img
+                      style={{ width: '30px' }}
+                      src={countryByCode[lead?.geo]?.image}
+                      alt=''
+                    />
+                  </p>
+                }
+              >
+                <Select
+                  value={lead?.geo}
+                  options={countries?.map(item => ({
+                    value: item.code,
+                    label: item.name,
+                  }))}
+                />
               </EditableBlock>
             </Row>
             <Row title='Email'>
@@ -126,6 +158,39 @@ export const Personal = () => {
             <Row title='Phone'>
               <EditableBlock value={lead?.phone}>
                 <CustomInput value={lead?.phone} />
+              </EditableBlock>
+            </Row>
+            <Row title='Created at'>
+              <EditableBlock
+                disabled
+                value={moment(lead?.created_at || moment()).format(
+                  'MM/DD/YYYY HH:mm',
+                )}
+              >
+                <CustomInput
+                  value={moment(lead?.created_at || moment()).format(
+                    'MM/DD/YYYY HH:mm',
+                  )}
+                />
+              </EditableBlock>
+            </Row>
+            <Row title='Updated at'>
+              <EditableBlock
+                disabled
+                value={moment(lead?.updated_at || moment()).format(
+                  'MM/DD/YYYY HH:mm',
+                )}
+              >
+                <CustomInput
+                  value={moment(lead?.updated_at || moment()).format(
+                    'MM/DD/YYYY HH:mm',
+                  )}
+                />
+              </EditableBlock>
+            </Row>
+            <Row title='Created by'>
+              <EditableBlock disabled value={lead?.created_by}>
+                <CustomInput value={lead?.created_by} />
               </EditableBlock>
             </Row>
           </Wrapper>
@@ -150,7 +215,9 @@ export const Personal = () => {
           <Wrapper>
             <H2>Sales</H2>
             <Row title='Brand'>
-              <EditableBlock value={lead?.brand?.title}>
+              <EditableBlock
+                value={brands?.find(item => item?.id === lead?.brand_id)?.title}
+              >
                 <Select
                   label='Brand'
                   options={brands?.map(item => ({
@@ -162,7 +229,14 @@ export const Personal = () => {
               </EditableBlock>
             </Row>
             <Row title='Status'>
-              <EditableBlock value={'null'}>
+              <EditableBlock
+                value={
+                  <LeadStatus
+                    status={lead?.status?.title}
+                    color={lead?.status?.color}
+                  />
+                }
+              >
                 <Select
                   label='Status'
                   options={status?.map(item => ({
@@ -174,8 +248,19 @@ export const Personal = () => {
               </EditableBlock>
             </Row>
             <Row title='Assigned to'>
-              <EditableBlock value={'null'}>
-                <CustomInput value={null} />
+              <EditableBlock
+                value={
+                  users?.find(item => item?.id === lead?.assigned_to)?.full_name
+                }
+              >
+                <Select
+                  value={lead?.assigned_to}
+                  size='small'
+                  options={users?.map(item => ({
+                    label: item.full_name,
+                    value: item.id,
+                  }))}
+                />
               </EditableBlock>
             </Row>
             <Row title='Role'>
@@ -219,6 +304,9 @@ export const Personal = () => {
             >
               Add Event
             </Button>
+          </Wrapper>
+          <Wrapper>
+            <H2>Status Logs</H2>
           </Wrapper>
         </ContainerInner>
       </Container>
