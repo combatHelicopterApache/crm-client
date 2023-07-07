@@ -19,12 +19,15 @@ import { SearchFilter } from 'components/Table/components/SearchFilter'
 import { FilterDropdownProps } from 'antd/es/table/interface'
 import { ControlsButton } from 'components/ControlsButton/ControlsButton'
 import { NavLink } from 'react-router-dom'
-import { countryByCode } from 'utils/countryList'
+import { countryByCode, countries } from 'utils/countryList'
 import { CommentPopover } from '../components/CommentPopover'
 import { ColumnsType, TableProps } from 'antd/es/table'
 import { MessagesDrawer } from '../components/MessagesDrawer'
 import { geoToLocalTime } from 'utils/geoToLocalTime'
 import { P } from 'molecules/P/P'
+import { useStatus } from 'hooks/useStatus'
+import { useUsers } from 'hooks/useUsers'
+import { DateRangeFilter } from 'components/Table/components/DateRangeFilter'
 
 const { Paragraph } = Typography
 
@@ -52,6 +55,8 @@ const wordToUpperCase = (firstLater, ...rest) => {
 }
 
 export const LeadsTable = () => {
+  const { status } = useStatus()
+  const { users } = useUsers()
   const navigate = useNavigate()
   const [leads, setLeads] = useState([])
   const [loading, setLoading] = useState(false)
@@ -188,6 +193,7 @@ export const LeadsTable = () => {
       key: 'uid',
       width: 150,
       sorter: true,
+
       render: id => renderCopyableText(id),
       filterDropdown: (props: FilterDropdownProps) => (
         <SearchFilter title={'Lead ID'} {...props} />
@@ -250,14 +256,22 @@ export const LeadsTable = () => {
       dataIndex: 'geo',
       key: 'geo',
       width: 150,
-      sorter: true,
+      filterMode: 'tree',
+      filterSearch: true,
+      filters: countries?.map(item => ({ text: item.name, value: item.code })),
+
       render: coutry => (
         <Tooltip placement='left' title={countryByCode?.[coutry]?.name}>
-          <Flag>{countryByCode?.[coutry]?.emoji || '-'}</Flag>
+          {countryByCode?.[coutry]?.image && countryByCode?.[coutry]?.name ? (
+            <img
+              style={{ display: 'block', width: '30px' }}
+              src={countryByCode?.[coutry]?.image}
+              alt={countryByCode?.[coutry]?.name}
+            />
+          ) : (
+            <Flag>{coutry || '-'}</Flag>
+          )}
         </Tooltip>
-      ),
-      filterDropdown: (props: FilterDropdownProps) => (
-        <SearchFilter title={'Country'} {...props} />
       ),
     },
     {
@@ -284,24 +298,33 @@ export const LeadsTable = () => {
       key: 'manager',
       width: 150,
       sorter: true,
+
       render: manager => (
         <NavLink to={`settings/user/${manager?.id}`}>
           {manager?.full_name || '-'}
         </NavLink>
       ),
-      filterDropdown: (props: FilterDropdownProps) => (
-        <SearchFilter title={'Manager'} {...props} />
+    },
+    {
+      title: 'Assigned to',
+      dataIndex: 'assigned_to',
+      key: 'assigned_to',
+      width: 150,
+      sorter: true,
+      filters: users?.map(item => ({ text: item.full_name, value: item.id })),
+      render: manager => (
+        <NavLink to={`settings/user/${manager?.id}`}>
+          {manager?.full_name || '-'}
+        </NavLink>
       ),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 100,
+      width: 150,
       sorter: true,
-      filterDropdown: (props: FilterDropdownProps) => (
-        <SearchFilter title={'Status'} {...props} />
-      ),
+      filters: status?.map(item => ({ text: item.title, value: item.id })),
       render: (status: any) => (
         <LeadStatus status={status?.title} color={status?.color} />
       ),
@@ -310,10 +333,9 @@ export const LeadsTable = () => {
       title: 'Client Type',
       dataIndex: 'client_type',
       key: 'client_type',
-      width: 100,
+      width: 150,
       sorter: true,
       filters: ClientTypeFilters,
-      filterDropdown: true,
       render: (status: any) => (
         <LeadStatus status={wordToUpperCase(...status)} color={'#1976d2'} />
       ),
@@ -358,6 +380,7 @@ export const LeadsTable = () => {
       dataIndex: 'created_at',
       key: 'created_at',
       width: 150,
+      filterDropdown: props => <DateRangeFilter {...props} />,
       render: (data: number) =>
         data ? moment(data).format('DD/MM/YYYY HH:mm') : '-',
     },
@@ -367,6 +390,7 @@ export const LeadsTable = () => {
       key: 'updated_at',
       width: 150,
       sorter: true,
+      filterDropdown: props => <DateRangeFilter {...props} />,
       render: (data: number) =>
         data ? moment(data).format('DD/MM/YYYY HH:mm') : '-',
     },
@@ -385,6 +409,7 @@ export const LeadsTable = () => {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
+      width: 150,
       render: (value, record) => <TableActions {...tableActionProps(record)} />,
     },
   ]

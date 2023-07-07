@@ -71,7 +71,7 @@ export const Comments: FC<INotesProps> = props => {
         attached_files: null,
       })
         .then(r => {
-          setNotes(p => [r?.data, ...p])
+          setNotes(p => [r, ...p])
         })
         .then(() => {
           setCurrentNote('')
@@ -332,7 +332,7 @@ export const Comments: FC<INotesProps> = props => {
                       )}
                       <p className='created-text'>
                         <i>
-                          Created by {item?.created_by} at{' '}
+                          Created by {item?.user_name} at{' '}
                           {formatTimeByMoment(item?.created_at)}
                         </i>
                       </p>

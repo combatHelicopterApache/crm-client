@@ -39,3 +39,9 @@
     color: var(--whiteColor) !important;
   }
 }
+
+.ant-tree-treenode.ant-tree-treenode-switcher-open.filter-node {
+  border: 1px solid var(--mainGray) !important;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
