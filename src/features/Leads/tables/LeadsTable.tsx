@@ -29,6 +29,7 @@ import { RangePickerFilter } from 'components/Table/components/RangeFilter'
 import { Select } from 'components/Select/Select'
 import { CreateLead } from '../components/CreateLead'
 import { createLead } from '../../../api/Leads'
+import { changeLeadStatus } from 'api/Status'
 
 const { Paragraph } = Typography
 
@@ -242,6 +243,15 @@ export const LeadsTable = () => {
       'Are you sure that you want to delete this lead?',
     ],
   })
+
+  const handleChangeLeadStatus = async (leadId, newStatus) => {
+    try {
+      const res = await changeLeadStatus(leadId, newStatus)
+      notification('success', 'Status was changed successfuly!')
+    } catch (error) {
+      notification('error', error.message)
+    }
+  }
 
   const columns: ColumnsType<[]> = [
     {

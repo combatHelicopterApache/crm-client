@@ -26,6 +26,7 @@ import { useStatus } from 'hooks/useStatus'
 import { LeadStatus } from 'features/Leads/components/LeadStatus'
 import { countries, countryByCode } from 'utils/countryList'
 import { renderCopyableText } from 'utils/renderCopyableText'
+import { LeadStatusBlock } from 'features/Leads/components/LeadStatusBlock'
 
 export const Personal = () => {
   const { id: leadId } = useParams<{ id: string }>()
@@ -307,6 +308,10 @@ export const Personal = () => {
           </Wrapper>
           <Wrapper>
             <H2>Status Logs</H2>
+            <LeadStatusBlock
+              statusList={lead?.status_log_list?.status_list}
+              leadId={leadId}
+            />
           </Wrapper>
         </ContainerInner>
       </Container>

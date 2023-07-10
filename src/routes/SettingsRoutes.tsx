@@ -9,6 +9,9 @@ import { useAppSelector } from 'store/store'
 
 export const SettingsRoutes = () => {
   const auth = useAppSelector(authSelector)
+  const { users, settings, company_info } = auth?.auth_user?.permissions || {}
+
+  const isActiveUser = auth?.auth_user?.active
 
   const settingsRoutes = useMemo(
     () => [
@@ -19,21 +22,21 @@ export const SettingsRoutes = () => {
         element: lazyWithRetry(
           () => import('../pages/SettingsPage/CompanyPage'),
         ),
-        isAccess: true,
+        isAccess: isActiveUser && company_info && settings,
       },
       {
         path: RoutesPath.SETTINGS_ROUTE_USERS,
         title: 'Users',
         exact: true,
         element: lazyWithRetry(() => import('../pages/SettingsPage/UsersPage')),
-        isAccess: true,
+        isAccess: isActiveUser && users,
       },
       {
         path: RoutesPath.SETTINGS_ROUTE_USER,
         title: 'User',
         exact: true,
         element: lazyWithRetry(() => import('../pages/SettingsPage/UserPage')),
-        isAccess: true,
+        isAccess: isActiveUser && users && settings,
       },
       {
         path: RoutesPath.SETTINGS_ROUTE_OFFICES,
@@ -42,7 +45,7 @@ export const SettingsRoutes = () => {
         element: lazyWithRetry(
           () => import('../pages/SettingsPage/OfficesPage'),
         ),
-        isAccess: true,
+        isAccess: isActiveUser && settings,
       },
       {
         path: RoutesPath.SETTINGS_ROUTE_STATUS,
@@ -51,7 +54,7 @@ export const SettingsRoutes = () => {
         element: lazyWithRetry(
           () => import('../pages/SettingsPage/LeadStatusPage'),
         ),
-        isAccess: true,
+        isAccess: isActiveUser && settings,
       },
     ],
     [window.location.pathname],
