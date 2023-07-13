@@ -30,6 +30,7 @@ import { Select } from 'components/Select/Select'
 import { CreateLead } from '../components/CreateLead'
 import { createLead } from '../../../api/Leads'
 import { changeLeadStatus } from 'api/Status'
+import { BulkActions } from '../components/BulkActions'
 
 const { Paragraph } = Typography
 
@@ -71,6 +72,7 @@ export const LeadsTable = () => {
   const [sortOrder, setSortOrder] = useState<string | null>(null)
   const [tableFilters, setTableFilters] = useState({})
   const [openLead, setOpenLead] = useState(false)
+  const [openBulkModal, setOpenBulkModal] = useState(false)
 
   const [pagination, setPagination] = useState({
     page: 1,
@@ -191,6 +193,13 @@ export const LeadsTable = () => {
     setOpenLead(false)
   }
 
+  const onOpenBulkModal = () => {
+    setOpenBulkModal(true)
+  }
+  const onCloseBulkModal = () => {
+    setOpenBulkModal(false)
+  }
+
   const onSave = async lead => {
     try {
       const res = await createLead(lead)
@@ -217,19 +226,21 @@ export const LeadsTable = () => {
     popConfirms: ['Are you sure that you want to delete this lead?'],
   })
   const controlsActionProps = record => ({
-    todos: ['add', 'edit', 'copy', 'delete'],
+    todos: ['add', 'edit', 'copy', 'delete', 'bulk'],
     callbacks: [
       onOpenLeadForm,
       () => handleOpenLead(checkedRows[0]?.id),
       () => null,
       () => handleDelete(checkedRows[0]?.id),
+      onOpenBulkModal,
     ],
-    preloaders: [loading, loading, loading, loading],
+    preloaders: [loading, loading, loading, loading, loading],
     disabled: [
       false,
       checkedRows.length !== 1,
       checkedRows.length !== 1,
       checkedRows.length !== 1,
+      checkedRows.length < 2,
     ],
     tooltips: [
       'Remove this lead?',
@@ -244,9 +255,16 @@ export const LeadsTable = () => {
     ],
   })
 
-  const handleChangeLeadStatus = async (leadId, newStatus) => {
+  const handleChangeLeadStatus = async (leadId, newStatusId) => {
     try {
-      const res = await changeLeadStatus(leadId, newStatus)
+      const res = await changeLeadStatus(leadId, newStatusId)
+      setLeads(prev =>
+        prev.map(p =>
+          p.id === leadId
+            ? { ...p, status: { ...p.status, id: newStatusId } }
+            : p,
+        ),
+      )
       notification('success', 'Status was changed successfuly!')
     } catch (error) {
       notification('error', error.message)
@@ -395,11 +413,19 @@ export const LeadsTable = () => {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 150,
+      width: 200,
       sorter: true,
       filters: status?.map(item => ({ text: item.title, value: item.id })),
-      render: (status: any) => (
-        <LeadStatus status={status?.title} color={status?.color} />
+      render: (value: any, record) => (
+        <Select
+          value={value.id}
+          size='small'
+          onChange={e => handleChangeLeadStatus(record.id, e.target.value)}
+          options={status?.map(item => ({
+            label: item.title,
+            value: item.id,
+          }))}
+        />
       ),
     },
     {
@@ -507,6 +533,7 @@ export const LeadsTable = () => {
             open={openLead}
             onSave={onSave}
           />
+          <BulkActions onClose={onCloseBulkModal} open={openBulkModal} />
         </Wrapper>
       </Spin>
     </>

@@ -25,6 +25,7 @@ export type ActionType =
   | 'phone'
   | 'import'
   | 'export'
+  | 'bulk'
 
 interface IProps {
   type: ActionType
@@ -77,6 +78,11 @@ export const Button: FC<IProps> = ({
     }
     case 'edit': {
       text = 'Edit'
+      icon = <Edit />
+      break
+    }
+    case 'bulk': {
+      text = 'Bulk Actions'
       icon = <Edit />
       break
     }

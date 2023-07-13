@@ -58,7 +58,7 @@ const Wrapper = styled.div`
     font-size: 13px;
   }
   & #label {
-    top: 0px;
+    top: -3px;
   }
 
   & .MuiOutlinedInput-notchedOutline {
