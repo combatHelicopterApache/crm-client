@@ -90,7 +90,7 @@ const TableWrapper = styled.div`
 
   .ant-table-tbody > tr > td {
     transition: background 0.2s, border-color 0.2s;
-    border-bottom: 1px solid transparent !important;
+    border-bottom: 1px solid #6565654a !important;
   }
 
   .ant-table-container::after {
